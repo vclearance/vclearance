@@ -23,7 +23,7 @@
 
         /* Шапка сайта (Header) */
         header {
-            background-color: rgba(20, 20, 20, 0.85);
+            background-color: rgba(20, 20, 20, 0.95);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             color: white;
@@ -37,7 +37,7 @@
         }
 
         .container {
-            width: 85%;
+            width: 88%;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -48,22 +48,39 @@
             align-items: center;
         }
 
-        /* Логотип в шапке */
         .logo-link {
             display: flex;
             align-items: center;
             text-decoration: none;
+            z-index: 1100;
         }
 
         .logo-img {
-            height: 45px;
+            height: 40px;
             width: auto;
             display: block;
             transition: opacity 0.3s ease;
         }
 
-        .logo-img:hover {
-            opacity: 0.8;
+        /* Кнопка гамбургера для мобилок */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1100;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease;
+            border-radius: 2px;
         }
 
         /* Правая часть шапки */
@@ -72,7 +89,6 @@
             align-items: center;
         }
 
-        /* Вкладки меню */
         .nav-links {
             list-style: none;
             display: flex;
@@ -117,7 +133,7 @@
             transform: scaleX(1);
         }
 
-        /* ВЫПАДАЮЩИЕ МЕНЮ */
+        /* Выпадающее меню флота */
         .dropdown {
             position: relative;
         }
@@ -127,9 +143,8 @@
             top: 100%;
             left: 50%;
             transform: translateX(-50%) translateY(15px);
-            background-color: rgba(25, 25, 25, 0.95);
+            background-color: rgba(25, 25, 25, 0.98);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
             list-style: none;
             padding: 8px 0;
             border-radius: 6px;
@@ -139,17 +154,6 @@
             visibility: hidden;
             transition: all 0.3s ease;
             z-index: 1100;
-        }
-
-        .dropdown-menu::before {
-            content: '';
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 6px;
-            border-style: solid;
-            border-color: transparent transparent rgba(25, 25, 25, 0.95) transparent;
         }
 
         .dropdown:hover .dropdown-menu {
@@ -183,7 +187,7 @@
             padding-left: 25px;
         }
 
-        /* МЕНЮ ВЫБОРА ЯЗЫКА */
+        /* Переключатель языка */
         .lang-dropdown {
             margin-left: 40px;
         }
@@ -208,44 +212,26 @@
             border-color: rgba(255, 255, 255, 0.4);
         }
 
-        .lang-current::after {
-            content: '▼';
-            font-size: 8px;
-            color: #888888;
-            transition: transform 0.3s ease;
-        }
-
-        .lang-dropdown:hover .lang-current::after {
-            transform: rotate(180deg);
-        }
-
-        .lang-option {
-            display: flex !important;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-        }
-
         /* ГЛАВНЫЙ БАННЕР (HERO SECTION) */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)), 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.85)), 
                               url('https://i.imgur.com/kFSOdpY.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
-            padding: 120px 0 60px 0;
+            padding: 110px 0 50px 0;
         }
 
         .hero-content {
-            background-color: rgba(15, 15, 15, 0.65);
+            background-color: rgba(15, 15, 15, 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 60px 50px;
+            padding: 50px 40px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.07);
             box-shadow: 0 20px 50px rgba(0,0,0,0.7);
@@ -258,32 +244,29 @@
         }
 
         .hero-logo-img {
-            height: 110px;
+            height: 90px;
             width: auto;
             margin-bottom: 20px;
             display: block;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
         }
 
         .hero p {
-            font-size: 20px;
-            margin-bottom: 40px;
+            font-size: 18px;
+            margin-bottom: 35px;
             color: #e0e0e0;
             max-width: 700px;
             font-weight: 300;
-            letter-spacing: 0.5px;
         }
 
-        /* КНОПКИ ДЕЙСТВИЯ */
         .hero-btn-group {
             display: flex;
-            gap: 20px;
-            margin-bottom: 50px;
+            gap: 15px;
+            margin-bottom: 45px;
         }
 
         .btn {
             display: inline-block;
-            padding: 14px 35px;
+            padding: 13px 32px;
             text-decoration: none;
             font-weight: 600;
             border-radius: 6px;
@@ -292,6 +275,7 @@
             font-size: 13px;
             transition: all 0.3s ease;
             cursor: pointer;
+            text-align: center;
         }
 
         .btn-primary {
@@ -302,9 +286,7 @@
 
         .btn-primary:hover {
             background-color: #e6e6e6;
-            border-color: #e6e6e6;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
         }
 
         .btn-secondary {
@@ -319,71 +301,56 @@
             transform: translateY(-2px);
         }
 
-        /* ИНФОРМАЦИОННЫЕ ПЛАШКИ НА БАННЕРЕ */
+        /* Информационные плашки */
         .hero-features {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             width: 100%;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 40px;
+            padding-top: 35px;
         }
 
         .feature-item {
-            padding: 15px 20px;
+            padding: 15px;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.03);
             transition: all 0.3s ease;
         }
 
-        .feature-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-        }
-
         .feature-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 22px;
+            margin-bottom: 6px;
             display: block;
         }
 
         .feature-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             margin-bottom: 5px;
-            color: white;
         }
 
         .feature-desc {
-            font-size: 13px;
+            font-size: 12px;
             color: #aaaaaa;
         }
 
-        /* Секции контента */
+        /* Секции */
         .content-section {
-            padding: 120px 0;
-            position: relative;
+            padding: 100px 0;
         }
 
-        #about {
-            background-color: #121212;
-        }
-
-        #fleet {
-            background-color: #0a0a0a;
+        #about { background-color: #121212; }
+        #fleet { 
+            background-color: #0a0a0a; 
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            /* Отступ сверху для точного скролла под шапку */
-            scroll-margin-top: 70px; 
         }
 
         .section-title {
-            font-size: 34px;
-            margin-bottom: 60px;
-            color: white;
+            font-size: 30px;
+            margin-bottom: 50px;
             text-transform: uppercase;
             letter-spacing: 2px;
             text-align: center;
@@ -393,45 +360,38 @@
         .section-title::after {
             content: '';
             display: block;
-            width: 50px;
+            width: 40px;
             height: 3px;
             background-color: #ffffff;
-            margin: 15px auto 0;
-            border-radius: 2px;
+            margin: 12px auto 0;
         }
 
-        /* Сетка для карточек */
+        /* Сетка карточек */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .card {
-            background: linear-gradient(145deg, rgba(30, 30, 30, 0.6), rgba(20, 20, 20, 0.8));
-            padding: 45px 35px;
+            background: linear-gradient(145deg, rgba(25, 25, 25, 0.6), rgba(18, 18, 18, 0.8));
+            padding: 40px 30px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            scroll-margin-top: 100px; /* Отступ при переходе по ссылке */
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            scroll-margin-top: 90px;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            background: linear-gradient(145deg, rgba(40, 40, 40, 0.8), rgba(25, 25, 25, 0.9));
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.03);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(25, 25, 25, 0.9);
         }
 
-        /* Анимация подсветки при переходе из меню */
         @keyframes target-glow {
-            0% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.05); }
-            50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.4); border-color: rgba(255, 255, 255, 0.6); }
-            100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.05); }
+            0% { border-color: rgba(255,255,255,0.04); }
+            50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); border-color: rgba(255, 255, 255, 0.5); }
+            100% { border-color: rgba(255,255,255,0.04); }
         }
 
         .card.highlight-target {
@@ -439,52 +399,44 @@
         }
 
         .card-icon {
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 32px;
+            margin-bottom: 15px;
             display: inline-block;
-            background: rgba(255,255,255,0.03);
-            width: 70px;
-            height: 70px;
-            line-height: 70px;
+            background: rgba(255,255,255,0.02);
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
             border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .card h3 {
-            margin-bottom: 18px;
-            color: white;
-            font-size: 22px;
+            margin-bottom: 15px;
+            font-size: 20px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
         }
 
         .card p {
             color: #b3b3b3;
             font-size: 14px;
-            line-height: 1.7;
-            font-weight: 300;
-            text-align: left; /* Изменил на левый край, так как текста стало много */
+            line-height: 1.6;
+            text-align: left;
         }
 
-        /* СЕКЦИЯ ВСТУПЛЕНИЯ */
+        /* Секция Вступления */
         .join-section {
-            padding: 120px 0;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(15,15,15,0.95)), 
-                        url('https://i.imgur.com/kFSOdpY.png');
+            padding: 100px 0;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(15,15,15,0.95)), url('https://i.imgur.com/kFSOdpY.png');
             background-size: cover;
             background-position: center;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .join-container {
-            max-width: 750px;
+            max-width: 700px;
             margin: 0 auto;
-            background: rgba(20, 20, 20, 0.5);
-            padding: 50px 30px;
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
+            background: rgba(20, 20, 20, 0.6);
+            padding: 45px 25px;
+            border-radius: 14px;
             border: 1px solid rgba(255,255,255,0.05);
         }
 
@@ -492,105 +444,166 @@
             background-color: #5865F2;
             color: white;
             border: 2px solid #5865F2;
-            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.3);
         }
 
         .btn-discord:hover {
             background-color: #4752C4;
-            border-color: #4752C4;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.5);
+            transform: translateY(-2px);
         }
 
-        /* Подвал */
         footer {
             background-color: #050505;
             color: #555555;
             text-align: center;
-            padding: 50px 0;
-            font-size: 13px;
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 40px 0;
+            font-size: 12px;
         }
 
-        footer p {
-            margin-bottom: 12px;
-        }
+        footer p { margin-bottom: 10px; }
+        footer a { color: #777777; text-decoration: none; }
+        footer a:hover { color: white; }
 
-        footer a {
-            color: #777777;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: white;
-        }
-
-        /* Адаптивность */
+        /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ (МЕНЕЕ 768px) ================= */
         @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
+            .menu-toggle {
+                display: flex;
             }
+
             .nav-container {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: rgba(15, 15, 15, 0.98);
+                border-left: 1px solid rgba(255, 255, 255, 0.05);
                 flex-direction: column;
-                margin-top: 20px;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 30px;
+                transition: right 0.4s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.7);
+                z-index: 1000;
+                gap: 25px; /* Разделение между ссылками и языками */
             }
+
+            .nav-container.active {
+                right: 0;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 20px;
+            }
+
             .nav-links li {
-                margin: 0 15px;
+                margin-left: 0;
+                width: 100%;
             }
+
+            .nav-links a {
+                font-size: 18px;
+                width: 100%;
+                padding: 8px 0;
+            }
+
+            /* Выпадающий список флота в мобилке */
             .dropdown-menu {
                 position: static;
                 transform: none !important;
                 opacity: 1;
                 visibility: visible;
                 width: 100%;
-                background: transparent;
-                border: none;
+                background: rgba(255,255,255,0.02);
                 box-shadow: none;
-                text-align: center;
-            }
-            .dropdown-menu a, .dropdown-menu button {
-                text-align: center;
-                justify-content: center;
-            }
-            .dropdown-menu::before {
+                border: none;
+                padding-left: 15px;
+                margin-top: 5px;
                 display: none;
             }
+
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-menu a {
+                font-size: 15px;
+                color: #888888;
+            }
+
+            /* ФИКС ЯЗЫКОВОЙ ПАНЕЛИ ДЛЯ МОБИЛКИ */
             .lang-dropdown {
                 margin-left: 0;
-                margin-top: 15px;
+                margin-top: 10px;
+                width: 100%;
+                position: relative;
             }
-            .hero {
-                padding-top: 160px;
+
+            .lang-dropdown .dropdown-menu {
+                position: static; /* Убираем абсолютное позиционирование */
+                display: none;    /* По умолчанию скрыто, как и флот */
+                transform: none !important;
+                background: rgba(255, 255, 255, 0.02);
+                width: 100%;
+                box-shadow: none;
+                border: none;
+                padding-left: 15px;
+                margin-top: 5px;
             }
-            .hero-content {
-                padding: 40px 20px;
+
+            .lang-dropdown.active .dropdown-menu {
+                display: block; /* Показываем при клике */
             }
-            .hero-logo-img {
-                height: 75px;
+
+            .lang-current {
+                width: 100%;
+                justify-content: space-between;
+                padding: 10px 15px;
+                background: rgba(255, 255, 255, 0.02);
+                border-color: rgba(255, 255, 255, 0.08);
+                font-size: 15px;
             }
-            .hero p {
-                font-size: 16px;
+
+            .lang-option {
+                font-size: 15px;
+                padding: 10px 20px !important;
             }
+
+            /* Анимация кнопки гамбургера */
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-44deg);
+            }
+
+            /* Корректировка блоков */
+            .hero { padding-top: 100px; }
+            .hero-content { padding: 30px 20px; }
+            .hero-logo-img { height: 70px; }
+            .hero p { font-size: 15px; }
+            
             .hero-btn-group {
                 flex-direction: column;
                 width: 100%;
-                gap: 10px;
             }
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
+            .btn { width: 100%; }
+
             .hero-features {
                 grid-template-columns: 1fr;
-                gap: 15px;
+                gap: 12px;
             }
-            .content-section {
-                padding: 70px 0;
-            }
-            .card {
-                padding: 35px 25px;
-            }
+
+            .content-section { padding: 60px 0; }
+            .section-title { font-size: 24px; margin-bottom: 35px; }
+            .grid { grid-template-columns: 1fr; }
+            .card { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -599,15 +612,21 @@
     <header>
         <div class="container navbar">
             <a href="#" class="logo-link">
-                <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance Logo" class="logo-img">
+                <img src="https://X9EWcyh.png" alt="vClearance Logo" class="logo-img">
             </a>
             
-            <div class="nav-container">
+            <button class="menu-toggle" id="mobileMenuBtn" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-container" id="navContainer">
                 <ul class="nav-links">
-                    <li><a href="#about" class="lang" data-ru="О компании" data-en="About">О компании</a></li>
+                    <li><a href="#about" class="lang" data-ru="О компании" data-en="About" onclick="closeMenu()">О компании</a></li>
                     
-                    <li class="dropdown">
-                        <a href="#fleet" class="lang" data-ru="Наш Флот" data-en="Our Fleet">Наш Флот</a>
+                    <li class="dropdown" id="fleetDropdown">
+                        <a href="#fleet" class="lang" data-ru="Наш Флот" data-en="Our Fleet" onclick="toggleMobileDropdown(event)">Наш Флот</a>
                         <ul class="dropdown-menu">
                             <li><a href="#airbus-a320" onclick="highlightCard('airbus-a320')">Airbus A320</a></li>
                             <li><a href="#boeing-737" onclick="highlightCard('boeing-737')">Boeing 737-900</a></li>
@@ -615,25 +634,19 @@
                         </ul>
                     </li>
 
-                    <li><a href="#join" class="lang" data-ru="Вступить" data-en="Join Us">Вступить</a></li>
+                    <li><a href="#join" class="lang" data-ru="Вступить" data-en="Join Us" onclick="closeMenu()">Вступить</a></li>
                 </ul>
                 
-                <div class="dropdown lang-dropdown">
-                    <button class="lang-current">
-                        <span id="currentFlag">🇷🇺</span>
-                        <span id="currentText">RU</span>
+                <div class="dropdown lang-dropdown" id="langDropdown">
+                    <button class="lang-current" onclick="toggleMobileLang(event)">
+                        <span>
+                            <span id="currentFlag">🇷🇺</span>
+                            <span id="currentText">RU</span>
+                        </span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li>
-                            <button class="lang-option" onclick="changeLanguage('ru')">
-                                <span>🇷🇺</span> Русский
-                            </button>
-                        </li>
-                        <li>
-                            <button class="lang-option" onclick="changeLanguage('en')">
-                                <span>🇬🇧</span> English
-                            </button>
-                        </li>
+                        <li><button class="lang-option" onclick="changeLanguage('ru')">🇷🇺 RU</button></li>
+                        <li><button class="lang-option" onclick="changeLanguage('en')">🇬🇧 EN</button></li>
                     </ul>
                 </div>
             </div>
@@ -642,8 +655,7 @@
 
     <section class="hero">
         <div class="container hero-content">
-            <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance Virtual Airline" class="hero-logo-img">
-            
+            <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance VA" class="hero-logo-img">
             <p class="lang" 
                data-ru="Новый взгляд на полеты в сети VATSIM. Простота, свобода и увлечение авиацией без лишних отчетов и жестких рамок." 
                data-en="A fresh look at flying on the VATSIM network. Simplicity, freedom, and passion for aviation without stress and boundaries.">
@@ -682,29 +694,17 @@
                 <div class="card">
                     <span class="card-icon">🔓</span>
                     <h3 class="lang" data-ru="Свободная концепция" data-en="Free Concept">Свободная концепция</h3>
-                    <p class="lang" 
-                       data-ru="Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию." 
-                       data-en="We created a virtual airline for those who want to fly on VATSIM for pure fun. No rigid schedules, complex reports, or flight assignment stress.">
-                       Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию.
-                    </p>
+                    <p class="lang" data-ru="Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию." data-en="We created a virtual airline for those who want to fly on VATSIM for pure fun. No rigid schedules, complex reports, or flight assignment stress.">Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию.</p>
                 </div>
                 <div class="card">
                     <span class="card-icon">🤝</span>
                     <h3 class="lang" data-ru="Авиационное братство" data-en="Aviation Brotherhood">Авиационное братство</h3>
-                    <p class="lang" 
-                       data-ru="Наша цель — объединить пилотов для совместных вылетов, общения, обмена опытом и взаимной помощи при освоении сложных типов ВС или правил радиообмена." 
-                       data-en="Our goal is to unite pilots for group flights, networking, experience sharing, and mutual assistance in mastering complex aircraft types or ATC phraseology.">
-                       Наша цель — объединить пилотов для совместных вылетов, общения, обмена опытом и взаимной помощи при освоении сложных типов ВС или правил радиообмена.
-                    </p>
+                    <p class="lang" data-ru="Наша цель — объединить пилотов для совместных вылетов, общения, обмена опытом и взаимной помощи при освоении сложных типов ВС или правил радиообмена." data-en="Our goal is to unite pilots for group flights, networking, experience sharing, and mutual assistance in mastering complex aircraft types or ATC phraseology.">Наша цель — объединить пилотов для совместных вылетов, общения, обмена опытом и взаимной помощи при освоении сложных типов ВС или правил радиообмена.</p>
                 </div>
                 <div class="card">
                     <span class="card-icon">🛠️</span>
                     <h3 class="lang" data-ru="Полная поддержка" data-en="Full Support">Полная поддержка</h3>
-                    <p class="lang" 
-                       data-ru="Неважно, только вы установили симулятор или уже имеете сотни часов в сети. Мы рады каждому, кто уважает правила VATSIM и горит небом." 
-                       data-en="It doesn't matter if you just installed the simulator or already have hundreds of hours online. We welcome everyone who respects VATSIM rules and loves the skies.">
-                       Неважно, только вы установили симулятор или уже имеете сотни часов в сети. Мы рады каждому, кто уважает правила VATSIM и горит небом.
-                    </p>
+                    <p class="lang" data-ru="Неважно, только вы установили симулятор или уже имеете сотни часов в сети. Мы рады каждому, кто уважает правила VATSIM и горит небом." data-en="It doesn't matter if you just installed the simulator or already have hundreds of hours online. We welcome everyone who respects VATSIM rules and loves the skies.">Неважно, только вы установили симулятор или уже имеете сотни часов в сети. Мы рады каждому, кто уважает правила VATSIM и горит небом.</p>
                 </div>
             </div>
         </div>
@@ -749,12 +749,12 @@
         </div>
     </section>
 
-<section id="join" class="join-section">
+    <section id="join" class="join-section">
         <div class="container">
             <div class="join-container">
                 <h2 class="section-title lang" data-ru="Стать частью команды" data-en="Join the Team" style="margin-bottom: 30px;">Стать частью команды</h2>
                 <p class="lang" style="margin-bottom: 40px; color: #cccccc; font-weight: 300; font-size: 16px;"
-                   data-ru="vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!"
+                   data-ru="vClearance строится вокруг active Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!"
                    data-en="vClearance is built around an active Discord community. There we coordinate group flights, share screenshots, and discuss flight simulation. We are waiting for you!">
                      vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!
                 </p>
@@ -776,11 +776,46 @@
     </footer>
 
     <script>
+        // Элементы меню
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navContainer = document.getElementById('navContainer');
+        const fleetDropdown = document.getElementById('fleetDropdown');
+        const langDropdown = document.getElementById('langDropdown');
+
+        // Открытие/закрытие гамбургера
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navContainer.classList.toggle('active');
+        });
+
+        function closeMenu() {
+            mobileMenuBtn.classList.remove('active');
+            navContainer.classList.remove('active');
+            fleetDropdown.classList.remove('active');
+            langDropdown.classList.remove('active');
+        }
+
+        // Клик по флоту на мобилках
+        function toggleMobileDropdown(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault(); 
+                fleetDropdown.classList.toggle('active');
+            }
+        }
+
+        // Клик по выбору языка на мобилках
+        function toggleMobileLang(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                langDropdown.classList.toggle('active');
+            }
+        }
+
+        // Логика смены языков
         const currentFlag = document.getElementById('currentFlag');
         const currentText = document.getElementById('currentText');
         const langElements = document.querySelectorAll('.lang');
 
-        // Смена языков
         function changeLanguage(lang) {
             if (lang === 'ru') {
                 currentFlag.textContent = '🇷🇺';
@@ -797,22 +832,21 @@
                     el.textContent = el.getAttribute('data-ru');
                 }
             });
+            if (window.innerWidth <= 768) closeMenu();
         }
 
-        // Подсветка карточки при переходе по ссылке из хедера
+        // Подсветка карточек при переходе
         function highlightCard(cardId) {
-            // Ищем карточку по ID
-            const targetCard = document.getElementById(cardId);
-            if (targetCard) {
-                // Сначала убираем класс, если он уже был добавлен ранее
-                targetCard.classList.remove('highlight-target');
-                
-                // Небольшой хак, чтобы перезапустить CSS анимацию
-                void targetCard.offsetWidth; 
-                
-                // Добавляем класс анимации подсветки
-                targetCard.classList.add('highlight-target');
-            }
+            closeMenu(); 
+            
+            setTimeout(() => {
+                const targetCard = document.getElementById(cardId);
+                if (targetCard) {
+                    targetCard.classList.remove('highlight-target');
+                    void targetCard.offsetWidth; 
+                    targetCard.classList.add('highlight-target');
+                }
+            }, 100);
         }
     </script>
 
