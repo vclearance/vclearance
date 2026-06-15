@@ -456,6 +456,10 @@
             color: #cccccc;
         }
 
+        .roster-table tbody tr {
+            cursor: pointer;
+        }
+
         .roster-table tr:hover td {
             background-color: rgba(255, 255, 255, 0.02);
             color: white;
@@ -597,6 +601,95 @@
         }
 
         .close-modal-btn:hover { color: white; }
+
+        /* РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА */
+        .pilot-details-row td {
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 0;
+            border-bottom: 0px solid rgba(255, 255, 255, 0.05);
+            transition: border-bottom-width 0.35s ease;
+        }
+
+        .pilot-details-row.open td {
+            border-bottom-width: 1px;
+        }
+
+        .pilot-details-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 25px;
+            padding: 0 25px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
+        }
+
+        .pilot-details-row.open .pilot-details-inner {
+            max-height: 200px;
+            opacity: 1;
+            padding: 20px 25px;
+        }
+
+        .pilot-detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .pilot-detail-item span:first-child {
+            color: #888;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        .pilot-detail-item span:last-child {
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .pilot-stats-link {
+            display: inline-block;
+            margin-left: auto;
+            padding: 10px 24px;
+            background-color: white;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            white-space: nowrap;
+        }
+
+        .pilot-stats-link:hover {
+            background-color: #e6e6e6;
+            transform: translateY(-2px);
+        }
+
+        .roster-table tbody tr.pilot-row-clickable.active td {
+            background-color: rgba(255, 255, 255, 0.04);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .pilot-details-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .pilot-stats-link {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
 
         /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
         @media (max-width: 768px) {
@@ -955,6 +1048,27 @@
         function openModal() { privacyModal.classList.add('open'); }
         function closeModal() { privacyModal.classList.remove('open'); }
 
+        // === РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА ===
+        window.openPilotCid = null;
+
+        function togglePilotDetails(rowId) {
+            const detailRow = document.getElementById(`details-${rowId}`);
+            const mainRow = document.getElementById(`row-${rowId}`);
+            const isOpen = detailRow.classList.contains('open');
+
+            // Закрыть все остальные открытые строки
+            document.querySelectorAll('.pilot-details-row.open').forEach(r => r.classList.remove('open'));
+            document.querySelectorAll('.pilot-row-clickable.active').forEach(r => r.classList.remove('active'));
+
+            if (!isOpen) {
+                detailRow.classList.add('open');
+                mainRow.classList.add('active');
+                window.openPilotCid = rowId;
+            } else {
+                window.openPilotCid = null;
+            }
+        }
+
         // Логика смены языков
         let currentLang = 'ru';
         const currentFlag = document.getElementById('currentFlag');
@@ -1028,6 +1142,14 @@
                 let route = '---';
                 let statusBadge = '';
 
+                // Загружаем последний сохраненный полет из localStorage
+                const cacheKey = `lastFlight_${localPilot.cid}`;
+                let lastFlight = null;
+                try {
+                    const cached = localStorage.getItem(cacheKey);
+                    if (cached) lastFlight = JSON.parse(cached);
+                } catch (e) {}
+
                 if (onlineData) {
                     // Пилот ОНЛАЙН — вытягиваем полетные данные
                     callsign = onlineData.callsign || '---';
@@ -1044,12 +1166,19 @@
                     }
                     
                     statusBadge = `<span class="status-badge status-online">Online</span>`;
+
+                    // Сохраняем как последний известный полет
+                    try {
+                        localStorage.setItem(cacheKey, JSON.stringify({ callsign, aircraft, route }));
+                    } catch (e) {}
                 } else {
                     // Пилот ОФЛАЙН — пишем дефолтные прочерки
                     statusBadge = `<span class="status-badge status-offline">Offline</span>`;
                 }
 
                 const tr = document.createElement('tr');
+                tr.id = `row-${localPilot.cid}`;
+                tr.className = 'pilot-row-clickable';
                 tr.innerHTML = `
                     <td>${localPilot.name} (${localPilot.cid})</td>
                     <td><strong>${callsign}</strong></td>
@@ -1057,7 +1186,50 @@
                     <td>${route}</td>
                     <td>${statusBadge}</td>
                 `;
+                tr.addEventListener('click', () => togglePilotDetails(localPilot.cid));
                 rosterTbody.appendChild(tr);
+
+                // Данные для раскрывающейся строки: текущий полет (если онлайн) либо последний известный
+                const detailCallsign = onlineData ? callsign : (lastFlight ? lastFlight.callsign : '---');
+                const detailAircraft = onlineData ? aircraft : (lastFlight ? lastFlight.aircraft : '---');
+                const detailRoute = onlineData ? route : (lastFlight ? lastFlight.route : '---');
+                const flightLabelRu = onlineData ? 'Текущий полёт' : 'Последний полёт';
+                const flightLabelEn = onlineData ? 'Current Flight' : 'Last Flight';
+                const flightLabel = (typeof currentLang !== 'undefined' && currentLang === 'en') ? flightLabelEn : flightLabelRu;
+
+                const detailsTr = document.createElement('tr');
+                detailsTr.id = `details-${localPilot.cid}`;
+                detailsTr.className = 'pilot-details-row';
+                if (window.openPilotCid === localPilot.cid) {
+                    detailsTr.classList.add('open');
+                }
+                detailsTr.innerHTML = `
+                    <td colspan="5">
+                        <div class="pilot-details-inner">
+                            <div class="pilot-detail-item">
+                                <span class="lang" data-ru="CID" data-en="CID">CID</span>
+                                <span>${localPilot.cid}</span>
+                            </div>
+                            <div class="pilot-detail-item">
+                                <span class="lang" data-ru="${flightLabelRu}" data-en="${flightLabelEn}">${flightLabel}</span>
+                                <span>${detailCallsign}</span>
+                            </div>
+                            <div class="pilot-detail-item">
+                                <span class="lang" data-ru="Тип ВС" data-en="Aircraft">${(typeof currentLang !== 'undefined' && currentLang === 'en') ? 'Aircraft' : 'Тип ВС'}</span>
+                                <span>${detailAircraft}</span>
+                            </div>
+                            <div class="pilot-detail-item">
+                                <span class="lang" data-ru="Маршрут" data-en="Route">${(typeof currentLang !== 'undefined' && currentLang === 'en') ? 'Route' : 'Маршрут'}</span>
+                                <span>${detailRoute}</span>
+                            </div>
+                            <a href="https://stats.vatsim.net/stats/${localPilot.cid}" target="_blank" class="pilot-stats-link lang" data-ru="Статистика VATSIM" data-en="VATSIM Stats">${(typeof currentLang !== 'undefined' && currentLang === 'en') ? 'VATSIM Stats' : 'Статистика VATSIM'}</a>
+                        </div>
+                    </td>
+                `;
+                rosterTbody.appendChild(detailsTr);
+                if (window.openPilotCid === localPilot.cid) {
+                    tr.classList.add('active');
+                }
             });
         }
 
