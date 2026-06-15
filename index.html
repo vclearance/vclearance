@@ -51,7 +51,7 @@
         .logo-links-wrapper {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             z-index: 1100;
         }
 
@@ -100,19 +100,155 @@
             animation: pulse-dot 1.8s infinite;
         }
 
-        @keyframes pulse-dot {
-            0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
-            }
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 6px rgba(46, 204, 113, 0);
-            }
-            100% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
-            }
+        /* === СТИЛИ ДЛЯ ПСЕВДО-ЛИЧНОГО КАБИНЕТА С КНОПКОЙ СИДА === */
+        .profile-widget {
+            position: relative;
+            margin-left: 25px;
+        }
+
+        .profile-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 135%;
+            right: 0;
+            background: rgba(18, 18, 18, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            width: 300px;
+            padding: 15px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+            display: none;
+            z-index: 1200;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .profile-dropdown.active {
+            display: block;
+        }
+
+        .profile-login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .profile-login-form input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+        }
+
+        .profile-login-form button {
+            background: white;
+            color: #1a1a1a;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .profile-login-form button:hover {
+            background: #e6e6e6;
+        }
+
+        .logout-btn {
+            background: rgba(255, 77, 77, 0.08);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            color: #ff4d4d;
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 77, 77, 0.18);
+            color: #ff6666;
+        }
+
+        /* Вспомогательные стили вывода данных */
+        .cid-res-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 6px;
+        }
+
+        .cid-res-pilot {
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .cid-res-route {
+            font-size: 13px;
+            margin-bottom: 12px;
+            color: #ccc;
+        }
+
+        .cid-res-metar-title {
+            font-size: 10px;
+            color: #aaa;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .cid-res-metar-box {
+            background: rgba(46, 204, 113, 0.03);
+            border: 1px solid rgba(46, 204, 113, 0.1);
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            color: #2ecc71;
+            margin-top: 4px;
+            line-height: 1.4;
+            white-space: normal;
+            word-break: break-all;
         }
 
         /* Кнопка гамбургера для мобилок */
@@ -242,7 +378,7 @@
 
         /* Переключатель языка */
         .lang-dropdown {
-            margin-left: 40px;
+            margin-left: 30px;
         }
 
         .lang-current {
@@ -532,6 +668,28 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Кнопка "Это я!" в списке пилотов */
+        .btn-its-me {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.4);
+            padding: 2px 6px;
+            font-size: 10px;
+            text-transform: lowercase;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            display: inline-block;
+            vertical-align: middle;
+            transition: all 0.2s ease;
+        }
+
+        .btn-its-me:hover {
+            background: #0056b3;
+            color: #fff;
+            border-color: #0056b3;
+        }
+
         /* Секция Вступления */
         .join-section {
             padding: 100px 0;
@@ -753,15 +911,15 @@
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: flex-start;
-                padding: 100px 30px;
+                padding: 90px 25px;
                 transition: right 0.4s ease;
                 box-shadow: -10px 0 30px rgba(0,0,0,0.7);
                 z-index: 1000;
-                gap: 25px;
+                gap: 20px;
             }
 
             .nav-container.active { right: 0; }
-            .nav-links { flex-direction: column; align-items: flex-start; width: 100%; gap: 20px; }
+            .nav-links { flex-direction: column; align-items: flex-start; width: 100%; gap: 15px; }
             .nav-links li { margin-left: 0; width: 100%; }
             .nav-links a { font-size: 16px; width: 100%; padding: 8px 0; }
 
@@ -782,7 +940,13 @@
             .dropdown.active .dropdown-menu { display: block; }
             .dropdown-menu a { font-size: 15px; color: #888888; }
 
-            .lang-dropdown { margin-left: 0; margin-top: 10px; width: 100%; position: relative; }
+            /* Адаптация ЛК и языков в мобильном меню */
+            .profile-widget { margin-left: 0; margin-top: 15px; width: 100%; }
+            .profile-btn { width: 100%; justify-content: space-between; padding: 10px 15px; background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 15px; }
+            .profile-dropdown { position: static; width: 100%; box-shadow: none; border: none; background: rgba(255, 255, 255, 0.02); margin-top: 5px; transform: none; display: none; padding: 15px 10px; }
+            .profile-dropdown.active { display: block; }
+
+            .lang-dropdown { margin-left: 0; margin-top: 5px; width: 100%; position: relative; }
             .lang-dropdown .dropdown-menu { position: static; display: none; transform: none !important; background: rgba(255, 255, 255, 0.02); width: 100%; box-shadow: none; border: none; padding-left: 15px; margin-top: 5px; }
             .lang-dropdown.active .dropdown-menu { display: block; }
             .lang-current { width: 100%; justify-content: space-between; padding: 10px 15px; background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 15px; }
@@ -846,6 +1010,8 @@
                     <li><a href="#join" class="lang" data-ru="Вступить" data-en="Join Us" onclick="closeMenu()">Вступить</a></li>
                 </ul>
                 
+                <div class="profile-widget" id="profileWidget"></div>
+
                 <div class="dropdown lang-dropdown" id="langDropdown">
                     <button class="lang-current" onclick="toggleMobileLang(event)">
                         <span>
@@ -906,7 +1072,7 @@
                 <div class="card">
                     <span class="card-icon">🔓</span>
                     <h3 class="lang" data-ru="Свободная концепция" data-en="Free Concept">Свободная концепция</h3>
-                    <p class="lang" data-ru="Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привойки к расписанию." data-en="We created a virtual airline for those who want to fly on VATSIM for pure fun. No rigid schedules, complex reports, or flight assignment stress.">Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию.</p>
+                    <p class="lang" data-ru="Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию." data-en="We created a virtual airline for those who want to fly on VATSIM for pure fun. No rigid schedules, complex reports, or flight assignment stress.">Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию.</p>
                 </div>
                 <div class="card">
                     <span class="card-icon">🤝</span>
@@ -971,8 +1137,7 @@
                             <th class="lang" data-ru="Статус" data-en="Network Status">Статус</th>
                         </tr>
                     </thead>
-                    <tbody id="roster-tbody">
-                        </tbody>
+                    <tbody id="roster-tbody"></tbody>
                 </table>
             </div>
         </div>
@@ -983,7 +1148,7 @@
             <div class="join-container">
                 <h2 class="section-title lang" data-ru="Стать частью команды" data-en="Join the Team" style="margin-bottom: 30px;">Стать частью команды</h2>
                 <p class="lang" style="margin-bottom: 40px; color: #cccccc; font-weight: 300; font-size: 16px;"
-                   data-ru="vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!"
+                   data-ru="vClearance строится вокруг active Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!"
                    data-en="vClearance is built around an active Discord community. There we coordinate group flights, share screenshots, and discuss flight simulation. We are waiting for you!">
                      vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!
                 </p>
@@ -1049,9 +1214,8 @@
                 <p class="lang" 
                    data-ru="Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord." 
                    data-en="To exercise any data rights or request removal of your CID from the vClearance roster, please contact the staff via our official Discord community server.">
-                   Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш official Discord community server.
+                   Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord.
                 </p>
-                <p>v1.0</p>
             </div>
         </div>
     </div>
@@ -1105,9 +1269,12 @@
             navContainer.classList.remove('active');
             fleetDropdown.classList.remove('active');
             langDropdown.classList.remove('active');
+            
+            const profileDropdown = document.getElementById('profileDropdown');
+            if (profileDropdown) profileDropdown.classList.remove('active');
         }
 
-        // Привязываем функции к кнопкам (т.к. у нас type="module", функции нужно явно вешать на window)
+        // Привязываем функции к кнопкам
         window.closeMenu = closeMenu;
         window.openModal = () => privacyModal.classList.add('open');
         window.closeModal = () => privacyModal.classList.remove('open');
@@ -1126,7 +1293,7 @@
             }
         };
 
-        // === РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА ===
+        // === РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА В ТАБЛИЦЕ ===
         window.openPilotCid = null;
 
         window.togglePilotDetails = function(rowId) {
@@ -1178,6 +1345,9 @@
                 renderRoster([]);
             }
             
+            // Перерисовываем виджет ЛК для перевода кнопок ввода
+            window.updateProfileWidget();
+            
             if (window.innerWidth <= 768) closeMenu();
         };
 
@@ -1209,7 +1379,6 @@
         // === ИНТЕГРАЦИЯ VATSIM API И ОБНОВЛЕНИЕ БАЗЫ ===
         async function fetchVatsimData() {
             try {
-                // Актуализируем кэш из облака
                 await loadFlightsFromFirebase();
 
                 const response = await fetch('https://data.vatsim.net/v3/vatsim-data.json');
@@ -1248,7 +1417,6 @@
                     }
                 });
 
-                // Пишем изменения в базу Firestore
                 if (needUpdateFirebase) {
                     window.firebaseFlightsCache = updatedDataToSave;
                     const docRef = doc(db, 'vatsim_history', 'roster');
@@ -1256,6 +1424,12 @@
                 }
 
                 renderRoster(window.lastVatsimData);
+                
+                // Авто-обновление данных METAR в открытом окне ЛК, если пользователь залогинен
+                const dropdown = document.getElementById('profileDropdown');
+                if (dropdown && dropdown.classList.contains('active')) {
+                    window.renderProfileDropdownData();
+                }
             } catch (error) {
                 console.error('Ошибка получения данных VATSIM:', error);
                 renderRoster([]);
@@ -1265,27 +1439,21 @@
         function renderRoster(pilotsOnline) {
             rosterTbody.innerHTML = '';
             
-            // === ОБНОВЛЕНИЕ СЧЁТЧИКА В ПИЛЮЛЕ (С УЧЁТОМ ЯЗЫКА) ===
-            // Считаем, сколько пилотов из нашего списка сейчас реально в сети
             const totalOnline = MY_PILOTS.filter(localPilot => 
                 pilotsOnline.some(p => p.cid.toString() === localPilot.cid.toString())
             ).length;
 
-            // Находим наш двуязычный счётчик в шапке
             const counterTextEl = document.querySelector('#globalOnlineCounter .counter-text');
             if (counterTextEl) {
-                // Обновляем атрибуты для перевода
                 counterTextEl.setAttribute('data-ru', `${totalOnline} в сети`);
                 counterTextEl.setAttribute('data-en', `${totalOnline} online`);
                 
-                // Выводим текст в зависимости от выбранного прямо сейчас языка
                 if (currentLang === 'en') {
                     counterTextEl.textContent = `${totalOnline} online`;
                 } else {
                     counterTextEl.textContent = `${totalOnline} в сети`;
                 }
             }
-            // ====================================================
             
             MY_PILOTS.forEach(localPilot => {
                 const onlineData = pilotsOnline.find(p => p.cid.toString() === localPilot.cid.toString());
@@ -1317,8 +1485,12 @@
                 const tr = document.createElement('tr');
                 tr.id = `row-${localPilot.cid}`;
                 tr.className = 'pilot-row-clickable';
+                // Добавлена кнопка "это я!" в ячейку с именем
                 tr.innerHTML = `
-                    <td>${localPilot.name} (${localPilot.cid})</td>
+                    <td>
+                        <button class="btn-its-me" onclick="event.stopPropagation(); window.quickLogin('${localPilot.cid}')">это я!</button>
+                        ${localPilot.name} (${localPilot.cid})
+                    </td>
                     <td><strong>${callsign}</strong></td>
                     <td>${aircraft}</td>
                     <td>${route}</td>
@@ -1371,9 +1543,218 @@
             });
         }
 
+        // === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ЗАПРОСА METAR ===
+        async function getMetar(icao) {
+            if (!icao || icao === '???' || icao === '---') return '---';
+            try {
+                const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`);
+                if (response.ok) {
+                    const text = await response.text();
+                    return text.trim() || `METAR for ${icao} not found`;
+                }
+                return `Error loading METAR (${response.status})`;
+            } catch (e) {
+                return 'Network weather error';
+            }
+        }
+
+        // === ЛОГИКА ПСЕВДО-ЛИЧНОГО КАБИНЕТА С LOCALSTORAGE ===
+        window.toggleProfileDropdown = function(e) {
+            if (e) e.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('active');
+                if (dropdown.classList.contains('active')) {
+                    window.renderProfileDropdownData();
+                }
+            }
+        };
+
+        // Функция быстрого входа по кнопке "это я!"
+        window.quickLogin = function(cid) {
+            if (!cid) return;
+            localStorage.setItem('vatsim_pilot_cid', cid);
+            window.updateProfileWidget();
+            
+            // Плавный скролл наверх к шапке профиля
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Раскрываем шторку с небольшой задержкой для плавности
+            setTimeout(() => {
+                const dropdown = document.getElementById('profileDropdown');
+                if (dropdown) {
+                    dropdown.classList.add('active');
+                    window.renderProfileDropdownData();
+                }
+            }, 300);
+        };
+
+        window.loginProfile = function() {
+            const input = document.getElementById('profileCidInput');
+            if (!input) return;
+            const cid = input.value.trim();
+            if (cid.length >= 4) {
+                localStorage.setItem('vatsim_pilot_cid', cid);
+                window.updateProfileWidget();
+                
+                // Сразу открываем шторку с подтянутыми данными
+                setTimeout(() => {
+                    const dropdown = document.getElementById('profileDropdown');
+                    if (dropdown) {
+                        dropdown.classList.add('active');
+                        window.renderProfileDropdownData();
+                    }
+                }, 80);
+            }
+        };
+
+        window.logoutProfile = function() {
+            localStorage.removeItem('vatsim_pilot_cid');
+            window.updateProfileWidget();
+        };
+
+        // Перерисовка структуры виджета (Кнопка «Войти» или «Кнопка с CID»)
+        window.updateProfileWidget = function() {
+            const widget = document.getElementById('profileWidget');
+            if (!widget) return;
+            const savedCid = localStorage.getItem('vatsim_pilot_cid');
+            
+            if (!savedCid) {
+                const btnText = currentLang === 'en' ? 'Sign In' : 'Войти';
+                const placeholderText = currentLang === 'en' ? 'Enter CID...' : 'Введите CID...';
+                widget.innerHTML = `
+                    <button class="profile-btn" onclick="window.toggleProfileDropdown(event)">
+                        <span> ${btnText}</span>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown" onclick="event.stopPropagation()">
+                        <div class="profile-login-form">
+                            <input type="text" id="profileCidInput" placeholder="${placeholderText}" maxlength="8">
+                            <button onclick="window.loginProfile()">${btnText}</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                widget.innerHTML = `
+                    <button class="profile-btn" onclick="window.toggleProfileDropdown(event)">
+                        <span> ${savedCid}</span>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown" onclick="event.stopPropagation()">
+                        <div id="profileDropdownContent">
+                            <div style="font-size:12px; color:#aaa; text-align:center; padding:5px 0;">...</div>
+                        </div>
+                        <button class="logout-btn" onclick="window.logoutProfile()">${currentLang === 'en' ? 'Log Out' : 'Выйти'}</button>
+                    </div>
+                `;
+                window.renderProfileDropdownData();
+            }
+        };
+
+        // Заполнение шторки ЛК полётной информацией и METAR
+        window.renderProfileDropdownData = async function() {
+            const savedCid = localStorage.getItem('vatsim_pilot_cid');
+            const content = document.getElementById('profileDropdownContent');
+            if (!savedCid || !content) return;
+
+            const onlinePilot = window.lastVatsimData ? window.lastVatsimData.find(p => p.cid.toString() === savedCid) : null;
+            const cachedPilot = window.firebaseFlightsCache ? window.firebaseFlightsCache[savedCid] : null;
+
+            if (onlinePilot) {
+                const callsign = onlinePilot.callsign || '---';
+                let dep = '---';
+                let arr = '---';
+                if (onlinePilot.flight_plan) {
+                    dep = onlinePilot.flight_plan.departure || '---';
+                    arr = onlinePilot.flight_plan.arrival || '---';
+                }
+
+                content.innerHTML = `
+                    <div class="cid-res-header">
+                        <span>${currentLang === 'en' ? 'VATSIM ONLINE' : 'В СЕТИ VATSIM'}</span>
+                        <span class="status-badge status-online">Online</span>
+                    </div>
+                    <div class="cid-res-pilot">${onlinePilot.name || 'Pilot'} (${savedCid})</div>
+                    <div class="cid-res-route">Callsign: <strong>${callsign}</strong> | Flight: <strong>${dep} ➔ ${arr}</strong></div>
+                    <div class="cid-res-metar-title">METAR ${dep}:</div>
+                    <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div>
+                    <div class="cid-res-metar-title">METAR ${arr}:</div>
+                    <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div>
+                `;
+                
+                const metarDep = await getMetar(dep);
+                const metarArr = await getMetar(arr);
+                
+                content.innerHTML = `
+                    <div class="cid-res-header">
+                        <span>${currentLang === 'en' ? 'VATSIM ONLINE' : 'В СЕТИ VATSIM'}</span>
+                        <span class="status-badge status-online">Online</span>
+                    </div>
+                    <div class="cid-res-pilot">${onlinePilot.name || 'Pilot'} (${savedCid})</div>
+                    <div class="cid-res-route">Callsign: <strong>${callsign}</strong> | Flight: <strong>${dep} ➔ ${arr}</strong></div>
+                    <div class="cid-res-metar-title">METAR ${dep}:</div>
+                    <div class="cid-res-metar-box">${metarDep}</div>
+                    <div class="cid-res-metar-title">METAR ${arr}:</div>
+                    <div class="cid-res-metar-box">${metarArr}</div>
+                `;
+            } else if (cachedPilot) {
+                const callsign = cachedPilot.callsign || '---';
+                let dep = '---';
+                let arr = '---';
+                if (cachedPilot.route && cachedPilot.route.includes('→')) {
+                    const parts = cachedPilot.route.split('→');
+                    dep = parts[0].trim();
+                    arr = parts[1].trim();
+                }
+
+                content.innerHTML = `
+                    <div class="cid-res-header">
+                        <span>${currentLang === 'en' ? 'Database history' : 'История из базы компании'}</span>
+                        <span class="status-badge status-offline">Offline</span>
+                    </div>
+                    <div class="cid-res-pilot">${callsign} (${savedCid})</div>
+                    <div class="cid-res-route">${currentLang === 'en' ? 'Last flight' : 'Крайний полет'}: <strong>${dep} ➔ ${arr}</strong></div>
+                    <div class="cid-res-metar-title">METAR ${dep}:</div>
+                    <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div>
+                    <div class="cid-res-metar-title">METAR ${arr}:</div>
+                    <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div>
+                `;
+
+                const metarDep = await getMetar(dep);
+                const metarArr = await getMetar(arr);
+
+                content.innerHTML = `
+                    <div class="cid-res-header">
+                        <span>${currentLang === 'en' ? 'Database history' : 'История из базы компании'}</span>
+                        <span class="status-badge status-offline">Offline</span>
+                    </div>
+                    <div class="cid-res-pilot">${callsign} (${savedCid})</div>
+                    <div class="cid-res-route">${currentLang === 'en' ? 'Last flight' : 'Крайний полет'}: <strong>${dep} ➔ ${arr}</strong></div>
+                    <div class="cid-res-metar-title">METAR ${dep}:</div>
+                    <div class="cid-res-metar-box">${metarDep}</div>
+                    <div class="cid-res-metar-title">METAR ${arr}:</div>
+                    <div class="cid-res-metar-box">${metarArr}</div>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div style="font-size:12px; color:#ff4d4d; text-align:center; padding:10px 0;">
+                        ${currentLang === 'en' ? 'CID not found online or in company database.' : 'CID не найден в сети и в базе компании.'}
+                    </div>
+                `;
+            }
+        };
+
+        // Закрываем окно ЛК при клике в любое другое место экрана
+        document.addEventListener('click', (e) => {
+            const widget = document.getElementById('profileWidget');
+            if (widget && !widget.contains(e.target)) {
+                const dropdown = document.getElementById('profileDropdown');
+                if (dropdown) dropdown.classList.remove('active');
+            }
+        });
+
         // Запуск приложения
         async function initApp() {
             renderRoster([]);
+            window.updateProfileWidget(); // Инициализация ЛК из localStorage
             await loadFlightsFromFirebase();
             await fetchVatsimData();
             setInterval(fetchVatsimData, 60000); 
