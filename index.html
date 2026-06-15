@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vClearance Virtual Airline | VATSIM</title>
+    <title>vClearance Virtual Airline | VATSIM Community</title>
     <style>
         /* Общие стили и сброс настроек */
         * {
@@ -48,18 +48,25 @@
             align-items: center;
         }
 
-        .logo-link {
+        .logo-links-wrapper {
             display: flex;
             align-items: center;
-            text-decoration: none;
+            gap: 20px;
             z-index: 1100;
         }
 
         .logo-img {
-            height: 40px;
+            height: 38px;
             width: auto;
             display: block;
-            transition: opacity 0.3s ease;
+        }
+
+        .vatsim-logo-header {
+            height: 24px;
+            width: auto;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+            opacity: 0.8;
         }
 
         /* Кнопка гамбургера для мобилок */
@@ -104,7 +111,7 @@
             color: #aaaaaa;
             text-decoration: none;
             font-weight: 500;
-            font-size: 15px;
+            font-size: 14px;
             letter-spacing: 1px;
             text-transform: uppercase;
             padding: 6px 0;
@@ -207,28 +214,23 @@
             transition: all 0.3s ease;
         }
 
-        .lang-current:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
         /* ГЛАВНЫЙ БАННЕР (HERO SECTION) */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.85)), 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.9)), 
                               url('https://i.imgur.com/kFSOdpY.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
-            padding: 110px 0 50px 0;
+            padding: 120px 0 60px 0;
         }
 
         .hero-content {
-            background-color: rgba(15, 15, 15, 0.75);
+            background-color: rgba(15, 15, 15, 0.8);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 50px 40px;
@@ -243,10 +245,27 @@
             max-width: 1000px;
         }
 
-        .hero-logo-img {
-            height: 90px;
+        .hero-logos-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .hero-logo-main {
+            height: 85px;
             width: auto;
-            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-vatsim-logo {
+            height: 54px;
+            width: auto;
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+            padding-left: 20px;
+            opacity: 0.9;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
             display: block;
         }
 
@@ -316,7 +335,6 @@
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.3s ease;
         }
 
         .feature-icon {
@@ -339,18 +357,16 @@
 
         /* Секции */
         .content-section {
-            padding: 100px 0;
+            padding: 90px 0;
         }
 
         #about { background-color: #121212; }
-        #fleet { 
-            background-color: #0a0a0a; 
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
-        }
+        #fleet { background-color: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.02); }
+        #roster { background-color: #121212; border-top: 1px solid rgba(255, 255, 255, 0.02); }
 
         .section-title {
-            font-size: 30px;
-            margin-bottom: 50px;
+            font-size: 28px;
+            margin-bottom: 45px;
             text-transform: uppercase;
             letter-spacing: 2px;
             text-align: center;
@@ -388,25 +404,10 @@
             background: rgba(25, 25, 25, 0.9);
         }
 
-        @keyframes target-glow {
-            0% { border-color: rgba(255,255,255,0.04); }
-            50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); border-color: rgba(255, 255, 255, 0.5); }
-            100% { border-color: rgba(255,255,255,0.04); }
-        }
-
-        .card.highlight-target {
-            animation: target-glow 2s ease-in-out;
-        }
-
         .card-icon {
             font-size: 32px;
             margin-bottom: 15px;
             display: inline-block;
-            background: rgba(255,255,255,0.02);
-            width: 60px;
-            height: 60px;
-            line-height: 60px;
-            border-radius: 50%;
         }
 
         .card h3 {
@@ -419,7 +420,66 @@
             color: #b3b3b3;
             font-size: 14px;
             line-height: 1.6;
+        }
+
+        /* ТАБЛИЦА СПИСКА ПИЛОТОВ (PILOT ROSTER) */
+        .roster-wrapper {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .roster-table {
+            width: 100%;
+            border-collapse: collapse;
             text-align: left;
+            font-size: 14px;
+            min-width: 600px;
+        }
+
+        .roster-table th {
+            background-color: rgba(30, 30, 30, 0.8);
+            color: white;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .roster-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #cccccc;
+        }
+
+        .roster-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: white;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-online {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .status-offline {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #777777;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Секция Вступления */
@@ -455,19 +515,92 @@
             background-color: #050505;
             color: #555555;
             text-align: center;
-            padding: 40px 0;
+            padding: 50px 0;
             font-size: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
         }
 
         footer p { margin-bottom: 10px; }
-        footer a { color: #777777; text-decoration: none; }
+        footer a { color: #777777; text-decoration: underline; cursor: pointer; }
         footer a:hover { color: white; }
 
-        /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ (МЕНЕЕ 768px) ================= */
+        /* МОДАЛЬНОЕ ОКНО ДЛЯ PRIVACY POLICY (GDPR) */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #161616;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 35px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            text-align: left;
+        }
+
+        .modal-header {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+        }
+
+        .modal-body {
+            color: #b3b3b3;
+            font-size: 13px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .modal-body h4 {
+            color: white;
+            margin: 18px 0 6px 0;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .close-modal-btn:hover { color: white; }
+
+        /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
+            .menu-toggle { display: flex; }
 
             .nav-container {
                 position: fixed;
@@ -485,32 +618,14 @@
                 transition: right 0.4s ease;
                 box-shadow: -10px 0 30px rgba(0,0,0,0.7);
                 z-index: 1000;
-                gap: 25px; /* Разделение между ссылками и языками */
+                gap: 25px;
             }
 
-            .nav-container.active {
-                right: 0;
-            }
+            .nav-container.active { right: 0; }
+            .nav-links { flex-direction: column; align-items: flex-start; width: 100%; gap: 20px; }
+            .nav-links li { margin-left: 0; width: 100%; }
+            .nav-links a { font-size: 16px; width: 100%; padding: 8px 0; }
 
-            .nav-links {
-                flex-direction: column;
-                align-items: flex-start;
-                width: 100%;
-                gap: 20px;
-            }
-
-            .nav-links li {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            .nav-links a {
-                font-size: 18px;
-                width: 100%;
-                padding: 8px 0;
-            }
-
-            /* Выпадающий список флота в мобилке */
             .dropdown-menu {
                 position: static;
                 transform: none !important;
@@ -525,81 +640,27 @@
                 display: none;
             }
 
-            .dropdown.active .dropdown-menu {
-                display: block;
-            }
+            .dropdown.active .dropdown-menu { display: block; }
+            .dropdown-menu a { font-size: 15px; color: #888888; }
 
-            .dropdown-menu a {
-                font-size: 15px;
-                color: #888888;
-            }
+            .lang-dropdown { margin-left: 0; margin-top: 10px; width: 100%; position: relative; }
+            .lang-dropdown .dropdown-menu { position: static; display: none; transform: none !important; background: rgba(255, 255, 255, 0.02); width: 100%; box-shadow: none; border: none; padding-left: 15px; margin-top: 5px; }
+            .lang-dropdown.active .dropdown-menu { display: block; }
+            .lang-current { width: 100%; justify-content: space-between; padding: 10px 15px; background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 15px; }
 
-            /* ФИКС ЯЗЫКОВОЙ ПАНЕЛИ ДЛЯ МОБИЛКИ */
-            .lang-dropdown {
-                margin-left: 0;
-                margin-top: 10px;
-                width: 100%;
-                position: relative;
-            }
+            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-44deg); }
 
-            .lang-dropdown .dropdown-menu {
-                position: static; /* Убираем абсолютное позиционирование */
-                display: none;    /* По умолчанию скрыто, как и флот */
-                transform: none !important;
-                background: rgba(255, 255, 255, 0.02);
-                width: 100%;
-                box-shadow: none;
-                border: none;
-                padding-left: 15px;
-                margin-top: 5px;
-            }
-
-            .lang-dropdown.active .dropdown-menu {
-                display: block; /* Показываем при клике */
-            }
-
-            .lang-current {
-                width: 100%;
-                justify-content: space-between;
-                padding: 10px 15px;
-                background: rgba(255, 255, 255, 0.02);
-                border-color: rgba(255, 255, 255, 0.08);
-                font-size: 15px;
-            }
-
-            .lang-option {
-                font-size: 15px;
-                padding: 10px 20px !important;
-            }
-
-            /* Анимация кнопки гамбургера */
-            .menu-toggle.active span:nth-child(1) {
-                transform: translateY(9px) rotate(45deg);
-            }
-            .menu-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-            .menu-toggle.active span:nth-child(3) {
-                transform: translateY(-9px) rotate(-44deg);
-            }
-
-            /* Корректировка блоков */
             .hero { padding-top: 100px; }
             .hero-content { padding: 30px 20px; }
-            .hero-logo-img { height: 70px; }
+            .hero-logos-container { gap: 15px; flex-direction: column; }
+            .hero-logos-container .hero-vatsim-logo { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-left: 0; padding-top: 15px; width: 120px; height: auto; margin: 0 auto; }
+            .hero-logo-main { height: 60px; }
             .hero p { font-size: 15px; }
-            
-            .hero-btn-group {
-                flex-direction: column;
-                width: 100%;
-            }
+            .hero-btn-group { flex-direction: column; width: 100%; }
             .btn { width: 100%; }
-
-            .hero-features {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
+            .hero-features { grid-template-columns: 1fr; gap: 12px; }
             .content-section { padding: 60px 0; }
             .section-title { font-size: 24px; margin-bottom: 35px; }
             .grid { grid-template-columns: 1fr; }
@@ -611,9 +672,12 @@
 
     <header>
         <div class="container navbar">
-            <a href="#" class="logo-link">
-                <img src="https://X9EWcyh.png" alt="vClearance Logo" class="logo-img">
-            </a>
+            <div class="logo-links-wrapper">
+                <a href="#">
+                    <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance Logo" class="logo-img">
+                </a>
+                <img src="https://imgur.com/Xxznh5y.png" alt="VATSIM Logo" class="vatsim-logo-header">
+            </div>
             
             <button class="menu-toggle" id="mobileMenuBtn" aria-label="Открыть меню">
                 <span></span>
@@ -634,6 +698,7 @@
                         </ul>
                     </li>
 
+                    <li><a href="#roster" class="lang" data-ru="Пилоты" data-en="Roster" onclick="closeMenu()">Пилоты</a></li>
                     <li><a href="#join" class="lang" data-ru="Вступить" data-en="Join Us" onclick="closeMenu()">Вступить</a></li>
                 </ul>
                 
@@ -655,7 +720,10 @@
 
     <section class="hero">
         <div class="container hero-content">
-            <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance VA" class="hero-logo-img">
+            <div class="hero-logos-container">
+                <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance" class="hero-logo-main">
+                <img src="https://imgur.com/Xxznh5y.png" alt="VATSIM Logo" class="hero-vatsim-logo">
+            </div>
             <p class="lang" 
                data-ru="Новый взгляд на полеты в сети VATSIM. Простота, свобода и увлечение авиацией без лишних отчетов и жестких рамок." 
                data-en="A fresh look at flying on the VATSIM network. Simplicity, freedom, and passion for aviation without stress and boundaries.">
@@ -664,7 +732,7 @@
 
             <div class="hero-btn-group">
                 <a href="#join" class="btn btn-primary lang" data-ru="Присоединиться" data-en="Join Crew">Присоединиться</a>
-                <a href="#fleet" class="btn btn-secondary lang" data-ru="Наш флот" data-en="Our fleet">Наш флот</a>
+                <a href="#roster" class="btn btn-secondary lang" data-ru="Список пилотов" data-en="Pilot Roster">Список пилотов</a>
             </div>
 
             <div class="hero-features">
@@ -679,9 +747,9 @@
                     <div class="feature-desc lang" data-ru="Полное погружение в симуляцию и реальную радиосвязь" data-en="Full immersion into realistic simulation and ATC radio">Полное погружение в симуляцию и реальную радиосвязь</div>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">📅</span>
-                    <div class="feature-title lang" data-ru="Свободный график" data-en="Flexible Schedule">Свободный график</div>
-                    <div class="feature-desc lang" data-ru="Никаких обязательных норм налёта — летай когда удобно" data-en="No mandatory flight hour quotas — fly at your own convenience">Никакой обязательной нормы налёта — летай когда удобно</div>
+                    <span class="feature-icon">🛠️</span>
+                    <div class="feature-title lang" data-ru="Живой Roster" data-en="Live Tracking">Живой Roster</div>
+                    <div class="feature-desc lang" data-ru="Мониторинг активности участников сообщества в реальном времени" data-en="Real-time monitoring of community member flight activity">Мониторинг активности участников сообщества в реальном времени</div>
                 </div>
             </div>
         </div>
@@ -714,37 +782,54 @@
         <div class="container">
             <h2 class="section-title lang" data-ru="Наш Флот" data-en="Our Fleet">Наш Флот</h2>
             <div class="grid">
-                
                 <div class="card" id="airbus-a320">
                     <span class="card-icon">🇪🇺</span>
                     <h3>Airbus A320</h3>
                     <p class="lang" 
-                       data-ru="Европейская классика со статусным компьютерным управлением Fly-by-Wire. Наш основной узкофюзеляжный лайнер, идеально подходящий для выполнения ближне- и среднемагистральных рейсов между базами авиакомпании. Современная стеклянная кабина, продвинутая система автопилота и автоматический контроль защитных режимов (Alpha Floor) делают его отличным выбором как для новичков, так и для опытных линейных пилотов. Дальность полета составляет до 6150 км, что покрывает всю Европу и СНГ." 
-                       data-en="A European classic featuring state-of-the-art Fly-by-Wire computer flight controls. Our primary narrow-body airliner, perfectly tailored for short and medium-haul operations between our corporate hubs. The modern glass cockpit, advanced autoflight systems, and automated protection modes (Alpha Floor) make it a superb choice for both newcomers and senior virtual aviators. Boasting a range of up to 6,150 km, it smoothly bridges all routes across Europe and the CIS.">
-                       Европейская классика со статусным компьютерным управлением Fly-by-Wire. Наш основной узкофюзеляжный лайнер, идеально подходящий для выполнения ближне- и среднемагистральных рейсов между базами авиакомпании. Современная стеклянная кабина, продвинутая система автопилота и автоматический контроль защитных режимов (Alpha Floor) делают его отличным выбором как для новичков, так и для опытных линейных пилотов. Дальность полета составляет до 6150 км, что покрывает всю Европу и СНГ.
+                       data-ru="Европейская классика со статусным компьютерным управлением Fly-by-Wire. Наш основной узкофюзеляжный лайнер, идеально подходящий для выполнения ближне- и среднемагистральных рейсов." 
+                       data-en="A European classic featuring state-of-the-art Fly-by-Wire computer flight controls. Our primary narrow-body airliner, perfectly tailored for short and medium-haul operations.">
+                       Европейская классика со статусным компьютерным управлением Fly-by-Wire. Наш основной узкофюзеляжный лайнер, идеально подходящий для выполнения ближне- и среднемагистральных рейсов.
                     </p>
                 </div>
-                
                 <div class="card" id="boeing-737">
                     <span class="card-icon">🇺🇸</span>
                     <h3>Boeing 737-900</h3>
                     <p class="lang" 
-                       data-ru="Самый вместительный, длинный и тяжелый представитель легендарного семейства Next Generation в нашем парке. Настоящее штурвальное управление, плотная панель оверхеда с кучей тумблеров и честная аэродинамика потребуют от вас собранности на всех этапах захода. Этот борт предназначен для высокозагруженных региональных маршрутов и чартерных рейсов. Он прощает меньше ошибок, чем Airbus, но взамен дарит непередаваемое ощущение ручного пилотирования тяжелой машины. Дальность полета — до 5925 км." 
-                       data-en="The most spacious, longest, and heaviest member of the legendary Next Generation family within our fleet. True yoke-and-cable control mechanics, a tightly packed overhead panel filled with switches, and genuine aerodynamics demand full pilot concentration during all approach phases. This airframe is designated for high-density regional routes and charter flights. It offers less automation than an Airbus, but provides an unmatched feeling of raw, manual heavy aircraft handling. Range is up to 5,925 km.">
-                       Самый вместительный, длинный и тяжелый представитель легендарного семейства Next Generation в нашем парке. Настоящее штурвальное управление, плотная панель оверхеда с кучей тумблеров и честная аэродинамика потребуют от вас собранности на всех этапах захода. Этот борт предназначен для высокозагруженных региональных маршрутов и чартерных рейсов. Он прощает меньше ошибок, чем Airbus, но взамен дарит непередаваемое ощущение ручного пилотирования тяжелой машины. Дальность полета — до 5925 км.
+                       data-ru="Самый вместительный представитель семейства Next Generation в парке. Штурвальное управление, оверхед с тумблерами и честная динамика потребуют собранности." 
+                       data-en="The longest member of the Next Generation family within our fleet. Yoke-and-cable control mechanics and a tight overhead panel require full pilot concentration.">
+                       Самый вместительный представитель семейства Next Generation в парке. Штурвальное управление, оверхед с тумблерами и честная динамика потребуют собранности.
                     </p>
                 </div>
-                
                 <div class="card" id="boeing-777">
                     <span class="card-icon">👑</span>
                     <h3>Boeing 777</h3>
                     <p class="lang" 
-                       data-ru="Мощный широкофюзеляжный флагман vClearance с огромными двигателями GE90. Создан специально для тяжелых трансконтинентальных перелетов, многочасовых рейсов через океаны и глобальных грузовых миссий. Оснащен продвинутыми навигационными системами для полетов в полярных зонах и зонах ETOPS. Огромный вес, инерция и невероятная тяга требуют точного расчета снижения (Top of Descent) и грамотной работы с тягой. Идеальный выбор для тех, кто любит запускать дальние рейсы на всю ночь. Дальность полета — до 15840 км." 
-                       data-en="The mighty wide-body flagship of vClearance powered by massive GE90 engines. Purpose-built for heavy transcontinental operations, multi-hour oceanic crossings, and global cargo operations. Equipped with highly sophisticated navigation complexes for Polar and ETOPS flights. Its immense weight, inertia, and unbelievable thrust require flawless Top of Descent calculations and careful management. The ultimate choice for long-haul crews who enjoy overnight operations. Range is up to 15,840 km.">
-                       Мощный широкофюзеляжный флагман vClearance с огромными двигателями GE90. Создан специально для тяжелых трансконтинентальных перелетов, многочасовых рейсов через океаны и глобальных грузовых миссий. Оснащен продвинутыми навигационными системами для полетов в полярных зонах и зонах ETOPS. Огромный вес, инерция и невероятная тяга требуют точного расчета снижения (Top of Descent) и грамотной работы с тягой. Идеальный выбор для тех, кто любит запускать дальние рейсы на всю ночь. Дальность полета — до 15840 км.
+                       data-ru="Мощный широкофюзеляжный флагман vClearance с двигателями GE90. Создан для трансконтинентальных перелетов и многочасовых миссий через океаны." 
+                       data-en="The mighty wide-body flagship of vClearance powered by GE90 engines. Purpose-built for transcontinental operations and multi-hour oceanic crossings.">
+                       Мощный широкофюзеляжный флагман vClearance с двигателями GE90. Создан для трансконтинентальных перелетов и многочасовых миссий через океаны.
                     </p>
                 </div>
-                
+            </div>
+        </div>
+    </section>
+
+    <section id="roster" class="content-section">
+        <div class="container">
+            <h2 class="section-title lang" data-ru="Список и активность пилотов" data-en="Pilot Roster & Live Activity">Список и активность пилотов</h2>
+            <div class="roster-wrapper">
+                <table class="roster-table">
+                    <thead>
+                        <tr>
+                            <th class="lang" data-ru="Пилот / CID" data-en="Pilot / CID">Пилот / CID</th>
+                            <th class="lang" data-ru="Позывной" data-en="Callsign">Позывной</th>
+                            <th class="lang" data-ru="Тип ВС" data-en="Aircraft">Тип ВС</th>
+                            <th class="lang" data-ru="Маршрут" data-en="Route">Маршрут</th>
+                            <th class="lang" data-ru="Статус" data-en="Network Status">Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody id="roster-tbody">
+                        </tbody>
+                </table>
             </div>
         </div>
     </section>
@@ -754,7 +839,7 @@
             <div class="join-container">
                 <h2 class="section-title lang" data-ru="Стать частью команды" data-en="Join the Team" style="margin-bottom: 30px;">Стать частью команды</h2>
                 <p class="lang" style="margin-bottom: 40px; color: #cccccc; font-weight: 300; font-size: 16px;"
-                   data-ru="vClearance строится вокруг active Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!"
+                   data-ru="vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!"
                    data-en="vClearance is built around an active Discord community. There we coordinate group flights, share screenshots, and discuss flight simulation. We are waiting for you!">
                      vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!
                 </p>
@@ -772,17 +857,75 @@
                Сайт создан исключительно для любителей авиасимуляторов (MSFS, X-Plane, P3D). Мы не являемся реальной авиакомпанией и не оказываем реальных услуг.
             </p>
             <p><span class="lang" data-ru="Проект некоммерческого сообщества в сети " data-en="A non-profit community project on the ">Проект некоммерческого сообщества в сети </span><a href="https://vatsim.net" target="_blank">VATSIM</a></p>
+            <p style="margin-top: 15px;"><a onclick="openModal()" class="lang" data-ru="Политика конфиденциальности (GDPR)" data-en="Privacy Policy (GDPR)">Политика конфиденциальности (GDPR)</a></p>
         </div>
     </footer>
 
+    <div class="modal" id="privacyModal">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal()">&times;</button>
+            <div class="modal-header lang" data-ru="Политика конфиденциальности (GDPR)" data-en="Privacy Policy (GDPR)">Политика конфиденциальности (GDPR)</div>
+            <div class="modal-body">
+                <p class="lang" 
+                   data-ru="Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance." 
+                   data-en="This Privacy Policy is compiled in compliance with the General Data Protection Regulation (GDPR) of the European Union and governs the collection, processing, and protection of personal data within the non-profit simulation community vClearance.">
+                   Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance.
+                </p>
+                
+                <h4 class="lang" data-ru="1. Сбор персональных данных" data-en="1. Collection of Personal Data">1. Сбор персональных данных</h4>
+                <p class="lang" 
+                   data-ru="Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут)." 
+                   data-en="We only process public data provided by the VATSIM network via the official public data feed (data.vatsim.net). This data includes: First and Last Name, VATSIM Identification Number (CID), and current virtual flight parameters (callsign, aircraft type, route).">
+                   Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилию, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут).
+                </p>
+
+                <h4 class="lang" data-ru="2. Правовые основания и цели обработки" data-en="2. Legal Basis and Purpose of Processing">2. Правовые основания и цели обработки</h4>
+                <p class="lang" 
+                   data-ru="Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активности в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга." 
+                   data-en="Data processing is conducted based on legitimate interest (Art. 6 (1) (f) GDPR) to verify active community membership and dynamically display live flight activity on the VATSIM network. Data is never used for commercial profiling or targeted advertising.">
+                   Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активности в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга.
+                </p>
+
+                <h4 class="lang" data-ru="3. Права пользователей в соответствии с GDPR" data-en="3. Your Rights Under GDPR">3. Права пользователей в соответствии с GDPR</h4>
+                <p class="lang" data-ru="Каждый участник сообщества обладает следующими неотъемлемыми правами:" data-en="Every community member possesses the following statutory rights:">Каждый участник сообщества обладает следующими неотъемлемыми правами:</p>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li class="lang" data-ru="Право на доступ к своим данным и проверку их корректности;" data-en="Right of access to view collected information;">Право на доступ к своим данным и проверку их корректности;</li>
+                    <li class="lang" data-ru="Право на отзыв согласия и полное удаление (исключение из списков) («Право быть забытым»);" data-en="Right to erasure / exclusion from internal rosters ('Right to be forgotten');">Право на отзыв согласия и полное удаление (исключение из списков) («Право быть забытым»);</li>
+                    <li class="lang" data-ru="Право ограничить обработку ваших данных на нашем веб-ресурсе." data-en="Right to restrict further processing of data on our web resource.">Право ограничить обработку ваших данных на нашем веб-ресурсе.</li>
+                </ul>
+
+                <h4 class="lang" data-ru="4. Хранение и безопасность данных" data-en="4. Data Retention and Security">4. Хранение и безопасность данных</h4>
+                <p class="lang" 
+                   data-ru="Данные о полетах обрабатываются исключительно «на лету» в оперативной памяти браузера и не сохраняются на серверах. Мы используем безопасное шифрование HTTPS для предотвращения перехвата трафика. Мы не передаем данные сторонним коммерческим организациям." 
+                   data-en="Flight data is processed purely on-the-fly inside the browser session and is not recorded onto dedicated internal servers. We enforce global HTTPS encryption to avoid transport interception. No data is shared with commercial third parties.">
+                   Данные о полетах обрабатываются исключительно «на лету» в оперативной памяти браузера и не сохраняются на серверах. Мы используем безопасное шифрование HTTPS для предотвращения перехвата трафика. Мы не передаем данные сторонним коммерческим организациям.
+                </p>
+
+                <h4 class="lang" data-ru="5. Контакты и реализация прав" data-en="5. Contact Information">5. Контакты и реализация прав</h4>
+                <p class="lang" 
+                   data-ru="Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord." 
+                   data-en="To exercise any data rights or request removal of your CID from the vClearance roster, please contact the staff via our official Discord community server.">
+                   Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Элементы меню
+        // === СПИСОК CID ТВОИХ ПИЛОТОВ ДЛЯ ИНТЕГРАЦИИ ===
+        const MY_PILOTS = [
+            { cid: "1914467", name: "Elvin C." },
+            { cid: "1816284", name: "Karim I." },
+            { cid: "1878749", name: "Aleksey G." }
+        ];
+
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navContainer = document.getElementById('navContainer');
         const fleetDropdown = document.getElementById('fleetDropdown');
         const langDropdown = document.getElementById('langDropdown');
+        const privacyModal = document.getElementById('privacyModal');
+        const rosterTbody = document.getElementById('roster-tbody');
 
-        // Открытие/закрытие гамбургера
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenuBtn.classList.toggle('active');
             navContainer.classList.toggle('active');
@@ -795,7 +938,6 @@
             langDropdown.classList.remove('active');
         }
 
-        // Клик по флоту на мобилках
         function toggleMobileDropdown(e) {
             if (window.innerWidth <= 768) {
                 e.preventDefault(); 
@@ -803,7 +945,6 @@
             }
         }
 
-        // Клик по выбору языка на мобилках
         function toggleMobileLang(e) {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
@@ -811,12 +952,17 @@
             }
         }
 
+        function openModal() { privacyModal.classList.add('open'); }
+        function closeModal() { privacyModal.classList.remove('open'); }
+
         // Логика смены языков
+        let currentLang = 'ru';
         const currentFlag = document.getElementById('currentFlag');
         const currentText = document.getElementById('currentText');
         const langElements = document.querySelectorAll('.lang');
 
         function changeLanguage(lang) {
+            currentLang = lang;
             if (lang === 'ru') {
                 currentFlag.textContent = '🇷🇺';
                 currentText.textContent = 'RU';
@@ -832,13 +978,18 @@
                     el.textContent = el.getAttribute('data-ru');
                 }
             });
+            
+            if (window.lastVatsimData) {
+                renderRoster(window.lastVatsimData);
+            } else {
+                renderRoster([]);
+            }
+            
             if (window.innerWidth <= 768) closeMenu();
         }
 
-        // Подсветка карточек при переходе
         function highlightCard(cardId) {
             closeMenu(); 
-            
             setTimeout(() => {
                 const targetCard = document.getElementById(cardId);
                 if (targetCard) {
@@ -848,6 +999,74 @@
                 }
             }, 100);
         }
+
+        // === ИНТЕГРАЦИЯ VATSIM API ===
+        async function fetchVatsimData() {
+            try {
+                const response = await fetch('https://data.vatsim.net/v3/vatsim-data.json');
+                if (!response.ok) throw new Error('Network error');
+                const data = await response.json();
+                
+                window.lastVatsimData = data.pilots || [];
+                renderRoster(window.lastVatsimData);
+            } catch (error) {
+                console.error('Ошибка получения данных VATSIM:', error);
+                renderRoster([]);
+            }
+        }
+
+        function renderRoster(pilotsOnline) {
+            rosterTbody.innerHTML = '';
+            
+            // Проходим по ВСЕМ пилотам из нашего фиксированного списка
+            MY_PILOTS.forEach(localPilot => {
+                // Ищем, летит ли данный пилот прямо сейчас в VATSIM
+                const onlineData = pilotsOnline.find(p => p.cid.toString() === localPilot.cid.toString());
+                
+                let callsign = '---';
+                let aircraft = '---';
+                let route = '---';
+                let statusBadge = '';
+
+                if (onlineData) {
+                    // Пилот ОНЛАЙН — вытягиваем полетные данные
+                    callsign = onlineData.callsign || '---';
+                    
+                    if (onlineData.flight_plan) {
+                        if (onlineData.flight_plan.aircraft) {
+                            aircraft = onlineData.flight_plan.aircraft.split('/')[0];
+                        }
+                        const dep = onlineData.flight_plan.departure || '???';
+                        const arr = onlineData.flight_plan.arrival || '???';
+                        route = (dep === '???' && arr === '???') ? '---' : `${dep} → ${arr}`;
+                    } else {
+                        route = 'No Flight Plan';
+                    }
+                    
+                    statusBadge = `<span class="status-badge status-online">Online</span>`;
+                } else {
+                    // Пилот ОФЛАЙН — пишем дефолтные прочерки
+                    statusBadge = `<span class="status-badge status-offline">Offline</span>`;
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${localPilot.name} (${localPilot.cid})</td>
+                    <td><strong>${callsign}</strong></td>
+                    <td>${aircraft}</td>
+                    <td>${route}</td>
+                    <td>${statusBadge}</td>
+                `;
+                rosterTbody.appendChild(tr);
+            });
+        }
+
+        // Первичный пустой запуск (пока данные качаются)
+        renderRoster([]);
+        // Запрос к VATSIM
+        fetchVatsimData();
+        // Обновление раз в минуту
+        setInterval(fetchVatsimData, 60000);
     </script>
 
 </body>
