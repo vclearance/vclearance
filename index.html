@@ -69,6 +69,52 @@
             opacity: 0.8;
         }
 
+        /* Зеленая моргающая точка и счетчик */
+        .online-counter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(46, 204, 113, 0.08);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+
+        .counter-text {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #2ecc71;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .blinking-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #2ecc71;
+            animation: pulse-dot 1.8s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(46, 204, 113, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+            }
+        }
+
         /* Кнопка гамбургера для мобилок */
         .menu-toggle {
             display: none;
@@ -770,6 +816,11 @@
                     <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance Logo" class="logo-img">
                 </a>
                 <img src="https://imgur.com/Xxznh5y.png" alt="VATSIM Logo" class="vatsim-logo-header">
+                
+                <div class="online-counter" id="globalOnlineCounter">
+                    <span class="blinking-dot"></span>
+                    <span class="counter-text lang" data-ru="0 в сети" data-en="0 online">0 в сети</span>
+                </div>
             </div>
             
             <button class="menu-toggle" id="mobileMenuBtn" aria-label="Открыть меню">
@@ -855,7 +906,7 @@
                 <div class="card">
                     <span class="card-icon">🔓</span>
                     <h3 class="lang" data-ru="Свободная концепция" data-en="Free Concept">Свободная концепция</h3>
-                    <p class="lang" data-ru="Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию." data-en="We created a virtual airline for those who want to fly on VATSIM for pure fun. No rigid schedules, complex reports, or flight assignment stress.">Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию.</p>
+                    <p class="lang" data-ru="Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привойки к расписанию." data-en="We created a virtual airline for those who want to fly on VATSIM for pure fun. No rigid schedules, complex reports, or flight assignment stress.">Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию.</p>
                 </div>
                 <div class="card">
                     <span class="card-icon">🤝</span>
@@ -969,12 +1020,12 @@
                 <p class="lang" 
                    data-ru="Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут)." 
                    data-en="We only process public data provided by the VATSIM network via the official public data feed (data.vatsim.net). This data includes: First and Last Name, VATSIM Identification Number (CID), and current virtual flight parameters (callsign, aircraft type, route).">
-                   Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилию, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут).
+                   Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут).
                 </p>
 
                 <h4 class="lang" data-ru="2. Правовые основания и цели обработки" data-en="2. Legal Basis and Purpose of Processing">2. Правовые основания и цели обработки</h4>
                 <p class="lang" 
-                   data-ru="Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активности в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга." 
+                   data-ru="Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активность в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга." 
                    data-en="Data processing is conducted based on legitimate interest (Art. 6 (1) (f) GDPR) to verify active community membership and dynamically display live flight activity on the VATSIM network. Data is never used for commercial profiling or targeted advertising.">
                    Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активности в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга.
                 </p>
@@ -998,14 +1049,32 @@
                 <p class="lang" 
                    data-ru="Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord." 
                    data-en="To exercise any data rights or request removal of your CID from the vClearance roster, please contact the staff via our official Discord community server.">
-                   Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord.
+                   Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш official Discord community server.
                 </p>
             </div>
         </div>
     </div>
 
-    <script>
-        // === СПИСОК CID ТВОИХ ПИЛОТОВ ДЛЯ ИНТЕГРАЦИИ ===
+    <script type="module">
+        // 1. Импортируем нужные функции из официального CDN Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // 2. Твоя конфигурация проекта из вкладки CDN
+        const firebaseConfig = {
+            apiKey: "AIzaSyCa2nr-heFF5LqoqN_tPYGJpf9PGhqMydo",
+            authDomain: "vclearance-15b43.firebaseapp.com",
+            projectId: "vclearance-15b43",
+            storageBucket: "vclearance-15b43.firebasestorage.app",
+            messagingSenderId: "299361728910",
+            appId: "1:299361728910:web:7e77b2f4431db23a66ccdf"
+        };
+
+        // 3. Инициализация приложения и базы данных
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // === СПИСОК CID ТВОИХ ПИЛОТОВ ===
         const MY_PILOTS = [
             { cid: "1914467", name: "Elvin C." },
             { cid: "1816284", name: "Karim I." },
@@ -1014,6 +1083,10 @@
             { cid: "1752527", name: "Elisei N." }
         ];
 
+        // Глобальный кэш для истории полётов из Firebase
+        window.firebaseFlightsCache = {};
+
+        // Получаем элементы интерфейса
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navContainer = document.getElementById('navContainer');
         const fleetDropdown = document.getElementById('fleetDropdown');
@@ -1033,32 +1106,35 @@
             langDropdown.classList.remove('active');
         }
 
-        function toggleMobileDropdown(e) {
+        // Привязываем функции к кнопкам (т.к. у нас type="module", функции нужно явно вешать на window)
+        window.closeMenu = closeMenu;
+        window.openModal = () => privacyModal.classList.add('open');
+        window.closeModal = () => privacyModal.classList.remove('open');
+        
+        window.toggleMobileDropdown = (e) => {
             if (window.innerWidth <= 768) {
                 e.preventDefault(); 
                 fleetDropdown.classList.toggle('active');
             }
-        }
+        };
 
-        function toggleMobileLang(e) {
+        window.toggleMobileLang = (e) => {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
                 langDropdown.classList.toggle('active');
             }
-        }
-
-        function openModal() { privacyModal.classList.add('open'); }
-        function closeModal() { privacyModal.classList.remove('open'); }
+        };
 
         // === РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА ===
         window.openPilotCid = null;
 
-        function togglePilotDetails(rowId) {
+        window.togglePilotDetails = function(rowId) {
             const detailRow = document.getElementById(`details-${rowId}`);
             const mainRow = document.getElementById(`row-${rowId}`);
+            if (!detailRow || !mainRow) return;
+            
             const isOpen = detailRow.classList.contains('open');
 
-            // Закрыть все остальные открытые строки
             document.querySelectorAll('.pilot-details-row.open').forEach(r => r.classList.remove('open'));
             document.querySelectorAll('.pilot-row-clickable.active').forEach(r => r.classList.remove('active'));
 
@@ -1069,7 +1145,7 @@
             } else {
                 window.openPilotCid = null;
             }
-        }
+        };
 
         // Логика смены языков
         let currentLang = 'ru';
@@ -1077,7 +1153,7 @@
         const currentText = document.getElementById('currentText');
         const langElements = document.querySelectorAll('.lang');
 
-        function changeLanguage(lang) {
+        window.changeLanguage = function(lang) {
             currentLang = lang;
             if (lang === 'ru') {
                 currentFlag.textContent = '🇷🇺';
@@ -1102,9 +1178,9 @@
             }
             
             if (window.innerWidth <= 768) closeMenu();
-        }
+        };
 
-        function highlightCard(cardId) {
+        window.highlightCard = function(cardId) {
             closeMenu(); 
             setTimeout(() => {
                 const targetCard = document.getElementById(cardId);
@@ -1114,16 +1190,70 @@
                     targetCard.classList.add('highlight-target');
                 }
             }, 100);
+        };
+
+        // === ЗАГРУЗКА ИСТОРИИ ПОЛЁТОВ ИЗ FIREBASE ===
+        async function loadFlightsFromFirebase() {
+            try {
+                const docRef = doc(db, 'vatsim_history', 'roster');
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    window.firebaseFlightsCache = docSnap.data() || {};
+                }
+            } catch (error) {
+                console.error("Ошибка чтения из Firebase:", error);
+            }
         }
 
-        // === ИНТЕГРАЦИЯ VATSIM API ===
+        // === ИНТЕГРАЦИЯ VATSIM API И ОБНОВЛЕНИЕ БАЗЫ ===
         async function fetchVatsimData() {
             try {
+                // Актуализируем кэш из облака
+                await loadFlightsFromFirebase();
+
                 const response = await fetch('https://data.vatsim.net/v3/vatsim-data.json');
                 if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
                 
                 window.lastVatsimData = data.pilots || [];
+                
+                let needUpdateFirebase = false;
+                const updatedDataToSave = { ...window.firebaseFlightsCache };
+
+                MY_PILOTS.forEach(localPilot => {
+                    const onlineData = window.lastVatsimData.find(p => p.cid.toString() === localPilot.cid.toString());
+                    
+                    if (onlineData) {
+                        let callsign = onlineData.callsign || '---';
+                        let aircraft = '---';
+                        let route = '---';
+                        
+                        if (onlineData.flight_plan) {
+                            if (onlineData.flight_plan.aircraft) {
+                                aircraft = onlineData.flight_plan.aircraft.split('/')[0];
+                            }
+                            const dep = onlineData.flight_plan.departure || '???';
+                            const arr = onlineData.flight_plan.arrival || '???';
+                            route = (dep === '???' && arr === '???') ? '---' : `${dep} → ${arr}`;
+                        } else {
+                            route = 'No Flight Plan';
+                        }
+
+                        const cached = updatedDataToSave[localPilot.cid];
+                        if (!cached || cached.callsign !== callsign || cached.aircraft !== aircraft || cached.route !== route) {
+                            updatedDataToSave[localPilot.cid] = { callsign, aircraft, route };
+                            needUpdateFirebase = true;
+                        }
+                    }
+                });
+
+                // Пишем изменения в базу Firestore
+                if (needUpdateFirebase) {
+                    window.firebaseFlightsCache = updatedDataToSave;
+                    const docRef = doc(db, 'vatsim_history', 'roster');
+                    await setDoc(docRef, updatedDataToSave, { merge: true });
+                }
+
                 renderRoster(window.lastVatsimData);
             } catch (error) {
                 console.error('Ошибка получения данных VATSIM:', error);
@@ -1134,9 +1264,29 @@
         function renderRoster(pilotsOnline) {
             rosterTbody.innerHTML = '';
             
-            // Проходим по ВСЕМ пилотам из нашего фиксированного списка
+            // === ОБНОВЛЕНИЕ СЧЁТЧИКА В ПИЛЮЛЕ (С УЧЁТОМ ЯЗЫКА) ===
+            // Считаем, сколько пилотов из нашего списка сейчас реально в сети
+            const totalOnline = MY_PILOTS.filter(localPilot => 
+                pilotsOnline.some(p => p.cid.toString() === localPilot.cid.toString())
+            ).length;
+
+            // Находим наш двуязычный счётчик в шапке
+            const counterTextEl = document.querySelector('#globalOnlineCounter .counter-text');
+            if (counterTextEl) {
+                // Обновляем атрибуты для перевода
+                counterTextEl.setAttribute('data-ru', `${totalOnline} в сети`);
+                counterTextEl.setAttribute('data-en', `${totalOnline} online`);
+                
+                // Выводим текст в зависимости от выбранного прямо сейчас языка
+                if (currentLang === 'en') {
+                    counterTextEl.textContent = `${totalOnline} online`;
+                } else {
+                    counterTextEl.textContent = `${totalOnline} в сети`;
+                }
+            }
+            // ====================================================
+            
             MY_PILOTS.forEach(localPilot => {
-                // Ищем, летит ли данный пилот прямо сейчас в VATSIM
                 const onlineData = pilotsOnline.find(p => p.cid.toString() === localPilot.cid.toString());
                 
                 let callsign = '---';
@@ -1144,18 +1294,10 @@
                 let route = '---';
                 let statusBadge = '';
 
-                // Загружаем последний сохраненный полет из localStorage
-                const cacheKey = `lastFlight_${localPilot.cid}`;
-                let lastFlight = null;
-                try {
-                    const cached = localStorage.getItem(cacheKey);
-                    if (cached) lastFlight = JSON.parse(cached);
-                } catch (e) {}
+                const lastFlight = window.firebaseFlightsCache[localPilot.cid] || null;
 
                 if (onlineData) {
-                    // Пилот ОНЛАЙН — вытягиваем полетные данные
                     callsign = onlineData.callsign || '---';
-                    
                     if (onlineData.flight_plan) {
                         if (onlineData.flight_plan.aircraft) {
                             aircraft = onlineData.flight_plan.aircraft.split('/')[0];
@@ -1166,15 +1308,8 @@
                     } else {
                         route = 'No Flight Plan';
                     }
-                    
                     statusBadge = `<span class="status-badge status-online">Online</span>`;
-
-                    // Сохраняем как последний известный полет
-                    try {
-                        localStorage.setItem(cacheKey, JSON.stringify({ callsign, aircraft, route }));
-                    } catch (e) {}
                 } else {
-                    // Пилот ОФЛАЙН — пишем дефолтные прочерки
                     statusBadge = `<span class="status-badge status-offline">Offline</span>`;
                 }
 
@@ -1188,16 +1323,16 @@
                     <td>${route}</td>
                     <td>${statusBadge}</td>
                 `;
-                tr.addEventListener('click', () => togglePilotDetails(localPilot.cid));
+                tr.addEventListener('click', () => window.togglePilotDetails(localPilot.cid));
                 rosterTbody.appendChild(tr);
 
-                // Данные для раскрывающейся строки: текущий полет (если онлайн) либо последний известный
                 const detailCallsign = onlineData ? callsign : (lastFlight ? lastFlight.callsign : '---');
                 const detailAircraft = onlineData ? aircraft : (lastFlight ? lastFlight.aircraft : '---');
                 const detailRoute = onlineData ? route : (lastFlight ? lastFlight.route : '---');
+                
                 const flightLabelRu = onlineData ? 'Текущий полёт' : 'Последний полёт';
                 const flightLabelEn = onlineData ? 'Current Flight' : 'Last Flight';
-                const flightLabel = (typeof currentLang !== 'undefined' && currentLang === 'en') ? flightLabelEn : flightLabelRu;
+                const flightLabel = (currentLang === 'en') ? flightLabelEn : flightLabelRu;
 
                 const detailsTr = document.createElement('tr');
                 detailsTr.id = `details-${localPilot.cid}`;
@@ -1217,14 +1352,14 @@
                                 <span>${detailCallsign}</span>
                             </div>
                             <div class="pilot-detail-item">
-                                <span class="lang" data-ru="Тип ВС" data-en="Aircraft">${(typeof currentLang !== 'undefined' && currentLang === 'en') ? 'Aircraft' : 'Тип ВС'}</span>
+                                <span class="lang" data-ru="Тип ВС" data-en="Aircraft">${(currentLang === 'en') ? 'Aircraft' : 'Тип ВС'}</span>
                                 <span>${detailAircraft}</span>
                             </div>
                             <div class="pilot-detail-item">
-                                <span class="lang" data-ru="Маршрут" data-en="Route">${(typeof currentLang !== 'undefined' && currentLang === 'en') ? 'Route' : 'Маршрут'}</span>
+                                <span class="lang" data-ru="Маршрут" data-en="Route">${(currentLang === 'en') ? 'Route' : 'Маршрут'}</span>
                                 <span>${detailRoute}</span>
                             </div>
-                            <a href="https://stats.vatsim.net/stats/${localPilot.cid}" target="_blank" class="pilot-stats-link lang" data-ru="Статистика VATSIM" data-en="VATSIM Stats">${(typeof currentLang !== 'undefined' && currentLang === 'en') ? 'VATSIM Stats' : 'Статистика VATSIM'}</a>
+                            <a href="https://stats.vatsim.net/stats/${localPilot.cid}" target="_blank" class="pilot-stats-link lang" data-ru="Статистика VATSIM" data-en="VATSIM Stats">${(currentLang === 'en') ? 'VATSIM Stats' : 'Статистика VATSIM'}</a>
                         </div>
                     </td>
                 `;
@@ -1235,13 +1370,15 @@
             });
         }
 
-        // Первичный пустой запуск (пока данные качаются)
-        renderRoster([]);
-        // Запрос к VATSIM
-        fetchVatsimData();
-        // Обновление раз в минуту
-        setInterval(fetchVatsimData, 60000);
-    </script>
+        // Запуск приложения
+        async function initApp() {
+            renderRoster([]);
+            await loadFlightsFromFirebase();
+            await fetchVatsimData();
+            setInterval(fetchVatsimData, 60000); 
+        }
 
+        initApp();
+    </script>
 </body>
 </html>
