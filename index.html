@@ -1,1810 +1,1810 @@
-<!DOCTYPE html> -->
-<!-- <html lang="ru"> -->
-<!-- <head> -->
-    <!-- <meta charset="UTF-8"> -->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <!-- <title>vClearance Virtual Airline | VATSIM Community</title> -->
-    <!-- <style> -->
-        <!-- /* Общие стили и сброс настроек */ -->
-        <!-- * { -->
-            <!-- margin: 0; -->
-            <!-- padding: 0; -->
-            <!-- box-sizing: border-box; -->
-            <!-- font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -->
-            <!-- scroll-behavior: smooth; -->
-        <!-- } -->
-
-        <!-- body { -->
-            <!-- background-color: #0d0d0d; -->
-            <!-- color: white; -->
-            <!-- line-height: 1.6; -->
-            <!-- overflow-x: hidden; -->
-        <!-- } -->
-
-        <!-- /* Шапка сайта (Header) */ -->
-        <!-- header { -->
-            <!-- background-color: rgba(20, 20, 20, 0.95); -->
-            <!-- backdrop-filter: blur(8px); -->
-            <!-- -webkit-backdrop-filter: blur(8px); -->
-            <!-- color: white; -->
-            <!-- padding: 12px 0; -->
-            <!-- position: fixed; -->
-            <!-- width: 100%; -->
-            <!-- top: 0; -->
-            <!-- z-index: 1000; -->
-            <!-- box-shadow: 0 4px 20px rgba(0,0,0,0.5); -->
-            <!-- border-bottom: 1px solid rgba(255, 255, 255, 0.05); -->
-        <!-- } -->
-
-        <!-- .container { -->
-            <!-- width: 88%; -->
-            <!-- max-width: 1200px; -->
-            <!-- margin: 0 auto; -->
-        <!-- } -->
-
-        <!-- .navbar { -->
-            <!-- display: flex; -->
-            <!-- justify-content: space-between; -->
-            <!-- align-items: center; -->
-        <!-- } -->
-
-        <!-- .logo-links-wrapper { -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-            <!-- gap: 15px; -->
-            <!-- z-index: 1100; -->
-        <!-- } -->
-
-        <!-- .logo-img { -->
-            <!-- height: 38px; -->
-            <!-- width: auto; -->
-            <!-- display: block; -->
-        <!-- } -->
-
-        <!-- .vatsim-logo-header { -->
-            <!-- height: 24px; -->
-            <!-- width: auto; -->
-            <!-- border-left: 1px solid rgba(255, 255, 255, 0.2); -->
-            <!-- padding-left: 15px; -->
-            <!-- opacity: 0.8; -->
-        <!-- } -->
-
-        <!-- /* Зеленая моргающая точка и счетчик */ -->
-        <!-- .online-counter { -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-            <!-- gap: 8px; -->
-            <!-- background: rgba(46, 204, 113, 0.08); -->
-            <!-- border: 1px solid rgba(46, 204, 113, 0.2); -->
-            <!-- padding: 4px 10px; -->
-            <!-- border-radius: 12px; -->
-            <!-- margin-left: 5px; -->
-        <!-- } -->
-
-        <!-- .counter-text { -->
-            <!-- font-size: 11px; -->
-            <!-- font-weight: 600; -->
-            <!-- text-transform: uppercase; -->
-            <!-- color: #2ecc71; -->
-            <!-- letter-spacing: 0.5px; -->
-            <!-- white-space: nowrap; -->
-        <!-- } -->
-
-        <!-- .blinking-dot { -->
-            <!-- width: 7px; -->
-            <!-- height: 7px; -->
-            <!-- background-color: #2ecc71; -->
-            <!-- border-radius: 50%; -->
-            <!-- display: inline-block; -->
-            <!-- box-shadow: 0 0 8px #2ecc71; -->
-            <!-- animation: pulse-dot 1.8s infinite; -->
-        <!-- } -->
-
-        <!-- /* === СТИЛИ ДЛЯ ПСЕВДО-ЛИЧНОГО КАБИНЕТА С КНОПКОЙ СИДА === */ -->
-        <!-- .profile-widget { -->
-            <!-- position: relative; -->
-            <!-- margin-left: 25px; -->
-        <!-- } -->
-
-        <!-- .profile-btn { -->
-            <!-- background: rgba(255, 255, 255, 0.05); -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.15); -->
-            <!-- color: white; -->
-            <!-- padding: 6px 14px; -->
-            <!-- font-size: 13px; -->
-            <!-- font-weight: 600; -->
-            <!-- border-radius: 20px; -->
-            <!-- cursor: pointer; -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-            <!-- gap: 8px; -->
-            <!-- transition: all 0.3s ease; -->
-            <!-- white-space: nowrap; -->
-        <!-- } -->
-
-        <!-- .profile-btn:hover { -->
-            <!-- background: rgba(255, 255, 255, 0.1); -->
-            <!-- border-color: rgba(255, 255, 255, 0.3); -->
-        <!-- } -->
-
-        <!-- .profile-dropdown { -->
-            <!-- position: absolute; -->
-            <!-- top: 135%; -->
-            <!-- right: 0; -->
-            <!-- background: rgba(18, 18, 18, 0.98); -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.08); -->
-            <!-- border-radius: 10px; -->
-            <!-- width: 300px; -->
-            <!-- padding: 18px; -->
-            <!-- box-shadow: 0 12px 30px rgba(0,0,0,0.7); -->
-            <!-- display: none; -->
-            <!-- z-index: 1200; -->
-            <!-- backdrop-filter: blur(12px); -->
-            <!-- -webkit-backdrop-filter: blur(12px); -->
-        <!-- } -->
-
-        <!-- .profile-dropdown.active { -->
-            <!-- display: block; -->
-        <!-- } -->
-
-        <!-- .profile-login-form { -->
-            <!-- display: flex; -->
-            <!-- flex-direction: column; -->
-            <!-- gap: 12px; -->
-        <!-- } -->
-
-        <!-- .login-title { -->
-            <!-- font-size: 11px; -->
-            <!-- font-weight: 700; -->
-            <!-- text-transform: uppercase; -->
-            <!-- letter-spacing: 1px; -->
-            <!-- color: #888; -->
-            <!-- margin-bottom: -2px; -->
-            <!-- border-bottom: 1px solid rgba(255, 255, 255, 0.05); -->
-            <!-- padding-bottom: 6px; -->
-        <!-- } -->
-
-        <!-- .profile-login-form input { -->
-            <!-- background: rgba(255, 255, 255, 0.05); -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.1); -->
-            <!-- color: white; -->
-            <!-- padding: 8px 12px; -->
-            <!-- border-radius: 6px; -->
-            <!-- font-size: 13px; -->
-            <!-- outline: none; -->
-            <!-- width: 100%; -->
-        <!-- } -->
-
-        <!-- .profile-login-form button { -->
-            <!-- background: white; -->
-            <!-- color: #1a1a1a; -->
-            <!-- border: none; -->
-            <!-- padding: 8px; -->
-            <!-- border-radius: 6px; -->
-            <!-- font-weight: 600; -->
-            <!-- cursor: pointer; -->
-            <!-- font-size: 13px; -->
-            <!-- transition: background 0.2s; -->
-        <!-- } -->
-
-        <!-- .profile-login-form button:hover { -->
-            <!-- background: #e6e6e6; -->
-        <!-- } -->
-
-        <!-- .forgot-cid-link { -->
-            <!-- font-size: 11px; -->
-            <!-- color: rgba(255, 255, 255, 0.35); -->
-            <!-- text-decoration: none; -->
-            <!-- text-align: center; -->
-            <!-- display: block; -->
-            <!-- margin-top: 4px; -->
-            <!-- cursor: pointer; -->
-            <!-- transition: color 0.2s ease; -->
-        <!-- } -->
-
-        <!-- .forgot-cid-link:hover { -->
-            <!-- color: white; -->
-            <!-- text-decoration: underline; -->
-        <!-- } -->
-
-        <!-- .logout-btn { -->
-            <!-- background: rgba(255, 77, 77, 0.08); -->
-            <!-- border: 1px solid rgba(255, 77, 77, 0.2); -->
-            <!-- color: #ff4d4d; -->
-            <!-- width: 100%; -->
-            <!-- padding: 8px; -->
-            <!-- border-radius: 6px; -->
-            <!-- font-weight: 600; -->
-            <!-- cursor: pointer; -->
-            <!-- font-size: 12px; -->
-            <!-- margin-top: 12px; -->
-            <!-- text-transform: uppercase; -->
-            <!-- letter-spacing: 0.5px; -->
-            <!-- transition: all 0.2s; -->
-        <!-- } -->
-
-        <!-- .logout-btn:hover { -->
-            <!-- background: rgba(255, 77, 77, 0.18); -->
-            <!-- color: #ff6666; -->
-        <!-- } -->
-
-        <!-- /* Вспомогательные стили вывода данных */ -->
-        <!-- .cid-res-header { -->
-            <!-- display: flex; -->
-            <!-- justify-content: space-between; -->
-            <!-- align-items: center; -->
-            <!-- font-size: 11px; -->
-            <!-- font-weight: 600; -->
-            <!-- text-transform: uppercase; -->
-            <!-- color: #888; -->
-            <!-- margin-bottom: 8px; -->
-            <!-- border-bottom: 1px solid rgba(255, 255, 255, 0.05); -->
-            <!-- padding-bottom: 6px; -->
-        <!-- } -->
-
-        <!-- .cid-res-pilot { -->
-            <!-- font-size: 14px; -->
-            <!-- font-weight: 700; -->
-            <!-- color: white; -->
-            <!-- margin-bottom: 4px; -->
-        <!-- } -->
-
-        <!-- .cid-res-route { -->
-            <!-- font-size: 13px; -->
-            <!-- margin-bottom: 12px; -->
-            <!-- color: #ccc; -->
-        <!-- } -->
-
-        <!-- .cid-res-metar-title { -->
-            <!-- font-size: 10px; -->
-            <!-- color: #aaa; -->
-            <!-- text-transform: uppercase; -->
-            <!-- font-weight: 600; -->
-            <!-- margin-top: 10px; -->
-            <!-- letter-spacing: 0.5px; -->
-        <!-- } -->
-
-        <!-- .cid-res-metar-box { -->
-            <!-- background: rgba(46, 204, 113, 0.03); -->
-            <!-- border: 1px solid rgba(46, 204, 113, 0.1); -->
-            <!-- padding: 8px 10px; -->
-            <!-- border-radius: 6px; -->
-            <!-- font-family: 'Courier New', Courier, monospace; -->
-            <!-- font-size: 11px; -->
-            <!-- color: #2ecc71; -->
-            <!-- margin-top: 4px; -->
-            <!-- line-height: 1.4; -->
-            <!-- white-space: normal; -->
-            <!-- word-break: break-all; -->
-        <!-- } -->
-
-        <!-- /* Кнопка гамбургера для мобилок */ -->
-        <!-- .menu-toggle { -->
-            <!-- display: none; -->
-            <!-- flex-direction: column; -->
-            <!-- gap: 6px; -->
-            <!-- cursor: pointer; -->
-            <!-- background: none; -->
-            <!-- border: none; -->
-            <!-- z-index: 1100; -->
-            <!-- padding: 5px; -->
-        <!-- } -->
-
-        <!-- .menu-toggle span { -->
-            <!-- display: block; -->
-            <!-- width: 28px; -->
-            <!-- height: 3px; -->
-            <!-- background-color: white; -->
-            <!-- transition: all 0.3s ease; -->
-            <!-- border-radius: 2px; -->
-        <!-- } -->
-
-        <!-- /* Правая часть шапки */ -->
-        <!-- .nav-container { -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-        <!-- } -->
-
-        <!-- .nav-links { -->
-            <!-- list-style: none; -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-        <!-- } -->
-
-        <!-- .nav-links li { -->
-            <!-- margin-left: 35px; -->
-            <!-- position: relative; -->
-        <!-- } -->
-
-        <!-- .nav-links a { -->
-            <!-- color: #aaaaaa; -->
-            <!-- text-decoration: none; -->
-            <!-- font-weight: 500; -->
-            <!-- font-size: 14px; -->
-            <!-- letter-spacing: 1px; -->
-            <!-- text-transform: uppercase; -->
-            <!-- padding: 6px 0; -->
-            <!-- transition: color 0.3s ease; -->
-            <!-- display: inline-block; -->
-        <!-- } -->
-
-        <!-- .nav-links > li > a::after { -->
-            <!-- content: ''; -->
-            <!-- position: absolute; -->
-            <!-- width: 100%; -->
-            <!-- height: 2px; -->
-            <!-- bottom: -2px; -->
-            <!-- left: 0; -->
-            <!-- background-color: white; -->
-            <!-- transform: scaleX(0); -->
-            <!-- transform-origin: bottom center; -->
-            <!-- transition: transform 0.3s ease-in-out; -->
-        <!-- } -->
-
-        <!-- .nav-links > li > a:hover { -->
-            <!-- color: white; -->
-        <!-- } -->
-
-        <!-- .nav-links > li > a:hover::after { -->
-            <!-- transform: scaleX(1); -->
-        <!-- } -->
-
-        <!-- /* Выпадающее меню флота */ -->
-        <!-- .dropdown { -->
-            <!-- position: relative; -->
-        <!-- } -->
-
-        <!-- .dropdown-menu { -->
-            <!-- position: absolute; -->
-            <!-- top: 100%; -->
-            <!-- left: 50%; -->
-            <!-- transform: translateX(-50%) translateY(15px); -->
-            <!-- background-color: rgba(25, 25, 25, 0.98); -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.08); -->
-            <!-- list-style: none; -->
-            <!-- padding: 8px 0; -->
-            <!-- border-radius: 6px; -->
-            <!-- width: 180px; -->
-            <!-- box-shadow: 0 10px 25px rgba(0,0,0,0.5); -->
-            <!-- opacity: 0; -->
-            <!-- visibility: hidden; -->
-            <!-- transition: all 0.3s ease; -->
-            <!-- z-index: 1100; -->
-        <!-- } -->
-
-        <!-- .dropdown:hover .dropdown-menu { -->
-            <!-- opacity: 1; -->
-            <!-- visibility: visible; -->
-            <!-- transform: translateX(-50%) translateY(5px); -->
-        <!-- } -->
-
-        <!-- .dropdown-menu li { -->
-            <!-- margin-left: 0 !important; -->
-            <!-- width: 100%; -->
-        <!-- } -->
-
-        <!-- .dropdown-menu a, .dropdown-menu button { -->
-            <!-- display: block; -->
-            <!-- padding: 10px 20px; -->
-            <!-- font-size: 14px; -->
-            <!-- color: #b3b3b3; -->
-            <!-- text-decoration: none; -->
-            <!-- text-align: left; -->
-            <!-- background: none; -->
-            <!-- border: none; -->
-            <!-- width: 100%; -->
-            <!-- cursor: pointer; -->
-            <!-- transition: all 0.2s ease; -->
-        <!-- } -->
-
-        <!-- .dropdown-menu a:hover, .dropdown-menu button:hover { -->
-            <!-- background-color: rgba(255, 255, 255, 0.05); -->
-            <!-- color: white; -->
-            <!-- padding-left: 25px; -->
-        <!-- } -->
-
-        <!-- /* Переключатель языка */ -->
-        <!-- .lang-dropdown { -->
-            <!-- margin-left: 30px; -->
-        <!-- } -->
-
-        <!-- .lang-current { -->
-            <!-- background: rgba(255, 255, 255, 0.05); -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.15); -->
-            <!-- color: white; -->
-            <!-- padding: 6px 14px; -->
-            <!-- font-size: 13px; -->
-            <!-- font-weight: 600; -->
-            <!-- border-radius: 20px; -->
-            <!-- cursor: pointer; -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-            <!-- gap: 8px; -->
-            <!-- transition: all 0.3s ease; -->
-        <!-- } -->
-
-        <!-- /* ГЛАВНЫЙ БАННЕР (HERO SECTION) */ -->
-        <!-- .hero { -->
-            <!-- min-height: 100vh; -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-            <!-- justify-content: center; -->
-            <!-- background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.9)),  -->
-                              <!-- url('https://i.imgur.com/kFSOdpY.png'); -->
-            <!-- background-size: cover; -->
-            <!-- background-position: center; -->
-            <!-- background-attachment: fixed; -->
-            <!-- color: white; -->
-            <!-- padding: 120px 0 60px 0; -->
-        <!-- } -->
-
-        <!-- .hero-content { -->
-            <!-- background-color: rgba(15, 15, 15, 0.8); -->
-            <!-- backdrop-filter: blur(12px); -->
-            <!-- -webkit-backdrop-filter: blur(12px); -->
-            <!-- padding: 50px 40px; -->
-            <!-- border-radius: 16px; -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.07); -->
-            <!-- box-shadow: 0 20px 50px rgba(0,0,0,0.7); -->
-            <!-- display: flex; -->
-            <!-- flex-direction: column; -->
-            <!-- align-items: center; -->
-            <!-- text-align: center; -->
-            <!-- width: 100%; -->
-            <!-- max-width: 1000px; -->
-        <!-- } -->
-
-        <!-- .hero-logos-container { -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-            <!-- justify-content: center; -->
-            <!-- gap: 20px; -->
-            <!-- margin-bottom: 25px; -->
-        <!-- } -->
-
-        <!-- .hero-logo-main { -->
-            <!-- height: 85px; -->
-            <!-- width: auto; -->
-            <!-- display: block; -->
-        <!-- } -->
-
-        <!-- .hero-vatsim-logo { -->
-            <!-- height: 54px; -->
-            <!-- width: auto; -->
-            <!-- border-left: 2px solid rgba(255, 255, 255, 0.2); -->
-            <!-- padding-left: 20px; -->
-            <!-- opacity: 0.9; -->
-            <!-- filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5)); -->
-            <!-- display: block; -->
-        <!-- } -->
-
-        <!-- .hero p { -->
-            <!-- font-size: 18px; -->
-            <!-- margin-bottom: 35px; -->
-            <!-- color: #e0e0e0; -->
-            <!-- max-width: 700px; -->
-            <!-- font-weight: 300; -->
-        <!-- } -->
-
-        <!-- .hero-btn-group { -->
-            <!-- display: flex; -->
-            <!-- gap: 15px; -->
-            <!-- margin-bottom: 45px; -->
-        <!-- } -->
-
-        <!-- .btn { -->
-            <!-- display: inline-block; -->
-            <!-- padding: 13px 32px; -->
-            <!-- text-decoration: none; -->
-            <!-- font-weight: 600; -->
-            <!-- border-radius: 6px; -->
-            <!-- letter-spacing: 1px; -->
-            <!-- text-transform: uppercase; -->
-            <!-- font-size: 13px; -->
-            <!-- transition: all 0.3s ease; -->
-            <!-- cursor: pointer; -->
-            <!-- text-align: center; -->
-        <!-- } -->
-
-        <!-- .btn-primary { -->
-            <!-- background-color: white; -->
-            <!-- color: #1a1a1a; -->
-            <!-- border: 2px solid white; -->
-        <!-- } -->
-
-        <!-- .btn-primary:hover { -->
-            <!-- background-color: #e6e6e6; -->
-            <!-- transform: translateY(-2px); -->
-        <!-- } -->
-
-        <!-- .btn-secondary { -->
-            <!-- background-color: transparent; -->
-            <!-- color: white; -->
-            <!-- border: 2px solid rgba(255, 255, 255, 0.4); -->
-        <!-- } -->
-
-        <!-- .btn-secondary:hover { -->
-            <!-- border-color: white; -->
-            <!-- background-color: rgba(255, 255, 255, 0.05); -->
-            <!-- transform: translateY(-2px); -->
-        <!-- } -->
-
-        <!-- /* Информационные плашки */ -->
-        <!-- .hero-features { -->
-            <!-- display: grid; -->
-            <!-- grid-template-columns: repeat(3, 1fr); -->
-            <!-- gap: 20px; -->
-            <!-- width: 100%; -->
-            <!-- border-top: 1px solid rgba(255, 255, 255, 0.1); -->
-            <!-- padding-top: 35px; -->
-        <!-- } -->
-
-        <!-- .feature-item { -->
-            <!-- padding: 15px; -->
-            <!-- border-radius: 8px; -->
-            <!-- background: rgba(255, 255, 255, 0.02); -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.03); -->
-        <!-- } -->
-
-        <!-- .feature-icon { -->
-            <!-- font-size: 22px; -->
-            <!-- margin-bottom: 6px; -->
-            <!-- display: block; -->
-        <!-- } -->
-
-        <!-- .feature-title { -->
-            <!-- font-size: 15px; -->
-            <!-- font-weight: 700; -->
-            <!-- text-transform: uppercase; -->
-            <!-- margin-bottom: 5px; -->
-        <!-- } -->
-
-        <!-- .feature-desc { -->
-            <!-- font-size: 12px; -->
-            <!-- color: #aaaaaa; -->
-        <!-- } -->
-
-        <!-- /* Секции */ -->
-        <!-- .content-section { -->
-            <!-- padding: 90px 0; -->
-        <!-- } -->
-
-        <!-- #about { background-color: #121212; } -->
-        <!-- #fleet { background-color: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.02); } -->
-        <!-- #roster { background-color: #121212; border-top: 1px solid rgba(255, 255, 255, 0.02); scroll-margin-top: 70px; } -->
-
-        <!-- .section-title { -->
-            <!-- font-size: 28px; -->
-            <!-- margin-bottom: 45px; -->
-            <!-- text-transform: uppercase; -->
-            <!-- letter-spacing: 2px; -->
-            <!-- text-align: center; -->
-            <!-- font-weight: 700; -->
-        <!-- } -->
-
-        <!-- .section-title::after { -->
-            <!-- content: ''; -->
-            <!-- display: block; -->
-            <!-- width: 40px; -->
-            <!-- height: 3px; -->
-            <!-- background-color: #ffffff; -->
-            <!-- margin: 12px auto 0; -->
-        <!-- } -->
-
-        <!-- /* Сетка карточек */ -->
-        <!-- .grid { -->
-            <!-- display: grid; -->
-            <!-- grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); -->
-            <!-- gap: 25px; -->
-        <!-- } -->
-
-        <!-- .card { -->
-            <!-- background: linear-gradient(145deg, rgba(25, 25, 25, 0.6), rgba(18, 18, 18, 0.8)); -->
-            <!-- padding: 40px 30px; -->
-            <!-- border-radius: 12px; -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.04); -->
-            <!-- transition: all 0.3s ease; -->
-            <!-- scroll-margin-top: 90px; -->
-        <!-- } -->
-
-        <!-- .card:hover { -->
-            <!-- transform: translateY(-5px); -->
-            <!-- border-color: rgba(255, 255, 255, 0.15); -->
-            <!-- background: rgba(25, 25, 25, 0.9); -->
-        <!-- } -->
-
-        <!-- /* ТАБЛИЦА СПИСКА ПИЛОТОВ (PILOT ROSTER) */ -->
-        <!-- .roster-wrapper { -->
-            <!-- background: rgba(20, 20, 20, 0.6); -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.05); -->
-            <!-- border-radius: 12px; -->
-            <!-- overflow-x: auto; -->
-            <!-- width: 100%; -->
-        <!-- } -->
-
-        <!-- .roster-table { -->
-            <!-- width: 100%; -->
-            <!-- border-collapse: collapse; -->
-            <!-- text-align: left; -->
-            <!-- font-size: 14px; -->
-            <!-- min-width: 600px; -->
-        <!-- } -->
-
-        <!-- .roster-table th { -->
-            <!-- background-color: rgba(30, 30, 30, 0.8); -->
-            <!-- color: white; -->
-            <!-- text-transform: uppercase; -->
-            <!-- font-weight: 600; -->
-            <!-- font-size: 12px; -->
-            <!-- letter-spacing: 0.5px; -->
-            <!-- padding: 16px 20px; -->
-            <!-- border-bottom: 2px solid rgba(255, 255, 255, 0.05); -->
-        <!-- } -->
-
-        <!-- .roster-table td { -->
-            <!-- padding: 14px 20px; -->
-            <!-- border-bottom: 1px solid rgba(255, 255, 255, 0.03); -->
-            <!-- color: #cccccc; -->
-        <!-- } -->
-
-        <!-- .roster-table tbody tr { -->
-            <!-- cursor: pointer; -->
-        <!-- } -->
-
-        <!-- .roster-table tr:hover td { -->
-            <!-- background-color: rgba(255, 255, 255, 0.02); -->
-            <!-- color: white; -->
-        <!-- } -->
-
-        <!-- .status-badge { -->
-            <!-- display: inline-block; -->
-            <!-- padding: 3px 10px; -->
-            <!-- border-radius: 12px; -->
-            <!-- font-size: 11px; -->
-            <!-- font-weight: 600; -->
-            <!-- text-transform: uppercase; -->
-        <!-- } -->
-
-        <!-- .status-online { -->
-            <!-- background-color: rgba(46, 204, 113, 0.15); -->
-            <!-- color: #2ecc71; -->
-            <!-- border: 1px solid rgba(46, 204, 113, 0.3); -->
-        <!-- } -->
-
-        <!-- .status-offline { -->
-            <!-- background-color: rgba(255, 255, 255, 0.05); -->
-            <!-- color: #777777; -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.1); -->
-        <!-- } -->
-
-        <!-- /* Кнопка "Это я!" в списке пилотов */ -->
-        <!-- .btn-its-me { -->
-            <!-- background: transparent; -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.15); -->
-            <!-- color: rgba(255, 255, 255, 0.4); -->
-            <!-- padding: 2px 6px; -->
-            <!-- font-size: 10px; -->
-            <!-- text-transform: lowercase; -->
-            <!-- border-radius: 4px; -->
-            <!-- cursor: pointer; -->
-            <!-- margin-right: 8px; -->
-            <!-- display: inline-block; -->
-            <!-- vertical-align: middle; -->
-            <!-- transition: all 0.2s ease; -->
-        <!-- } -->
-
-        <!-- .btn-its-me:hover { -->
-            <!-- background: #0056b3; -->
-            <!-- color: #fff; -->
-            <!-- border-color: #0056b3; -->
-        <!-- } -->
-
-        <!-- /* Подсветка кнопок "Это я!" при клике на "Забыл CID" */ -->
-        <!-- .btn-its-me.highlight-target { -->
-            <!-- animation: pulse-button-highlight 0.8s ease-in-out 3; -->
-            <!-- border-color: #ffffff; -->
-            <!-- color: #ffffff; -->
-            <!-- background: rgba(255, 255, 255, 0.1); -->
-        <!-- } -->
-
-        <!-- @keyframes pulse-button-highlight { -->
-            <!-- 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); } -->
-            <!-- 50% { transform: scale(1.1); box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.2); border-color: #fff; } -->
-            <!-- 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } -->
-        <!-- } -->
-
-        <!-- /* Секция Вступления */ -->
-        <!-- .join-section { -->
-            <!-- padding: 100px 0; -->
-            <!-- background: linear-gradient(rgba(0,0,0,0.85), rgba(15,15,15,0.95)), url('https://i.imgur.com/kFSOdpY.png'); -->
-            <!-- background-size: cover; -->
-            <!-- background-position: center; -->
-            <!-- text-align: center; -->
-        <!-- } -->
-
-        <!-- .join-container { -->
-            <!-- max-width: 700px; -->
-            <!-- margin: 0 auto; -->
-            <!-- background: rgba(20, 20, 20, 0.6); -->
-            <!-- padding: 45px 25px; -->
-            <!-- border-radius: 14px; -->
-            <!-- border: 1px solid rgba(255,255,255,0.05); -->
-        <!-- } -->
-
-        <!-- .btn-discord { -->
-            <!-- background-color: #5865F2; -->
-            <!-- color: white; -->
-            <!-- border: 2px solid #5865F2; -->
-        <!-- } -->
-
-        <!-- .btn-discord:hover { -->
-            <!-- background-color: #4752C4; -->
-            <!-- transform: translateY(-2px); -->
-        <!-- } -->
-
-        <!-- footer { -->
-            <!-- background-color: #050505; -->
-            <!-- color: #555555; -->
-            <!-- text-align: center; -->
-            <!-- padding: 50px 0; -->
-            <!-- font-size: 12px; -->
-            <!-- border-top: 1px solid rgba(255, 255, 255, 0.02); -->
-        <!-- } -->
-
-        <!-- footer p { margin-bottom: 10px; } -->
-        <!-- footer a { color: #777777; text-decoration: underline; cursor: pointer; } -->
-        <!-- footer a:hover { color: white; } -->
-
-        <!-- /* МОДАЛЬНОЕ ОКНО ДЛЯ PRIVACY POLICY (GDPR) */ -->
-        <!-- .modal { -->
-            <!-- position: fixed; -->
-            <!-- top: 0; -->
-            <!-- left: 0; -->
-            <!-- width: 100%; -->
-            <!-- height: 100%; -->
-            <!-- background-color: rgba(0, 0, 0, 0.85); -->
-            <!-- display: flex; -->
-            <!-- align-items: center; -->
-            <!-- justify-content: center; -->
-            <!-- z-index: 2000; -->
-            <!-- opacity: 0; -->
-            <!-- visibility: hidden; -->
-            <!-- transition: all 0.3s ease; -->
-            <!-- padding: 20px; -->
-        <!-- } -->
-
-        <!-- .modal.open { -->
-            <!-- opacity: 1; -->
-            <!-- visibility: visible; -->
-        <!-- } -->
-
-        <!-- .modal-content { -->
-            <!-- background-color: #161616; -->
-            <!-- border: 1px solid rgba(255, 255, 255, 0.1); -->
-            <!-- border-radius: 12px; -->
-            <!-- width: 100%; -->
-            <!-- max-width: 700px; -->
-            <!-- max-height: 80vh; -->
-            <!-- overflow-y: auto; -->
-            <!-- padding: 35px; -->
-            <!-- position: relative; -->
-            <!-- box-shadow: 0 15px 40px rgba(0,0,0,0.8); -->
-            <!-- text-align: left; -->
-        <!-- } -->
-
-        <!-- .modal-header { -->
-            <!-- font-size: 22px; -->
-            <!-- font-weight: 700; -->
-            <!-- margin-bottom: 20px; -->
-            <!-- text-transform: uppercase; -->
-            <!-- border-bottom: 1px solid rgba(255, 255, 255, 0.08); -->
-            <!-- padding-bottom: 10px; -->
-        <!-- } -->
-
-        <!-- .modal-body { -->
-            <!-- color: #b3b3b3; -->
-            <!-- font-size: 13px; -->
-            <!-- overflow-y: auto; -->
-            <!-- line-height: 1.6; -->
-        <!-- } -->
-
-        <!-- .close-modal-btn { -->
-            <!-- position: absolute; -->
-            <!-- top: 20px; -->
-            <!-- right: 20px; -->
-            <!-- background: none; -->
-            <!-- border: none; -->
-            <!-- color: #888; -->
-            <!-- font-size: 24px; -->
-            <!-- cursor: pointer; -->
-        <!-- } -->
-
-        <!-- .close-modal-btn:hover { color: white; } -->
-
-        <!-- /* РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА */ -->
-        <!-- .pilot-details-row td { -->
-            <!-- background-color: rgba(255, 255, 255, 0.02); -->
-            <!-- padding: 0; -->
-            <!-- border-bottom: 0px solid rgba(255, 255, 255, 0.05); -->
-            <!-- transition: border-bottom-width 0.35s ease; -->
-        <!-- } -->
-
-        <!-- .pilot-details-row.open td { -->
-            <!-- border-bottom-width: 1px; -->
-        <!-- } -->
-
-        <!-- .pilot-details-inner { -->
-            <!-- display: flex; -->
-            <!-- flex-wrap: wrap; -->
-            <!-- align-items: center; -->
-            <!-- gap: 25px; -->
-            <!-- padding: 0 25px; -->
-            <!-- max-height: 0; -->
-            <!-- opacity: 0; -->
-            <!-- overflow: hidden; -->
-            <!-- transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease; -->
-        <!-- } -->
-
-        <!-- .pilot-details-row.open .pilot-details-inner { -->
-            <!-- max-height: 200px; -->
-            <!-- opacity: 1; -->
-            <!-- padding: 20px 25px; -->
-        <!-- } -->
-
-        <!-- .pilot-detail-item { -->
-            <!-- display: flex; -->
-            <!-- flex-direction: column; -->
-            <!-- gap: 4px; -->
-        <!-- } -->
-
-        <!-- .pilot-detail-item span:first-child { -->
-            <!-- color: #888; -->
-            <!-- text-transform: uppercase; -->
-            <!-- font-size: 11px; -->
-            <!-- letter-spacing: 0.5px; -->
-        <!-- } -->
-
-        <!-- .pilot-stats-link { -->
-            <!-- display: inline-block; -->
-            <!-- margin-left: auto; -->
-            <!-- padding: 10px 24px; -->
-            <!-- background-color: white; -->
-            <!-- color: #1a1a1a; -->
-            <!-- text-decoration: none; -->
-            <!-- font-weight: 600; -->
-            <!-- border-radius: 6px; -->
-            <!-- letter-spacing: 1px; -->
-            <!-- text-transform: uppercase; -->
-            <!-- font-size: 12px; -->
-            <!-- text-align: center; -->
-            <!-- transition: all 0.3s ease; -->
-            <!-- border: 2px solid white; -->
-            <!-- white-space: nowrap; -->
-        <!-- } -->
-
-        <!-- .pilot-stats-link:hover { -->
-            <!-- background-color: #e6e6e6; -->
-            <!-- transform: translateY(-2px); -->
-        <!-- } -->
-
-        <!-- .roster-table tbody tr.pilot-row-clickable.active td { -->
-            <!-- background-color: rgba(255, 255, 255, 0.04); -->
-            <!-- color: white; -->
-        <!-- } -->
-
-        <!-- /* Подсветка карточек флота */ -->
-        <!-- .card.highlight-target { -->
-            <!-- animation: pulse-card-highlight 1s ease-in-out 2; -->
-        <!-- } -->
-
-        <!-- @keyframes pulse-card-highlight { -->
-            <!-- 0% { border-color: rgba(255, 255, 255, 0.04); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } -->
-            <!-- 50% { border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); background: rgba(25, 25, 25, 0.9); } -->
-            <!-- 100% { border-color: rgba(255, 255, 255, 0.04); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } -->
-        <!-- } -->
-
-        <!-- @media (max-width: 768px) { -->
-            <!-- .pilot-details-inner { -->
-                <!-- flex-direction: column; -->
-                <!-- align-items: flex-start; -->
-                <!-- gap: 15px; -->
-            <!-- } -->
-            <!-- .pilot-stats-link { -->
-                <!-- margin-left: 0; -->
-                <!-- width: 100%; -->
-            <!-- } -->
-        <!-- } -->
-
-        <!-- /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */ -->
-        <!-- @media (max-width: 768px) { -->
-            <!-- .menu-toggle { display: flex; } -->
-
-            <!-- .nav-container { -->
-                <!-- position: fixed; -->
-                <!-- top: 0; -->
-                <!-- right: -100%; -->
-                <!-- width: 75%; -->
-                <!-- max-width: 300px; -->
-                <!-- height: 100vh; -->
-                <!-- background-color: rgba(15, 15, 15, 0.98); -->
-                <!-- border-left: 1px solid rgba(255, 255, 255, 0.05); -->
-                <!-- flex-direction: column; -->
-                <!-- align-items: flex-start; -->
-                <!-- justify-content: flex-start; -->
-                <!-- padding: 90px 25px; -->
-                <!-- transition: right 0.4s ease; -->
-                <!-- box-shadow: -10px 0 30px rgba(0,0,0,0.7); -->
-                <!-- z-index: 1000; -->
-                <!-- gap: 20px; -->
-            <!-- } -->
-
-            <!-- .nav-container.active { right: 0; } -->
-            <!-- .nav-links { flex-direction: column; align-items: flex-start; width: 100%; gap: 15px; } -->
-            <!-- .nav-links li { margin-left: 0; width: 100%; } -->
-            <!-- .nav-links a { font-size: 16px; width: 100%; padding: 8px 0; } -->
-
-            <!-- .dropdown-menu { -->
-                <!-- position: static; -->
-                <!-- transform: none !important; -->
-                <!-- opacity: 1; -->
-                <!-- visibility: visible; -->
-                <!-- width: 100%; -->
-                <!-- background: rgba(255,255,255,0.02); -->
-                <!-- box-shadow: none; -->
-                <!-- border: none; -->
-                <!-- padding-left: 15px; -->
-                <!-- margin-top: 5px; -->
-                <!-- display: none; -->
-            <!-- } -->
-
-            <!-- .dropdown.active .dropdown-menu { display: block; } -->
-            <!-- .dropdown-menu a { font-size: 15px; color: #888888; } -->
-
-            <!-- /* Адаптация ЛК и языков в мобильном меню */ -->
-            <!-- .profile-widget { margin-left: 0; margin-top: 15px; width: 100%; } -->
-            <!-- .profile-btn { width: 100%; justify-content: space-between; padding: 10px 15px; background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 15px; } -->
-            <!-- .profile-dropdown { position: static; width: 100%; box-shadow: none; border: none; background: rgba(255, 255, 255, 0.02); margin-top: 5px; transform: none; display: none; padding: 15px 10px; } -->
-            <!-- .profile-dropdown.active { display: block; } -->
-
-            <!-- .lang-dropdown { margin-left: 0; margin-top: 5px; width: 100%; position: relative; } -->
-            <!-- .lang-dropdown .dropdown-menu { position: static; display: none; transform: none !important; background: rgba(255, 255, 255, 0.02); width: 100%; box-shadow: none; border: none; padding-left: 15px; margin-top: 5px; } -->
-            <!-- .lang-dropdown.active .dropdown-menu { display: block; } -->
-            <!-- .lang-current { width: 100%; justify-content: space-between; padding: 10px 15px; background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 15px; } -->
-
-            <!-- .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); } -->
-            <!-- .menu-toggle.active span:nth-child(2) { opacity: 0; } -->
-            <!-- .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-44deg); } -->
-
-            <!-- .hero { padding-top: 100px; } -->
-            <!-- .hero-content { padding: 30px 20px; } -->
-            <!-- .hero-logos-container { gap: 15px; flex-direction: column; } -->
-            <!-- .hero-logos-container .hero-vatsim-logo { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-left: 0; padding-top: 15px; width: 120px; height: auto; margin: 0 auto; } -->
-            <!-- .hero-logo-main { height: 60px; } -->
-            <!-- .hero p { font-size: 15px; } -->
-            <!-- .hero-btn-group { flex-direction: column; width: 100%; } -->
-            <!-- .btn { width: 100%; } -->
-            <!-- .hero-features { grid-template-columns: 1fr; gap: 12px; } -->
-            <!-- .content-section { padding: 60px 0; } -->
-            <!-- .section-title { font-size: 24px; margin-bottom: 35px; } -->
-            <!-- .grid { grid-template-columns: 1fr; } -->
-            <!-- .card { padding: 30px 20px; } -->
-        <!-- } -->
-    <!-- </style> -->
-<!-- </head> -->
-<!-- <body> -->
-
-    <!-- <header> -->
-        <!-- <div class="container navbar"> -->
-            <!-- <div class="logo-links-wrapper"> -->
-                <!-- <a href="#"> -->
-                    <!-- <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance Logo" class="logo-img"> -->
-                <!-- </a> -->
-                <!-- <img src="https://imgur.com/Xxznh5y.png" alt="VATSIM Logo" class="vatsim-logo-header"> -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vClearance Virtual Airline | VATSIM Community</title>
+    <style>
+        /* Общие стили и сброс настроек */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Шапка сайта (Header) */
+        header {
+            background-color: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            padding: 12px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-links-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1100;
+        }
+
+        .logo-img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .vatsim-logo-header {
+            height: 24px;
+            width: auto;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+            opacity: 0.8;
+        }
+
+        /* Зеленая моргающая точка и счетчик */
+        .online-counter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(46, 204, 113, 0.08);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+
+        .counter-text {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #2ecc71;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .blinking-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #2ecc71;
+            animation: pulse-dot 1.8s infinite;
+        }
+
+        /* === СТИЛИ ДЛЯ ПСЕВДО-ЛИЧНОГО КАБИНЕТА С КНОПКОЙ СИДА === */
+        .profile-widget {
+            position: relative;
+            margin-left: 25px;
+        }
+
+        .profile-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 135%;
+            right: 0;
+            background: rgba(18, 18, 18, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            width: 300px;
+            padding: 18px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+            display: none;
+            z-index: 1200;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .profile-dropdown.active {
+            display: block;
+        }
+
+        .profile-login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .login-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: -2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 6px;
+        }
+
+        .profile-login-form input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+        }
+
+        .profile-login-form button {
+            background: white;
+            color: #1a1a1a;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .profile-login-form button:hover {
+            background: #e6e6e6;
+        }
+
+        .forgot-cid-link {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.35);
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            margin-top: 4px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-cid-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .logout-btn {
+            background: rgba(255, 77, 77, 0.08);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            color: #ff4d4d;
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 77, 77, 0.18);
+            color: #ff6666;
+        }
+
+        /* Вспомогательные стили вывода данных */
+        .cid-res-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 6px;
+        }
+
+        .cid-res-pilot {
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .cid-res-route {
+            font-size: 13px;
+            margin-bottom: 12px;
+            color: #ccc;
+        }
+
+        .cid-res-metar-title {
+            font-size: 10px;
+            color: #aaa;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .cid-res-metar-box {
+            background: rgba(46, 204, 113, 0.03);
+            border: 1px solid rgba(46, 204, 113, 0.1);
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            color: #2ecc71;
+            margin-top: 4px;
+            line-height: 1.4;
+            white-space: normal;
+            word-break: break-all;
+        }
+
+        /* Кнопка гамбургера для мобилок */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1100;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Правая часть шапки */
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 35px;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #aaaaaa;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 0;
+            transition: color 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-links > li > a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: white;
+            transform: scaleX(0);
+            transform-origin: bottom center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-links > li > a:hover {
+            color: white;
+        }
+
+        .nav-links > li > a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Выпадающее меню флота */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(15px);
+            background-color: rgba(25, 25, 25, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            list-style: none;
+            padding: 8px 0;
+            border-radius: 6px;
+            width: 180px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1100;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(5px);
+        }
+
+        .dropdown-menu li {
+            margin-left: 0 !important;
+            width: 100%;
+        }
+
+        .dropdown-menu a, .dropdown-menu button {
+            display: block;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #b3b3b3;
+            text-decoration: none;
+            text-align: left;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            padding-left: 25px;
+        }
+
+        /* Переключатель языка */
+        .lang-dropdown {
+            margin-left: 30px;
+        }
+
+        .lang-current {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        /* ГЛАВНЫЙ БАННЕР (HERO SECTION) */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.9)), 
+                              url('https://i.imgur.com/kFSOdpY.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 120px 0 60px 0;
+        }
+
+        .hero-content {
+            background-color: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 50px 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .hero-logos-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .hero-logo-main {
+            height: 85px;
+            width: auto;
+            display: block;
+        }
+
+        .hero-vatsim-logo {
+            height: 54px;
+            width: auto;
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+            padding-left: 20px;
+            opacity: 0.9;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+            display: block;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 35px;
+            color: #e0e0e0;
+            max-width: 700px;
+            font-weight: 300;
+        }
+
+        .hero-btn-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 45px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 32px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: #1a1a1a;
+            border: 2px solid white;
+        }
+
+        .btn-primary:hover {
+            background-color: #e6e6e6;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-secondary:hover {
+            border-color: white;
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Информационные плашки */
+        .hero-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 35px;
+        }
+
+        .feature-item {
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .feature-desc {
+            font-size: 12px;
+            color: #aaaaaa;
+        }
+
+        /* Секции */
+        .content-section {
+            padding: 90px 0;
+        }
+
+        #about { background-color: #121212; }
+        #fleet { background-color: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.02); }
+        #roster { background-color: #121212; border-top: 1px solid rgba(255, 255, 255, 0.02); scroll-margin-top: 70px; }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 45px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background-color: #ffffff;
+            margin: 12px auto 0;
+        }
+
+        /* Сетка карточек */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(25, 25, 25, 0.6), rgba(18, 18, 18, 0.8));
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            scroll-margin-top: 90px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(25, 25, 25, 0.9);
+        }
+
+        /* ТАБЛИЦА СПИСКА ПИЛОТОВ (PILOT ROSTER) */
+        .roster-wrapper {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .roster-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+            min-width: 600px;
+        }
+
+        .roster-table th {
+            background-color: rgba(30, 30, 30, 0.8);
+            color: white;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .roster-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #cccccc;
+        }
+
+        .roster-table tbody tr {
+            cursor: pointer;
+        }
+
+        .roster-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: white;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-online {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .status-offline {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #777777;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Кнопка "Это я!" в списке пилотов */
+        .btn-its-me {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.4);
+            padding: 2px 6px;
+            font-size: 10px;
+            text-transform: lowercase;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            display: inline-block;
+            vertical-align: middle;
+            transition: all 0.2s ease;
+        }
+
+        .btn-its-me:hover {
+            background: #0056b3;
+            color: #fff;
+            border-color: #0056b3;
+        }
+
+        /* Подсветка кнопок "Это я!" при клике на "Забыл CID" */
+        .btn-its-me.highlight-target {
+            animation: pulse-button-highlight 0.8s ease-in-out 3;
+            border-color: #ffffff;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes pulse-button-highlight {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+            50% { transform: scale(1.1); box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.2); border-color: #fff; }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        /* Секция Вступления */
+        .join-section {
+            padding: 100px 0;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(15,15,15,0.95)), url('https://i.imgur.com/kFSOdpY.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        }
+
+        .join-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(20, 20, 20, 0.6);
+            padding: 45px 25px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+            color: white;
+            border: 2px solid #5865F2;
+        }
+
+        .btn-discord:hover {
+            background-color: #4752C4;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: #050505;
+            color: #555555;
+            text-align: center;
+            padding: 50px 0;
+            font-size: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        footer p { margin-bottom: 10px; }
+        footer a { color: #777777; text-decoration: underline; cursor: pointer; }
+        footer a:hover { color: white; }
+
+        /* МОДАЛЬНОЕ ОКНО ДЛЯ PRIVACY POLICY (GDPR) */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #161616;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 35px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            text-align: left;
+        }
+
+        .modal-header {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+        }
+
+        .modal-body {
+            color: #b3b3b3;
+            font-size: 13px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .close-modal-btn:hover { color: white; }
+
+        /* РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА */
+        .pilot-details-row td {
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 0;
+            border-bottom: 0px solid rgba(255, 255, 255, 0.05);
+            transition: border-bottom-width 0.35s ease;
+        }
+
+        .pilot-details-row.open td {
+            border-bottom-width: 1px;
+        }
+
+        .pilot-details-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 25px;
+            padding: 0 25px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
+        }
+
+        .pilot-details-row.open .pilot-details-inner {
+            max-height: 200px;
+            opacity: 1;
+            padding: 20px 25px;
+        }
+
+        .pilot-detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .pilot-detail-item span:first-child {
+            color: #888;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        .pilot-stats-link {
+            display: inline-block;
+            margin-left: auto;
+            padding: 10px 24px;
+            background-color: white;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            white-space: nowrap;
+        }
+
+        .pilot-stats-link:hover {
+            background-color: #e6e6e6;
+            transform: translateY(-2px);
+        }
+
+        .roster-table tbody tr.pilot-row-clickable.active td {
+            background-color: rgba(255, 255, 255, 0.04);
+            color: white;
+        }
+
+        /* Подсветка карточек флота */
+        .card.highlight-target {
+            animation: pulse-card-highlight 1s ease-in-out 2;
+        }
+
+        @keyframes pulse-card-highlight {
+            0% { border-color: rgba(255, 255, 255, 0.04); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+            50% { border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); background: rgba(25, 25, 25, 0.9); }
+            100% { border-color: rgba(255, 255, 255, 0.04); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .pilot-details-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .pilot-stats-link {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+
+            .nav-container {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: rgba(15, 15, 15, 0.98);
+                border-left: 1px solid rgba(255, 255, 255, 0.05);
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 90px 25px;
+                transition: right 0.4s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.7);
+                z-index: 1000;
+                gap: 20px;
+            }
+
+            .nav-container.active { right: 0; }
+            .nav-links { flex-direction: column; align-items: flex-start; width: 100%; gap: 15px; }
+            .nav-links li { margin-left: 0; width: 100%; }
+            .nav-links a { font-size: 16px; width: 100%; padding: 8px 0; }
+
+            .dropdown-menu {
+                position: static;
+                transform: none !important;
+                opacity: 1;
+                visibility: visible;
+                width: 100%;
+                background: rgba(255,255,255,0.02);
+                box-shadow: none;
+                border: none;
+                padding-left: 15px;
+                margin-top: 5px;
+                display: none;
+            }
+
+            .dropdown.active .dropdown-menu { display: block; }
+            .dropdown-menu a { font-size: 15px; color: #888888; }
+
+            /* Адаптация ЛК и языков в мобильном меню */
+            .profile-widget { margin-left: 0; margin-top: 15px; width: 100%; }
+            .profile-btn { width: 100%; justify-content: space-between; padding: 10px 15px; background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 15px; }
+            .profile-dropdown { position: static; width: 100%; box-shadow: none; border: none; background: rgba(255, 255, 255, 0.02); margin-top: 5px; transform: none; display: none; padding: 15px 10px; }
+            .profile-dropdown.active { display: block; }
+
+            .lang-dropdown { margin-left: 0; margin-top: 5px; width: 100%; position: relative; }
+            .lang-dropdown .dropdown-menu { position: static; display: none; transform: none !important; background: rgba(255, 255, 255, 0.02); width: 100%; box-shadow: none; border: none; padding-left: 15px; margin-top: 5px; }
+            .lang-dropdown.active .dropdown-menu { display: block; }
+            .lang-current { width: 100%; justify-content: space-between; padding: 10px 15px; background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 15px; }
+
+            .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-44deg); }
+
+            .hero { padding-top: 100px; }
+            .hero-content { padding: 30px 20px; }
+            .hero-logos-container { gap: 15px; flex-direction: column; }
+            .hero-logos-container .hero-vatsim-logo { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-left: 0; padding-top: 15px; width: 120px; height: auto; margin: 0 auto; }
+            .hero-logo-main { height: 60px; }
+            .hero p { font-size: 15px; }
+            .hero-btn-group { flex-direction: column; width: 100%; }
+            .btn { width: 100%; }
+            .hero-features { grid-template-columns: 1fr; gap: 12px; }
+            .content-section { padding: 60px 0; }
+            .section-title { font-size: 24px; margin-bottom: 35px; }
+            .grid { grid-template-columns: 1fr; }
+            .card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container navbar">
+            <div class="logo-links-wrapper">
+                <a href="#">
+                    <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance Logo" class="logo-img">
+                </a>
+                <img src="https://imgur.com/Xxznh5y.png" alt="VATSIM Logo" class="vatsim-logo-header">
                 
-                <!-- <div class="online-counter" id="globalOnlineCounter"> -->
-                    <!-- <span class="blinking-dot"></span> -->
-                    <!-- <span class="counter-text lang" data-ru="0 в сети" data-en="0 online">0 в сети</span> -->
-                <!-- </div> -->
-            <!-- </div> -->
+                <div class="online-counter" id="globalOnlineCounter">
+                    <span class="blinking-dot"></span>
+                    <span class="counter-text lang" data-ru="0 в сети" data-en="0 online">0 в сети</span>
+                </div>
+            </div>
             
-            <!-- <button class="menu-toggle" id="mobileMenuBtn" aria-label="Открыть меню"> -->
-                <!-- <span></span> -->
-                <!-- <span></span> -->
-                <!-- <span></span> -->
-            <!-- </button> -->
+            <button class="menu-toggle" id="mobileMenuBtn" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             
-            <!-- <div class="nav-container" id="navContainer"> -->
-                <!-- <ul class="nav-links"> -->
-                    <!-- <li><a href="#about" class="lang" data-ru="О компании" data-en="About" onclick="closeMenu()">О компании</a></li> -->
+            <div class="nav-container" id="navContainer">
+                <ul class="nav-links">
+                    <li><a href="#about" class="lang" data-ru="О компании" data-en="About" onclick="closeMenu()">О компании</a></li>
                     
-                    <!-- <li class="dropdown" id="fleetDropdown"> -->
-                        <!-- <a href="#fleet" class="lang" data-ru="Наш Флот" data-en="Our Fleet" onclick="toggleMobileDropdown(event)">Наш Флот</a> -->
-                        <!-- <ul class="dropdown-menu"> -->
-                            <!-- <li><a href="#airbus-a320" onclick="highlightCard('airbus-a320')">Airbus A320</a></li> -->
-                            <!-- <li><a href="#boeing-737" onclick="highlightCard('boeing-737')">Boeing 737-900</a></li> -->
-                            <!-- <li><a href="#boeing-777" onclick="highlightCard('boeing-777')">Boeing 777</a></li> -->
-                        <!-- </ul> -->
-                    <!-- </li> -->
+                    <li class="dropdown" id="fleetDropdown">
+                        <a href="#fleet" class="lang" data-ru="Наш Флот" data-en="Our Fleet" onclick="toggleMobileDropdown(event)">Наш Флот</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#airbus-a320" onclick="highlightCard('airbus-a320')">Airbus A320</a></li>
+                            <li><a href="#boeing-737" onclick="highlightCard('boeing-737')">Boeing 737-900</a></li>
+                            <li><a href="#boeing-777" onclick="highlightCard('boeing-777')">Boeing 777</a></li>
+                        </ul>
+                    </li>
 
-                    <!-- <li><a href="#roster" class="lang" data-ru="Пилоты" data-en="Roster" onclick="closeMenu()">Пилоты</a></li> -->
-                    <!-- <li><a href="#join" class="lang" data-ru="Вступить" data-en="Join Us" onclick="closeMenu()">Вступить</a></li> -->
-                <!-- </ul> -->
+                    <li><a href="#roster" class="lang" data-ru="Пилоты" data-en="Roster" onclick="closeMenu()">Пилоты</a></li>
+                    <li><a href="#join" class="lang" data-ru="Вступить" data-en="Join Us" onclick="closeMenu()">Вступить</a></li>
+                </ul>
                 
-                <!-- <div class="profile-widget" id="profileWidget"></div> -->
+                <div class="profile-widget" id="profileWidget"></div>
 
-                <!-- <div class="dropdown lang-dropdown" id="langDropdown"> -->
-                    <!-- <button class="lang-current" onclick="toggleMobileLang(event)"> -->
-                        <!-- <span> -->
-                            <!-- <span id="currentFlag">🇷🇺</span> -->
-                            <!-- <span id="currentText">RU</span> -->
-                        <!-- </span> -->
-                    <!-- </button> -->
-                    <!-- <ul class="dropdown-menu"> -->
-                        <!-- <li><button class="lang-option" onclick="changeLanguage('ru')">🇷🇺 RU</button></li> -->
-                        <!-- <li><button class="lang-option" onclick="changeLanguage('en')">🇬🇧 EN</button></li> -->
-                    <!-- </ul> -->
-                <!-- </div> -->
-            <!-- </div> -->
-        <!-- </div> -->
-    <!-- </header> -->
+                <div class="dropdown lang-dropdown" id="langDropdown">
+                    <button class="lang-current" onclick="toggleMobileLang(event)">
+                        <span>
+                            <span id="currentFlag">🇷🇺</span>
+                            <span id="currentText">RU</span>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="lang-option" onclick="changeLanguage('ru')">🇷🇺 RU</button></li>
+                        <li><button class="lang-option" onclick="changeLanguage('en')">🇬🇧 EN</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <!-- <section class="hero"> -->
-        <!-- <div class="container hero-content"> -->
-            <!-- <div class="hero-logos-container"> -->
-                <!-- <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance" class="hero-logo-main"> -->
-                <!-- <img src="https://imgur.com/Xxznh5y.png" alt="VATSIM Logo" class="hero-vatsim-logo"> -->
-            <!-- </div> -->
-            <!-- <p class="lang"  -->
-               <!-- data-ru="Новый взгляд на полеты в сети VATSIM. Простота, свобода и увлечение авиацией без лишних отчетов и жестких рамок."  -->
-               <!-- data-en="A fresh look at flying on the VATSIM network. Simplicity, freedom, and passion for aviation without stress and boundaries."> -->
-               <!-- Новый взгляд на полеты в сети VATSIM. Простота, свобода и увлечение авиацией без лишних отчетов и жестких рамок. -->
-            <!-- </p> -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-logos-container">
+                <img src="https://i.imgur.com/X9EWcyh.png" alt="vClearance" class="hero-logo-main">
+                <img src="https://imgur.com/Xxznh5y.png" alt="VATSIM Logo" class="hero-vatsim-logo">
+            </div>
+            <p class="lang" 
+               data-ru="Новый взгляд на полеты в сети VATSIM. Простота, свобода и увлечение авиацией без лишних отчетов и жестких рамок." 
+               data-en="A fresh look at flying on the VATSIM network. Simplicity, freedom, and passion for aviation without stress and boundaries.">
+               Новый взгляд на полеты в сети VATSIM. Простота, свобода и увлечение авиацией без лишних отчетов и жестких рамок.
+            </p>
 
-            <!-- <div class="hero-btn-group"> -->
-                <!-- <a href="#join" class="btn btn-primary lang" data-ru="Присоединиться" data-en="Join Crew">Присоединиться</a> -->
-                <!-- <a href="#roster" class="btn btn-secondary lang" data-ru="Список пилотов" data-en="Pilot Roster">Список пилотов</a> -->
-            <!-- </div> -->
+            <div class="hero-btn-group">
+                <a href="#join" class="btn btn-primary lang" data-ru="Присоединиться" data-en="Join Crew">Присоединиться</a>
+                <a href="#roster" class="btn btn-secondary lang" data-ru="Список пилотов" data-en="Pilot Roster">Список пилотов</a>
+            </div>
 
-            <!-- <div class="hero-features"> -->
-                <!-- <div class="feature-item"> -->
-                    <!-- <span class="feature-icon">🏢</span> -->
-                    <!-- <div class="feature-title lang" data-ru="Наши базы" data-en="Our hubs">Наши базы</div> -->
-                    <!-- <div class="feature-desc lang" data-ru="Шереметьево (UUEE) • Минск (UMMS) • Казань (UWKD)" data-en="Sheremetyevo (UUEE) • Minsk (UMMS) • Kazan (UWKD)">Шереметьево (UUEE) • Минск (UMMS) • Казань (UWKD)</div> -->
-                <!-- </div> -->
-                <!-- <div class="feature-item"> -->
-                    <!-- <span class="feature-icon">🌐</span> -->
-                    <!-- <div class="feature-title lang" data-ru="Сеть VATSIM" data-en="VATSIM Network">Сеть VATSIM</div> -->
-                    <!-- <div class="feature-desc lang" data-ru="Полное погружение в симуляцию и реальную радиосвязь" data-en="Full immersion into realistic simulation and ATC radio">Полное погружение в симуляцию и реальную радиосвязь</div> -->
-                <!-- </div> -->
-                <!-- <div class="feature-item"> -->
-                    <!-- <span class="feature-icon">🛠️</span> -->
-                    <!-- <div class="feature-title lang" data-ru="Живой Roster" data-en="Live Tracking">Живой Roster</div> -->
-                    <!-- <div class="feature-desc lang" data-ru="Мониторинг активности участников сообщества в реальном времени" data-en="Real-time monitoring of community member flight activity">Мониторинг активности участников сообщества в реальном времени</div> -->
-                <!-- </div> -->
-            <!-- </div> -->
-        <!-- </div> -->
-    <!-- </section> -->
+            <div class="hero-features">
+                <div class="feature-item">
+                    <span class="feature-icon">🏢</span>
+                    <div class="feature-title lang" data-ru="Наши базы" data-en="Our hubs">Наши базы</div>
+                    <div class="feature-desc lang" data-ru="Шереметьево (UUEE) • Минск (UMMS) • Казань (UWKD)" data-en="Sheremetyevo (UUEE) • Minsk (UMMS) • Kazan (UWKD)">Шереметьево (UUEE) • Минск (UMMS) • Казань (UWKD)</div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🌐</span>
+                    <div class="feature-title lang" data-ru="Сеть VATSIM" data-en="VATSIM Network">Сеть VATSIM</div>
+                    <div class="feature-desc lang" data-ru="Полное погружение в симуляцию и реальную радиосвязь" data-en="Full immersion into realistic simulation and ATC radio">Полное погружение в симуляцию и реальную радиосвязь</div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🛠️</span>
+                    <div class="feature-title lang" data-ru="Живой Roster" data-en="Live Tracking">Живой Roster</div>
+                    <div class="feature-desc lang" data-ru="Мониторинг активности участников сообщества в реальном времени" data-en="Real-time monitoring of community member flight activity">Мониторинг активности участников сообщества в реальном времени</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- <section id="about" class="content-section"> -->
-        <!-- <div class="container"> -->
-            <!-- <h2 class="section-title lang" data-ru="О проекте" data-en="About Project">О проекте</h2> -->
-            <!-- <div class="grid"> -->
-                <!-- <div class="card"> -->
-                    <!-- <span class="card-icon">🔓</span> -->
-                    <!-- <h3 class="lang" data-ru="Свободная концепция" data-en="Free Concept">Свободная концепция</h3> -->
-                    <!-- <p class="lang" data-ru="Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию." data-en="We created a virtual airline for those who want to fly on VATSIM for pure fun. No rigid schedules, complex reports, or flight assignment stress.">Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию.</p> -->
-                <!-- </div> -->
-                <!-- <div class="card"> -->
-                    <!-- <span class="card-icon">🤝</span> -->
-                    <!-- <h3 class="lang" data-ru="Авиационное братство" data-en="Aviation Brotherhood">Авиационное братство</h3> -->
-                    <!-- <p class="lang" data-ru="Наша цель — объединить пилотов для совместных вылетов, общения, обмена опытом и взаимной помощи при освоении сложных типов ВС или правил радиообмена." data-en="Our goal is to unite pilots for group flights, networking, experience sharing, and mutual assistance in mastering complex aircraft types or ATC phraseology.">Наша цель — объединить пилотов для совместных вылетов, общения, обмена опытом и взаимной помощи при освоении сложных типов ВС или правил радиообмена.</p> -->
-                <!-- </div> -->
-                <!-- <div class="card"> -->
-                    <!-- <span class="card-icon">🛠️</span> -->
-                    <!-- <h3 class="lang" data-ru="Полная поддержка" data-en="Full Support">Полная поддержка</h3> -->
-                    <!-- <p class="lang" data-ru="Неважно, только вы установили симулятор или уже имеете сотни часов в сети. Мы рады каждому, кто уважает правила VATSIM и горит небом." data-en="It doesn't matter if you just installed the simulator or already have hundreds of hours online. We welcome everyone who respects VATSIM rules and loves the skies.">Неважно, только вы установили симулятор или уже имеете сотни часов в сети. Мы рады каждому, кто уважает правила VATSIM и горит небом.</p> -->
-                <!-- </div> -->
-            <!-- </div> -->
-        <!-- </div> -->
-    <!-- </section> -->
+    <section id="about" class="content-section">
+        <div class="container">
+            <h2 class="section-title lang" data-ru="О проекте" data-en="About Project">О проекте</h2>
+            <div class="grid">
+                <div class="card">
+                    <span class="card-icon">🔓</span>
+                    <h3 class="lang" data-ru="Свободная концепция" data-en="Free Concept">Свободная концепция</h3>
+                    <p class="lang" data-ru="Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию." data-en="We created a virtual airline for those who want to fly on VATSIM for pure fun. No rigid schedules, complex reports, or flight assignment stress.">Мы создали авиакомпанию для тех, кто хочет летать в сети VATSIM ради удовольствия. Никаких жестких планов, сложных отчетов и привязки к расписанию.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🤝</span>
+                    <h3 class="lang" data-ru="Авиационное братство" data-en="Aviation Brotherhood">Авиационное братство</h3>
+                    <p class="lang" data-ru="Наша цель — объединить пилотов для совместных вылетов, общения, обмена опытом и взаимной помощи при освоении сложных типов ВС или правил радиообмена." data-en="Our goal is to unite pilots for group flights, networking, experience sharing, and mutual assistance in mastering complex aircraft types or ATC phraseology.">Наша цель — объединить пилотов для совместных вылетов, общения, обмена опытом и взаимной помощи при освоении сложных типов ВС или правил радиообмена.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🛠️</span>
+                    <h3 class="lang" data-ru="Полная поддержка" data-en="Full Support">Полная поддержка</h3>
+                    <p class="lang" data-ru="Неважно, только вы установили симулятор или уже имеете сотни часов в сети. Мы рады каждому, кто уважает правила VATSIM и горит небом." data-en="It doesn't matter if you just installed the simulator or already have hundreds of hours online. We welcome everyone who respects VATSIM rules and loves the skies.">Неважно, только вы установили симулятор или уже имеете сотни часов в сети. Мы рады каждому, кто уважает правила VATSIM и горит небом.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- <section id="fleet" class="content-section"> -->
-        <!-- <div class="container"> -->
-            <!-- <h2 class="section-title lang" data-ru="Наш Флот" data-en="Our Fleet">Наш Флот</h2> -->
-            <!-- <div class="grid"> -->
-                <!-- <div class="card" id="airbus-a320"> -->
-                    <!-- <span class="card-icon">🇪🇺</span> -->
-                    <!-- <h3>Airbus A320</h3> -->
-                    <!-- <p class="lang"  -->
-                       <!-- data-ru="Европейская классика со статусным компьютерным управлением Fly-by-Wire. Наш основной узкофюзеляжный лайнер, идеально подходящий для выполнения ближне- и среднемагистральных рейсов."  -->
-                       <!-- data-en="A European classic featuring state-of-the-art Fly-by-Wire computer flight controls. Our primary narrow-body airliner, perfectly tailored for short and medium-haul operations."> -->
-                       <!-- Европейская классика со статусным компьютерным управлением Fly-by-Wire. Наш основной узкофюзеляжный лайнер, идеально подходящий для выполнения ближне- и среднемагистральных рейсов. -->
-                    <!-- </p> -->
-                <!-- </div> -->
-                <!-- <div class="card" id="boeing-737"> -->
-                    <!-- <span class="card-icon">🇺🇸</span> -->
-                    <!-- <h3>Boeing 737-900</h3> -->
-                    <!-- <p class="lang"  -->
-                       <!-- data-ru="Самый вместительный представитель семейства Next Generation в парке. Штурвальное управление, оверхед с тумблерами и честная динамика потребуют собранности."  -->
-                       <!-- data-en="The longest member of the Next Generation family within our fleet. Yoke-and-cable control mechanics and a tight overhead panel require full pilot concentration."> -->
-                       <!-- Самый вместительный представитель семейства Next Generation в парке. Штурвальное управление, оверхед с тумблерами и честная динамика потребуют собранности. -->
-                    <!-- </p> -->
-                <!-- </div> -->
-                <!-- <div class="card" id="boeing-777"> -->
-                    <!-- <span class="card-icon">👑</span> -->
-                    <!-- <h3>Boeing 777</h3> -->
-                    <!-- <p class="lang"  -->
-                       <!-- data-ru="Мощный широкофюзеляжный флагман vClearance с двигателями GE90. Создан для трансконтинентальных перелетов и многочасовых миссий через океаны."  -->
-                       <!-- data-en="The mighty wide-body flagship of vClearance powered by GE90 engines. Purpose-built for transcontinental operations and multi-hour oceanic crossings."> -->
-                       <!-- Мощный широкофюзеляжный флагман vClearance с двигателями GE90. Создан для трансконтинентальных перелетов и многочасовых миссий через океаны. -->
-                    <!-- </p> -->
-                <!-- </div> -->
-            <!-- </div> -->
-        <!-- </div> -->
-    <!-- </section> -->
+    <section id="fleet" class="content-section">
+        <div class="container">
+            <h2 class="section-title lang" data-ru="Наш Флот" data-en="Our Fleet">Наш Флот</h2>
+            <div class="grid">
+                <div class="card" id="airbus-a320">
+                    <span class="card-icon">🇪🇺</span>
+                    <h3>Airbus A320</h3>
+                    <p class="lang" 
+                       data-ru="Европейская классика со статусным компьютерным управлением Fly-by-Wire. Наш основной узкофюзеляжный лайнер, идеально подходящий для выполнения ближне- и среднемагистральных рейсов." 
+                       data-en="A European classic featuring state-of-the-art Fly-by-Wire computer flight controls. Our primary narrow-body airliner, perfectly tailored for short and medium-haul operations.">
+                       Европейская классика со статусным компьютерным управлением Fly-by-Wire. Наш основной узкофюзеляжный лайнер, идеально подходящий для выполнения ближне- и среднемагистральных рейсов.
+                    </p>
+                </div>
+                <div class="card" id="boeing-737">
+                    <span class="card-icon">🇺🇸</span>
+                    <h3>Boeing 737-900</h3>
+                    <p class="lang" 
+                       data-ru="Самый вместительный представитель семейства Next Generation в парке. Штурвальное управление, оверхед с тумблерами и честная динамика потребуют собранности." 
+                       data-en="The longest member of the Next Generation family within our fleet. Yoke-and-cable control mechanics and a tight overhead panel require full pilot concentration.">
+                       Самый вместительный представитель семейства Next Generation в парке. Штурвальное управление, оверхед с тумблерами и честная динамика потребуют собранности.
+                    </p>
+                </div>
+                <div class="card" id="boeing-777">
+                    <span class="card-icon">👑</span>
+                    <h3>Boeing 777</h3>
+                    <p class="lang" 
+                       data-ru="Мощный широкофюзеляжный флагман vClearance с двигателями GE90. Создан для трансконтинентальных перелетов и многочасовых миссий через океаны." 
+                       data-en="The mighty wide-body flagship of vClearance powered by GE90 engines. Purpose-built for transcontinental operations and multi-hour oceanic crossings.">
+                       Мощный широкофюзеляжный флагман vClearance с двигателями GE90. Создан для трансконтинентальных перелетов и многочасовых миссий через океаны.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- <section id="roster" class="content-section"> -->
-        <!-- <div class="container"> -->
-            <!-- <h2 class="section-title lang" data-ru="Список и активность пилотов" data-en="Pilot Roster & Live Activity">Список и активность пилотов</h2> -->
-            <!-- <div class="roster-wrapper"> -->
-                <!-- <table class="roster-table"> -->
-                    <!-- <thead> -->
-                        <!-- <tr> -->
-                            <!-- <th class="lang" data-ru="Пилот / CID" data-en="Pilot / CID">Пилот / CID</th> -->
-                            <!-- <th class="lang" data-ru="Позывной" data-en="Callsign">Позывной</th> -->
-                            <!-- <th class="lang" data-ru="Тип ВС" data-en="Aircraft">Тип ВС</th> -->
-                            <!-- <th class="lang" data-ru="Маршрут" data-en="Route">Маршрут</th> -->
-                            <!-- <th class="lang" data-ru="Статус" data-en="Network Status">Статус</th> -->
-                        <!-- </tr> -->
-                    <!-- </thead> -->
-                    <!-- <tbody id="roster-tbody"></tbody> -->
-                <!-- </table> -->
-            <!-- </div> -->
-        <!-- </div> -->
-    <!-- </section> -->
+    <section id="roster" class="content-section">
+        <div class="container">
+            <h2 class="section-title lang" data-ru="Список и активность пилотов" data-en="Pilot Roster & Live Activity">Список и активность пилотов</h2>
+            <div class="roster-wrapper">
+                <table class="roster-table">
+                    <thead>
+                        <tr>
+                            <th class="lang" data-ru="Пилот / CID" data-en="Pilot / CID">Пилот / CID</th>
+                            <th class="lang" data-ru="Позывной" data-en="Callsign">Позывной</th>
+                            <th class="lang" data-ru="Тип ВС" data-en="Aircraft">Тип ВС</th>
+                            <th class="lang" data-ru="Маршрут" data-en="Route">Маршрут</th>
+                            <th class="lang" data-ru="Статус" data-en="Network Status">Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody id="roster-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 
-    <!-- <section id="join" class="join-section"> -->
-        <!-- <div class="container"> -->
-            <!-- <div class="join-container"> -->
-                <!-- <h2 class="section-title lang" data-ru="Стать частью команды" data-en="Join the Team" style="margin-bottom: 30px;">Стать частью команды</h2> -->
-                <!-- <p class="lang" style="margin-bottom: 40px; color: #cccccc; font-weight: 300; font-size: 16px;" -->
-                   <!-- data-ru="vClearance строится вокруг active Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!" -->
-                   <!-- data-en="vClearance is built around an active Discord community. There we coordinate group flights, share screenshots, and discuss flight simulation. We are waiting for you!"> -->
-                     <!-- vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде! -->
-                <!-- </p> -->
-                <!-- <a href="https://discord.gg/A4x9tmdJEt" target="_blank" class="btn btn-discord lang" data-ru="Перейти в Discord" data-en="Open Discord">Перейти в Discord</a> -->
-            <!-- </div> -->
-        <!-- </div> -->
-    <!-- </section> -->
+    <section id="join" class="join-section">
+        <div class="container">
+            <div class="join-container">
+                <h2 class="section-title lang" data-ru="Стать частью команды" data-en="Join the Team" style="margin-bottom: 30px;">Стать частью команды</h2>
+                <p class="lang" style="margin-bottom: 40px; color: #cccccc; font-weight: 300; font-size: 16px;"
+                   data-ru="vClearance строится вокруг active Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!"
+                   data-en="vClearance is built around an active Discord community. There we coordinate group flights, share screenshots, and discuss flight simulation. We are waiting for you!">
+                     vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!
+                </p>
+                <a href="https://discord.gg/A4x9tmdJEt" target="_blank" class="btn btn-discord lang" data-ru="Перейти в Discord" data-en="Open Discord">Перейти в Discord</a>
+            </div>
+        </div>
+    </section>
 
-    <!-- <footer> -->
-        <!-- <div class="container"> -->
-            <!-- <p>&copy; 2026 vClearance virtual airline.</p> -->
-            <!-- <p class="lang"  -->
-               <!-- data-ru="Сайт создан исключительно для любителей авиасимуляторов (MSFS, X-Plane, P3D). Мы не являемся реальной авиакомпанией и не оказываем реальных услуг."  -->
-               <!-- data-en="This website is created solely for flight simulation enthusiasts (MSFS, X-Plane, P3D). We are not a real-world airline and do not provide real aviation services."> -->
-               <!-- Сайт создан исключительно для любителей авиасимуляторов (MSFS, X-Plane, P3D). We are not a real-world airline and do not provide real aviation services. -->
-            <!-- </p> -->
-            <!-- <p><span class="lang" data-ru="Проект некоммерческого сообщества в сети " data-en="A non-profit community project on the ">Проект некоммерческого сообщества в сети </span><a href="https://vatsim.net" target="_blank">VATSIM</a></p> -->
-            <!-- <p style="margin-top: 15px;"><a onclick="openModal()" class="lang" data-ru="Политика конфиденциальности (GDPR)" data-en="Privacy Policy (GDPR)">Политика конфиденциальности (GDPR)</a></p> -->
-        <!-- </div> -->
-    <!-- </footer> -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 vClearance virtual airline.</p>
+            <p class="lang" 
+               data-ru="Сайт создан исключительно для любителей авиасимуляторов (MSFS, X-Plane, P3D). Мы не являемся реальной авиакомпанией и не оказываем реальных услуг." 
+               data-en="This website is created solely for flight simulation enthusiasts (MSFS, X-Plane, P3D). We are not a real-world airline and do not provide real aviation services.">
+               Сайт создан исключительно для любителей авиасимуляторов (MSFS, X-Plane, P3D). We are not a real-world airline and do not provide real aviation services.
+            </p>
+            <p><span class="lang" data-ru="Проект некоммерческого сообщества в сети " data-en="A non-profit community project on the ">Проект некоммерческого сообщества в сети </span><a href="https://vatsim.net" target="_blank">VATSIM</a></p>
+            <p style="margin-top: 15px;"><a onclick="openModal()" class="lang" data-ru="Политика конфиденциальности (GDPR)" data-en="Privacy Policy (GDPR)">Политика конфиденциальности (GDPR)</a></p>
+        </div>
+    </footer>
 
-    <!-- <div class="modal" id="privacyModal"> -->
-        <!-- <div class="modal-content"> -->
-            <!-- <button class="close-modal-btn" onclick="closeModal()">&times;</button> -->
-            <!-- <div class="modal-header lang" data-ru="Политика конфиденциальности (GDPR)" data-en="Privacy Policy (GDPR)">Политика конфиденциальности (GDPR)</div> -->
-            <!-- <div class="modal-body"> -->
-                <!-- <p class="lang"  -->
-                   <!-- data-ru="Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance."  -->
-                   <!-- data-en="This Privacy Policy is compiled in compliance with the General Data Protection Regulation (GDPR) of the European Union and governs the collection, processing, and protection of personal data within the non-profit simulation community vClearance."> -->
-                   <!-- Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance. -->
-                <!-- </p> -->
+    <div class="modal" id="privacyModal">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal()">&times;</button>
+            <div class="modal-header lang" data-ru="Политика конфиденциальности (GDPR)" data-en="Privacy Policy (GDPR)">Политика конфиденциальности (GDPR)</div>
+            <div class="modal-body">
+                <p class="lang" 
+                   data-ru="Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance." 
+                   data-en="This Privacy Policy is compiled in compliance with the General Data Protection Regulation (GDPR) of the European Union and governs the collection, processing, and protection of personal data within the non-profit simulation community vClearance.">
+                   Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance.
+                </p>
                 
-                <!-- <h4 class="lang" data-ru="1. Сбор персональных данных" data-en="1. Collection of Personal Data">1. Сбор персональных данных</h4> -->
-                <!-- <p class="lang"  -->
-                   <!-- data-ru="Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут)."  -->
-                   <!-- data-en="We only process public data provided by the VATSIM network via the official public data feed (data.vatsim.net). This data includes: First and Last Name, VATSIM Identification Number (CID), and current virtual flight parameters (callsign, aircraft type, route)."> -->
-                   <!-- Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут). -->
-                <!-- </p> -->
+                <h4 class="lang" data-ru="1. Сбор персональных данных" data-en="1. Collection of Personal Data">1. Сбор персональных данных</h4>
+                <p class="lang" 
+                   data-ru="Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут)." 
+                   data-en="We only process public data provided by the VATSIM network via the official public data feed (data.vatsim.net). This data includes: First and Last Name, VATSIM Identification Number (CID), and current virtual flight parameters (callsign, aircraft type, route).">
+                   Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут).
+                </p>
 
-                <!-- <h4 class="lang" data-ru="2. Правовые основания и цели обработки" data-en="2. Legal Basis and Purpose of Processing">2. Правовые основания и цели обработки</h4> -->
-                <!-- <p class="lang"  -->
-                   <!-- data-ru="Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активность в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга."  -->
-                   <!-- data-en="Data processing is conducted based on legitimate interest (Art. 6 (1) (f) GDPR) to verify active community membership and dynamically display live flight activity on the VATSIM network. Data is never used for commercial profiling or targeted advertising."> -->
-                   <!-- Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активности в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга. -->
-                <!-- </p> -->
+                <h4 class="lang" data-ru="2. Правовые основания и цели обработки" data-en="2. Legal Basis and Purpose of Processing">2. Правовые основания и цели обработки</h4>
+                <p class="lang" 
+                   data-ru="Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активность в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга." 
+                   data-en="Data processing is conducted based on legitimate interest (Art. 6 (1) (f) GDPR) to verify active community membership and dynamically display live flight activity on the VATSIM network. Data is never used for commercial profiling or targeted advertising.">
+                   Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активности в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга.
+                </p>
 
-                <!-- <h4 class="lang" data-ru="3. Права пользователей в соответствии с GDPR" data-en="3. Your Rights Under GDPR">3. Права пользователей в соответствии с GDPR</h4> -->
-                <!-- <p class="lang" data-ru="Каждый участник сообщества обладает следующими неотъемлемыми правами:" data-en="Every community member possesses the following statutory rights:">Каждый участник сообщества обладает следующими неотъемлемыми правами:</p> -->
-                <!-- <ul style="margin-left: 20px; margin-top: 5px;"> -->
-                    <!-- <li class="lang" data-ru="Право на доступ к своим данным и проверку их корректности;" data-en="Right of access to view collected information;">Право на доступ к своим данным и проверку их корректности;</li> -->
-                    <!-- <li class="lang" data-ru="Право на отзыв согласия и полное удаление (исключение из списков) («Право быть забытым»);" data-en="Right to erasure / exclusion from internal rosters ('Right to be forgotten');">Право на отзыв согласия и полное удаление (исключение из списков) («Право быть забытым»);</li> -->
-                    <!-- <li class="lang" data-ru="Право ограничить обработку ваших данных на нашем веб-ресурсе." data-en="Right to restrict further processing of data on our web resource.">Право ограничить обработку ваших данных на нашем веб-ресурсе.</li> -->
-                <!-- </ul> -->
+                <h4 class="lang" data-ru="3. Права пользователей в соответствии с GDPR" data-en="3. Your Rights Under GDPR">3. Права пользователей в соответствии с GDPR</h4>
+                <p class="lang" data-ru="Каждый участник сообщества обладает следующими неотъемлемыми правами:" data-en="Every community member possesses the following statutory rights:">Каждый участник сообщества обладает следующими неотъемлемыми правами:</p>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li class="lang" data-ru="Право на доступ к своим данным и проверку их корректности;" data-en="Right of access to view collected information;">Право на доступ к своим данным и проверку их корректности;</li>
+                    <li class="lang" data-ru="Право на отзыв согласия и полное удаление (исключение из списков) («Право быть забытым»);" data-en="Right to erasure / exclusion from internal rosters ('Right to be forgotten');">Право на отзыв согласия и полное удаление (исключение из списков) («Право быть забытым»);</li>
+                    <li class="lang" data-ru="Право ограничить обработку ваших данных на нашем веб-ресурсе." data-en="Right to restrict further processing of data on our web resource.">Право ограничить обработку ваших данных на нашем веб-ресурсе.</li>
+                </ul>
 
-                <!-- <h4 class="lang" data-ru="4. Хранение и безопасность данных" data-en="4. Data Retention and Security">4. Хранение и безопасность данных</h4> -->
-                <!-- <p class="lang"  -->
-                   <!-- data-ru="Данные о полетах обрабатываются исключительно «на лету» в оперативной памяти браузера и не сохраняются на серверах. Мы используем безопасное шифрование HTTPS для предотвращения перехвата трафика. Мы не передаем данные сторонним коммерческим организациям."  -->
-                   <!-- data-en="Flight data is processed purely on-the-fly inside the browser session and is not recorded onto dedicated internal servers. We enforce global HTTPS encryption to avoid transport interception. No data is shared with commercial third parties."> -->
-                   <!-- Данные о полетах обрабатываются исключительно «на лету» в оперативной памяти браузера и не сохраняются на серверах. Мы используем безопасное шифрование HTTPS для предотвращения перехвата трафика. Мы не передаем данные сторонним коммерческим организациям. -->
-                <!-- </p> -->
+                <h4 class="lang" data-ru="4. Хранение и безопасность данных" data-en="4. Data Retention and Security">4. Хранение и безопасность данных</h4>
+                <p class="lang" 
+                   data-ru="Данные о полетах обрабатываются исключительно «на лету» в оперативной памяти браузера и не сохраняются на серверах. Мы используем безопасное шифрование HTTPS для предотвращения перехвата трафика. Мы не передаем данные сторонним коммерческим организациям." 
+                   data-en="Flight data is processed purely on-the-fly inside the browser session and is not recorded onto dedicated internal servers. We enforce global HTTPS encryption to avoid transport interception. No data is shared with commercial third parties.">
+                   Данные о полетах обрабатываются исключительно «на лету» в оперативной памяти браузера и не сохраняются на серверах. Мы используем безопасное шифрование HTTPS для предотвращения перехвата трафика. Мы не передаем данные сторонним коммерческим организациям.
+                </p>
 
-                <!-- <h4 class="lang" data-ru="5. Контакты и реализация прав" data-en="5. Contact Information">5. Контакты и реализация прав</h4> -->
-                <!-- <p class="lang"  -->
-                   <!-- data-ru="Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord."  -->
-                   <!-- data-en="To exercise any data rights or request removal of your CID from the vClearance roster, please contact the staff via our official Discord community server."> -->
-                   <!-- Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord. -->
-                <!-- </p> -->
-            <!-- </div> -->
-        <!-- </div> -->
-    <!-- </div> -->
+                <h4 class="lang" data-ru="5. Контакты и реализация прав" data-en="5. Contact Information">5. Контакты и реализация прав</h4>
+                <p class="lang" 
+                   data-ru="Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord." 
+                   data-en="To exercise any data rights or request removal of your CID from the vClearance roster, please contact the staff via our official Discord community server.">
+                   Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord.
+                </p>
+            </div>
+        </div>
+    </div>
 
-    <!-- <script type="module"> -->
-        <!-- // 1. Импортируем нужные функции из официального CDN Firebase -->
-        <!-- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"; -->
-        <!-- import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"; -->
+    <script type="module">
+        // 1. Импортируем нужные функции из официального CDN Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        <!-- // 2. Твоя конфигурация проекта из вкладки CDN -->
-        <!-- const firebaseConfig = { -->
-            <!-- apiKey: "AIzaSyCa2nr-heFF5LqoqN_tPYGJpf9PGhqMydo", -->
-            <!-- authDomain: "vclearance-15b43.firebaseapp.com", -->
-            <!-- projectId: "vclearance-15b43", -->
-            <!-- storageBucket: "vclearance-15b43.firebasestorage.app", -->
-            <!-- messagingSenderId: "299361728910", -->
-            <!-- appId: "1:299361728910:web:7e77b2f4431db23a66ccdf" -->
-        <!-- }; -->
+        // 2. Твоя конфигурация проекта из вкладки CDN
+        const firebaseConfig = {
+            apiKey: "AIzaSyCa2nr-heFF5LqoqN_tPYGJpf9PGhqMydo",
+            authDomain: "vclearance-15b43.firebaseapp.com",
+            projectId: "vclearance-15b43",
+            storageBucket: "vclearance-15b43.firebasestorage.app",
+            messagingSenderId: "299361728910",
+            appId: "1:299361728910:web:7e77b2f4431db23a66ccdf"
+        };
 
-        <!-- // 3. Инициализация приложения и базы данных -->
-        <!-- const app = initializeApp(firebaseConfig); -->
-        <!-- const db = getFirestore(app); -->
+        // 3. Инициализация приложения и базы данных
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        <!-- // === СПИСОК CID ТВОИХ ПИЛОТОВ === -->
-        <!-- const MY_PILOTS = [ -->
-            <!-- { cid: "1914467", name: "Elvin C." }, -->
-            <!-- { cid: "1816284", name: "Karim I." }, -->
-            <!-- { cid: "1878749", name: "Aleksey G." }, -->
-            <!-- { cid: "1904999", name: "Petr L." }, -->
-            <!-- { cid: "1752527", name: "Elisei N." } -->
-        <!-- ]; -->
+        // === СПИСОК CID ТВОИХ ПИЛОТОВ ===
+        const MY_PILOTS = [
+            { cid: "1914467", name: "Elvin C." },
+            { cid: "1816284", name: "Karim I." },
+            { cid: "1878749", name: "Aleksey G." },
+            { cid: "1904999", name: "Petr L." },
+            { cid: "1752527", name: "Elisei N." }
+        ];
 
-        <!-- // Глобальный кэш для истории полётов из Firebase -->
-        <!-- window.firebaseFlightsCache = {}; -->
+        // Глобальный кэш для истории полётов из Firebase
+        window.firebaseFlightsCache = {};
 
-        <!-- // Получаем элементы интерфейса -->
-        <!-- const mobileMenuBtn = document.getElementById('mobileMenuBtn'); -->
-        <!-- const navContainer = document.getElementById('navContainer'); -->
-        <!-- const fleetDropdown = document.getElementById('fleetDropdown'); -->
-        <!-- const langDropdown = document.getElementById('langDropdown'); -->
-        <!-- const privacyModal = document.getElementById('privacyModal'); -->
-        <!-- const rosterTbody = document.getElementById('roster-tbody'); -->
+        // Получаем элементы интерфейса
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navContainer = document.getElementById('navContainer');
+        const fleetDropdown = document.getElementById('fleetDropdown');
+        const langDropdown = document.getElementById('langDropdown');
+        const privacyModal = document.getElementById('privacyModal');
+        const rosterTbody = document.getElementById('roster-tbody');
 
-        <!-- mobileMenuBtn.addEventListener('click', () => { -->
-            <!-- mobileMenuBtn.classList.toggle('active'); -->
-            <!-- navContainer.classList.toggle('active'); -->
-        <!-- }); -->
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navContainer.classList.toggle('active');
+        });
 
-        <!-- function closeMenu() { -->
-            <!-- mobileMenuBtn.classList.remove('active'); -->
-            <!-- navContainer.classList.remove('active'); -->
-            <!-- fleetDropdown.classList.remove('active'); -->
-            <!-- langDropdown.classList.remove('active'); -->
+        function closeMenu() {
+            mobileMenuBtn.classList.remove('active');
+            navContainer.classList.remove('active');
+            fleetDropdown.classList.remove('active');
+            langDropdown.classList.remove('active');
             
-            <!-- const profileDropdown = document.getElementById('profileDropdown'); -->
-            <!-- if (profileDropdown) profileDropdown.classList.remove('active'); -->
-        <!-- } -->
+            const profileDropdown = document.getElementById('profileDropdown');
+            if (profileDropdown) profileDropdown.classList.remove('active');
+        }
 
-        <!-- // Привязываем функции к кнопкам -->
-        <!-- window.closeMenu = closeMenu; -->
-        <!-- window.openModal = () => privacyModal.classList.add('open'); -->
-        <!-- window.closeModal = () => privacyModal.classList.remove('open'); -->
+        // Привязываем функции к кнопкам
+        window.closeMenu = closeMenu;
+        window.openModal = () => privacyModal.classList.add('open');
+        window.closeModal = () => privacyModal.classList.remove('open');
         
-        <!-- window.toggleMobileDropdown = (e) => { -->
-            <!-- if (window.innerWidth <= 768) { -->
-                <!-- e.preventDefault();  -->
-                <!-- fleetDropdown.classList.toggle('active'); -->
-            <!-- } -->
-        <!-- }; -->
+        window.toggleMobileDropdown = (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault(); 
+                fleetDropdown.classList.toggle('active');
+            }
+        };
 
-        <!-- window.toggleMobileLang = (e) => { -->
-            <!-- if (window.innerWidth <= 768) { -->
-                <!-- e.preventDefault(); -->
-                <!-- langDropdown.classList.toggle('active'); -->
-            <!-- } -->
-        <!-- }; -->
+        window.toggleMobileLang = (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                langDropdown.classList.toggle('active');
+            }
+        };
 
-        <!-- // === РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА В ТАБЛИЦЕ === -->
-        <!-- window.openPilotCid = null; -->
+        // === РАСКРЫВАЮЩАЯСЯ СТРОКА ПИЛОТА В ТАБЛИЦЕ ===
+        window.openPilotCid = null;
 
-        <!-- window.togglePilotDetails = function(rowId) { -->
-            <!-- const detailRow = document.getElementById(`details-${rowId}`); -->
-            <!-- const mainRow = document.getElementById(`row-${rowId}`); -->
-            <!-- if (!detailRow || !mainRow) return; -->
+        window.togglePilotDetails = function(rowId) {
+            const detailRow = document.getElementById(`details-${rowId}`);
+            const mainRow = document.getElementById(`row-${rowId}`);
+            if (!detailRow || !mainRow) return;
             
-            <!-- const isOpen = detailRow.classList.contains('open'); -->
+            const isOpen = detailRow.classList.contains('open');
 
-            <!-- document.querySelectorAll('.pilot-details-row.open').forEach(r => r.classList.remove('open')); -->
-            <!-- document.querySelectorAll('.pilot-row-clickable.active').forEach(r => r.classList.remove('active')); -->
+            document.querySelectorAll('.pilot-details-row.open').forEach(r => r.classList.remove('open'));
+            document.querySelectorAll('.pilot-row-clickable.active').forEach(r => r.classList.remove('active'));
 
-            <!-- if (!isOpen) { -->
-                <!-- detailRow.classList.add('open'); -->
-                <!-- mainRow.classList.add('active'); -->
-                <!-- window.openPilotCid = rowId; -->
-            <!-- } else { -->
-                <!-- window.openPilotCid = null; -->
-            <!-- } -->
-        <!-- }; -->
+            if (!isOpen) {
+                detailRow.classList.add('open');
+                mainRow.classList.add('active');
+                window.openPilotCid = rowId;
+            } else {
+                window.openPilotCid = null;
+            }
+        };
 
-        <!-- // Логика смены языков -->
-        <!-- let currentLang = 'ru'; -->
-        <!-- const currentFlag = document.getElementById('currentFlag'); -->
-        <!-- const currentText = document.getElementById('currentText'); -->
-        <!-- const langElements = document.querySelectorAll('.lang'); -->
+        // Логика смены языков
+        let currentLang = 'ru';
+        const currentFlag = document.getElementById('currentFlag');
+        const currentText = document.getElementById('currentText');
+        const langElements = document.querySelectorAll('.lang');
 
-        <!-- window.changeLanguage = function(lang) { -->
-            <!-- currentLang = lang; -->
-            <!-- if (lang === 'ru') { -->
-                <!-- currentFlag.textContent = '🇷🇺'; -->
-                <!-- currentText.textContent = 'RU'; -->
-            <!-- } else { -->
-                <!-- currentFlag.textContent = '🇬🇧'; -->
-                <!-- currentText.textContent = 'EN'; -->
-            <!-- } -->
+        window.changeLanguage = function(lang) {
+            currentLang = lang;
+            if (lang === 'ru') {
+                currentFlag.textContent = '🇷🇺';
+                currentText.textContent = 'RU';
+            } else {
+                currentFlag.textContent = '🇬🇧';
+                currentText.textContent = 'EN';
+            }
             
-            <!-- langElements.forEach(el => { -->
-                <!-- if (lang === 'en') { -->
-                    <!-- el.textContent = el.getAttribute('data-en'); -->
-                <!-- } else { -->
-                    <!-- el.textContent = el.getAttribute('data-ru'); -->
-                <!-- } -->
-            <!-- }); -->
+            langElements.forEach(el => {
+                if (lang === 'en') {
+                    el.textContent = el.getAttribute('data-en');
+                } else {
+                    el.textContent = el.getAttribute('data-ru');
+                }
+            });
             
-            <!-- if (window.lastVatsimData) { -->
-                <!-- renderRoster(window.lastVatsimData); -->
-            <!-- } else { -->
-                <!-- renderRoster([]); -->
-            <!-- } -->
+            if (window.lastVatsimData) {
+                renderRoster(window.lastVatsimData);
+            } else {
+                renderRoster([]);
+            }
             
-            <!-- // Перерисовываем виджет ЛК для перевода кнопок ввода -->
-            <!-- window.updateProfileWidget(); -->
+            // Перерисовываем виджет ЛК для перевода кнопок ввода
+            window.updateProfileWidget();
             
-            <!-- if (window.innerWidth <= 768) closeMenu(); -->
-        <!-- }; -->
+            if (window.innerWidth <= 768) closeMenu();
+        };
 
-        <!-- window.highlightCard = function(cardId) { -->
-            <!-- closeMenu();  -->
-            <!-- setTimeout(() => { -->
-                <!-- const targetCard = document.getElementById(cardId); -->
-                <!-- if (targetCard) { -->
-                    <!-- targetCard.classList.remove('highlight-target'); -->
-                    <!-- void targetCard.offsetWidth;  -->
-                    <!-- targetCard.classList.add('highlight-target'); -->
-                <!-- } -->
-            <!-- }, 100); -->
-        <!-- }; -->
+        window.highlightCard = function(cardId) {
+            closeMenu(); 
+            setTimeout(() => {
+                const targetCard = document.getElementById(cardId);
+                if (targetCard) {
+                    targetCard.classList.remove('highlight-target');
+                    void targetCard.offsetWidth; 
+                    targetCard.classList.add('highlight-target');
+                }
+            }, 100);
+        };
 
-        <!-- // Функция подсветки кнопок "Это я!" при клике на "Забыл CID" -->
-        <!-- window.highlightItsMeButtons = function() { -->
-            <!-- // Закрываем выпадающую шторку ЛК -->
-            <!-- const dropdown = document.getElementById('profileDropdown'); -->
-            <!-- if (dropdown) dropdown.classList.remove('active'); -->
-            <!-- if (window.innerWidth <= 768) closeMenu(); -->
+        // Функция подсветки кнопок "Это я!" при клике на "Забыл CID"
+        window.highlightItsMeButtons = function() {
+            // Закрываем выпадающую шторку ЛК
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) dropdown.classList.remove('active');
+            if (window.innerWidth <= 768) closeMenu();
 
-            <!-- // Скроллим к списку пилотов -->
-            <!-- const rosterSection = document.getElementById('roster'); -->
-            <!-- if (rosterSection) { -->
-                <!-- rosterSection.scrollIntoView({ behavior: 'smooth' }); -->
-            <!-- } -->
+            // Скроллим к списку пилотов
+            const rosterSection = document.getElementById('roster');
+            if (rosterSection) {
+                rosterSection.scrollIntoView({ behavior: 'smooth' });
+            }
 
-            <!-- // Запускаем анимацию подсветки для всех кнопок "это я!" -->
-            <!-- setTimeout(() => { -->
-                <!-- document.querySelectorAll('.btn-its-me').forEach(btn => { -->
-                    <!-- btn.classList.remove('highlight-target'); -->
-                    <!-- void btn.offsetWidth; // Триггер сброса анимации -->
-                    <!-- btn.classList.add('highlight-target'); -->
-                <!-- }); -->
-            <!-- }, 300); -->
-        <!-- }; -->
+            // Запускаем анимацию подсветки для всех кнопок "это я!"
+            setTimeout(() => {
+                document.querySelectorAll('.btn-its-me').forEach(btn => {
+                    btn.classList.remove('highlight-target');
+                    void btn.offsetWidth; // Триггер сброса анимации
+                    btn.classList.add('highlight-target');
+                });
+            }, 300);
+        };
 
-        <!-- // === ЗАГРУЗКА ИСТОРИИ ПОЛЁТОВ ИЗ FIREBASE === -->
-        <!-- async function loadFlightsFromFirebase() { -->
-            <!-- try { -->
-                <!-- const docRef = doc(db, 'vatsim_history', 'roster'); -->
-                <!-- const docSnap = await getDoc(docRef); -->
-                <!-- if (docSnap.exists()) { -->
-                    <!-- window.firebaseFlightsCache = docSnap.data() || {}; -->
-                <!-- } -->
-            <!-- } catch (error) { -->
-                <!-- console.error("Ошибка чтения из Firebase:", error); -->
-            <!-- } -->
-        <!-- } -->
+        // === ЗАГРУЗКА ИСТОРИИ ПОЛЁТОВ ИЗ FIREBASE ===
+        async function loadFlightsFromFirebase() {
+            try {
+                const docRef = doc(db, 'vatsim_history', 'roster');
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    window.firebaseFlightsCache = docSnap.data() || {};
+                }
+            } catch (error) {
+                console.error("Ошибка чтения из Firebase:", error);
+            }
+        }
 
-        <!-- // === ИНТЕГРАЦИЯ VATSIM API И ОБНОВЛЕНИЕ БАЗЫ === -->
-        <!-- async function fetchVatsimData() { -->
-            <!-- try { -->
-                <!-- await loadFlightsFromFirebase(); -->
+        // === ИНТЕГРАЦИЯ VATSIM API И ОБНОВЛЕНИЕ БАЗЫ ===
+        async function fetchVatsimData() {
+            try {
+                await loadFlightsFromFirebase();
 
-                <!-- const response = await fetch('https://data.vatsim.net/v3/vatsim-data.json'); -->
-                <!-- if (!response.ok) throw new Error('Network error'); -->
-                <!-- const data = await response.json(); -->
+                const response = await fetch('https://data.vatsim.net/v3/vatsim-data.json');
+                if (!response.ok) throw new Error('Network error');
+                const data = await response.json();
                 
-                <!-- window.lastVatsimData = data.pilots || []; -->
+                window.lastVatsimData = data.pilots || [];
                 
-                <!-- let needUpdateFirebase = false; -->
-                <!-- const updatedDataToSave = { ...window.firebaseFlightsCache }; -->
+                let needUpdateFirebase = false;
+                const updatedDataToSave = { ...window.firebaseFlightsCache };
 
-                <!-- MY_PILOTS.forEach(localPilot => { -->
-                    <!-- const onlineData = window.lastVatsimData.find(p => p.cid.toString() === localPilot.cid.toString()); -->
+                MY_PILOTS.forEach(localPilot => {
+                    const onlineData = window.lastVatsimData.find(p => p.cid.toString() === localPilot.cid.toString());
                     
-                    <!-- if (onlineData) { -->
-                        <!-- let callsign = onlineData.callsign || '---'; -->
-                        <!-- let aircraft = '---'; -->
-                        <!-- let route = '---'; -->
+                    if (onlineData) {
+                        let callsign = onlineData.callsign || '---';
+                        let aircraft = '---';
+                        let route = '---';
                         
-                        <!-- if (onlineData.flight_plan) { -->
-                            <!-- if (onlineData.flight_plan.aircraft) { -->
-                                <!-- aircraft = onlineData.flight_plan.aircraft.split('/')[0]; -->
-                            <!-- } -->
-                            <!-- const dep = onlineData.flight_plan.departure || '???'; -->
-                            <!-- const arr = onlineData.flight_plan.arrival || '???'; -->
-                            <!-- route = (dep === '???' && arr === '???') ? '---' : `${dep} → ${arr}`; -->
-                        <!-- } else { -->
-                            <!-- route = 'No Flight Plan'; -->
-                        <!-- } -->
+                        if (onlineData.flight_plan) {
+                            if (onlineData.flight_plan.aircraft) {
+                                aircraft = onlineData.flight_plan.aircraft.split('/')[0];
+                            }
+                            const dep = onlineData.flight_plan.departure || '???';
+                            const arr = onlineData.flight_plan.arrival || '???';
+                            route = (dep === '???' && arr === '???') ? '---' : `${dep} → ${arr}`;
+                        } else {
+                            route = 'No Flight Plan';
+                        }
 
-                        <!-- const cached = updatedDataToSave[localPilot.cid]; -->
-                        <!-- if (!cached || cached.callsign !== callsign || cached.aircraft !== aircraft || cached.route !== route) { -->
-                            <!-- updatedDataToSave[localPilot.cid] = { callsign, aircraft, route }; -->
-                            <!-- needUpdateFirebase = true; -->
-                        <!-- } -->
-                    <!-- } -->
-                <!-- }); -->
+                        const cached = updatedDataToSave[localPilot.cid];
+                        if (!cached || cached.callsign !== callsign || cached.aircraft !== aircraft || cached.route !== route) {
+                            updatedDataToSave[localPilot.cid] = { callsign, aircraft, route };
+                            needUpdateFirebase = true;
+                        }
+                    }
+                });
 
-                <!-- if (needUpdateFirebase) { -->
-                    <!-- window.firebaseFlightsCache = updatedDataToSave; -->
-                    <!-- const docRef = doc(db, 'vatsim_history', 'roster'); -->
-                    <!-- await setDoc(docRef, updatedDataToSave, { merge: true }); -->
-                <!-- } -->
+                if (needUpdateFirebase) {
+                    window.firebaseFlightsCache = updatedDataToSave;
+                    const docRef = doc(db, 'vatsim_history', 'roster');
+                    await setDoc(docRef, updatedDataToSave, { merge: true });
+                }
 
-                <!-- renderRoster(window.lastVatsimData); -->
+                renderRoster(window.lastVatsimData);
                 
-                <!-- // Авто-обновление данных METAR в открытом окне ЛК, если пользователь залогинен -->
-                <!-- const dropdown = document.getElementById('profileDropdown'); -->
-                <!-- if (dropdown && dropdown.classList.contains('active')) { -->
-                    <!-- window.renderProfileDropdownData(); -->
-                <!-- } -->
-            <!-- } catch (error) { -->
-                <!-- console.error('Ошибка получения данных VATSIM:', error); -->
-                <!-- renderRoster([]); -->
-            <!-- } -->
-        <!-- } -->
+                // Авто-обновление данных METAR в открытом окне ЛК, если пользователь залогинен
+                const dropdown = document.getElementById('profileDropdown');
+                if (dropdown && dropdown.classList.contains('active')) {
+                    window.renderProfileDropdownData();
+                }
+            } catch (error) {
+                console.error('Ошибка получения данных VATSIM:', error);
+                renderRoster([]);
+            }
+        }
 
-        <!-- function renderRoster(pilotsOnline) { -->
-            <!-- rosterTbody.innerHTML = ''; -->
+        function renderRoster(pilotsOnline) {
+            rosterTbody.innerHTML = '';
             
-            <!-- const totalOnline = MY_PILOTS.filter(localPilot =>  -->
-                <!-- pilotsOnline.some(p => p.cid.toString() === localPilot.cid.toString()) -->
-            <!-- ).length; -->
+            const totalOnline = MY_PILOTS.filter(localPilot => 
+                pilotsOnline.some(p => p.cid.toString() === localPilot.cid.toString())
+            ).length;
 
-            <!-- const counterTextEl = document.querySelector('#globalOnlineCounter .counter-text'); -->
-            <!-- if (counterTextEl) { -->
-                <!-- counterTextEl.setAttribute('data-ru', `${totalOnline} в сети`); -->
-                <!-- counterTextEl.setAttribute('data-en', `${totalOnline} online`); -->
+            const counterTextEl = document.querySelector('#globalOnlineCounter .counter-text');
+            if (counterTextEl) {
+                counterTextEl.setAttribute('data-ru', `${totalOnline} в сети`);
+                counterTextEl.setAttribute('data-en', `${totalOnline} online`);
                 
-                <!-- if (currentLang === 'en') { -->
-                    <!-- counterTextEl.textContent = `${totalOnline} online`; -->
-                <!-- } else { -->
-                    <!-- counterTextEl.textContent = `${totalOnline} в сети`; -->
-                <!-- } -->
-            <!-- } -->
+                if (currentLang === 'en') {
+                    counterTextEl.textContent = `${totalOnline} online`;
+                } else {
+                    counterTextEl.textContent = `${totalOnline} в сети`;
+                }
+            }
             
-            <!-- MY_PILOTS.forEach(localPilot => { -->
-                <!-- const onlineData = pilotsOnline.find(p => p.cid.toString() === localPilot.cid.toString()); -->
+            MY_PILOTS.forEach(localPilot => {
+                const onlineData = pilotsOnline.find(p => p.cid.toString() === localPilot.cid.toString());
                 
-                <!-- let callsign = '---'; -->
-                <!-- let aircraft = '---'; -->
-                <!-- let route = '---'; -->
-                <!-- let statusBadge = ''; -->
+                let callsign = '---';
+                let aircraft = '---';
+                let route = '---';
+                let statusBadge = '';
 
-                <!-- const lastFlight = window.firebaseFlightsCache[localPilot.cid] || null; -->
+                const lastFlight = window.firebaseFlightsCache[localPilot.cid] || null;
 
-                <!-- if (onlineData) { -->
-                    <!-- callsign = onlineData.callsign || '---'; -->
-                    <!-- if (onlineData.flight_plan) { -->
-                        <!-- if (onlineData.flight_plan.aircraft) { -->
-                            <!-- aircraft = onlineData.flight_plan.aircraft.split('/')[0]; -->
-                        <!-- } -->
-                        <!-- const dep = onlineData.flight_plan.departure || '???'; -->
-                        <!-- const arr = onlineData.flight_plan.arrival || '???'; -->
-                        <!-- route = (dep === '???' && arr === '???') ? '---' : `${dep} → ${arr}`; -->
-                    <!-- } else { -->
-                        <!-- route = 'No Flight Plan'; -->
-                    <!-- } -->
-                    <!-- statusBadge = `<span class="status-badge status-online">Online</span>`; -->
-                <!-- } else { -->
-                    <!-- statusBadge = `<span class="status-badge status-offline">Offline</span>`; -->
-                <!-- } -->
+                if (onlineData) {
+                    callsign = onlineData.callsign || '---';
+                    if (onlineData.flight_plan) {
+                        if (onlineData.flight_plan.aircraft) {
+                            aircraft = onlineData.flight_plan.aircraft.split('/')[0];
+                        }
+                        const dep = onlineData.flight_plan.departure || '???';
+                        const arr = onlineData.flight_plan.arrival || '???';
+                        route = (dep === '???' && arr === '???') ? '---' : `${dep} → ${arr}`;
+                    } else {
+                        route = 'No Flight Plan';
+                    }
+                    statusBadge = `<span class="status-badge status-online">Online</span>`;
+                } else {
+                    statusBadge = `<span class="status-badge status-offline">Offline</span>`;
+                }
 
-                <!-- const tr = document.createElement('tr'); -->
-                <!-- tr.id = `row-${localPilot.cid}`; -->
-                <!-- tr.className = 'pilot-row-clickable'; -->
-                <!-- tr.innerHTML = ` -->
-                    <!-- <td> -->
-                        <!-- <button class="btn-its-me" onclick="event.stopPropagation(); window.quickLogin('${localPilot.cid}')">это я!</button> -->
-                        <!-- ${localPilot.name} (${localPilot.cid}) -->
-                    <!-- </td> -->
-                    <!-- <td><strong>${callsign}</strong></td> -->
-                    <!-- <td>${aircraft}</td> -->
-                    <!-- <td>${route}</td> -->
-                    <!-- <td>${statusBadge}</td> -->
-                <!-- `; -->
-                <!-- tr.addEventListener('click', () => window.togglePilotDetails(localPilot.cid)); -->
-                <!-- rosterTbody.appendChild(tr); -->
+                const tr = document.createElement('tr');
+                tr.id = `row-${localPilot.cid}`;
+                tr.className = 'pilot-row-clickable';
+                tr.innerHTML = `
+                    <td>
+                        <button class="btn-its-me" onclick="event.stopPropagation(); window.quickLogin('${localPilot.cid}')">это я!</button>
+                        ${localPilot.name} (${localPilot.cid})
+                    </td>
+                    <td><strong>${callsign}</strong></td>
+                    <td>${aircraft}</td>
+                    <td>${route}</td>
+                    <td>${statusBadge}</td>
+                `;
+                tr.addEventListener('click', () => window.togglePilotDetails(localPilot.cid));
+                rosterTbody.appendChild(tr);
 
-                <!-- const detailCallsign = onlineData ? callsign : (lastFlight ? lastFlight.callsign : '---'); -->
-                <!-- const detailAircraft = onlineData ? aircraft : (lastFlight ? lastFlight.aircraft : '---'); -->
-                <!-- const detailRoute = onlineData ? route : (lastFlight ? lastFlight.route : '---'); -->
+                const detailCallsign = onlineData ? callsign : (lastFlight ? lastFlight.callsign : '---');
+                const detailAircraft = onlineData ? aircraft : (lastFlight ? lastFlight.aircraft : '---');
+                const detailRoute = onlineData ? route : (lastFlight ? lastFlight.route : '---');
                 
-                <!-- const flightLabelRu = onlineData ? 'Текущий полёт' : 'Последний полёт'; -->
-                <!-- const flightLabelEn = onlineData ? 'Current Flight' : 'Last Flight'; -->
-                <!-- const flightLabel = (currentLang === 'en') ? flightLabelEn : flightLabelRu; -->
+                const flightLabelRu = onlineData ? 'Текущий полёт' : 'Последний полёт';
+                const flightLabelEn = onlineData ? 'Current Flight' : 'Last Flight';
+                const flightLabel = (currentLang === 'en') ? flightLabelEn : flightLabelRu;
 
-                <!-- const detailsTr = document.createElement('tr'); -->
-                <!-- detailsTr.id = `details-${localPilot.cid}`; -->
-                <!-- detailsTr.className = 'pilot-details-row'; -->
-                <!-- if (window.openPilotCid === localPilot.cid) { -->
-                    <!-- detailsTr.classList.add('open'); -->
-                <!-- } -->
-                <!-- detailsTr.innerHTML = ` -->
-                    <!-- <td colspan="5"> -->
-                        <!-- <div class="pilot-details-inner"> -->
-                            <!-- <div class="pilot-detail-item"> -->
-                                <!-- <span class="lang" data-ru="CID" data-en="CID">CID</span> -->
-                                <!-- <span>${localPilot.cid}</span> -->
-                            <!-- </div> -->
-                            <!-- <div class="pilot-detail-item"> -->
-                                <!-- <span class="lang" data-ru="${flightLabelRu}" data-en="${flightLabelEn}">${flightLabel}</span> -->
-                                <!-- <span>${detailCallsign}</span> -->
-                            <!-- </div> -->
-                            <!-- <div class="pilot-detail-item"> -->
-                                <!-- <span class="lang" data-ru="Тип ВС" data-en="Aircraft">${(currentLang === 'en') ? 'Aircraft' : 'Тип ВС'}</span> -->
-                                <!-- <span>${detailAircraft}</span> -->
-                            <!-- </div> -->
-                            <!-- <div class="pilot-detail-item"> -->
-                                <!-- <span class="lang" data-ru="Marsрут" data-en="Route">${(currentLang === 'en') ? 'Route' : 'Маршрут'}</span> -->
-                                <!-- <span>${detailRoute}</span> -->
-                            <!-- </div> -->
-                            <!-- <a href="https://stats.vatsim.net/stats/${localPilot.cid}" target="_blank" class="pilot-stats-link lang" data-ru="Статистика VATSIM" data-en="VATSIM Stats">${(currentLang === 'en') ? 'VATSIM Stats' : 'Статистика VATSIM'}</a> -->
-                        <!-- </div> -->
-                    <!-- </td> -->
-                <!-- `; -->
-                <!-- rosterTbody.appendChild(detailsTr); -->
-                <!-- if (window.openPilotCid === localPilot.cid) { -->
-                    <!-- tr.classList.add('active'); -->
-                <!-- } -->
-            <!-- }); -->
-        <!-- } -->
+                const detailsTr = document.createElement('tr');
+                detailsTr.id = `details-${localPilot.cid}`;
+                detailsTr.className = 'pilot-details-row';
+                if (window.openPilotCid === localPilot.cid) {
+                    detailsTr.classList.add('open');
+                }
+                detailsTr.innerHTML = `
+                    <td colspan="5">
+                        <div class="pilot-details-inner">
+                            <div class="pilot-detail-item">
+                                <span class="lang" data-ru="CID" data-en="CID">CID</span>
+                                <span>${localPilot.cid}</span>
+                            </div>
+                            <div class="pilot-detail-item">
+                                <span class="lang" data-ru="${flightLabelRu}" data-en="${flightLabelEn}">${flightLabel}</span>
+                                <span>${detailCallsign}</span>
+                            </div>
+                            <div class="pilot-detail-item">
+                                <span class="lang" data-ru="Тип ВС" data-en="Aircraft">${(currentLang === 'en') ? 'Aircraft' : 'Тип ВС'}</span>
+                                <span>${detailAircraft}</span>
+                            </div>
+                            <div class="pilot-detail-item">
+                                <span class="lang" data-ru="Marsрут" data-en="Route">${(currentLang === 'en') ? 'Route' : 'Маршрут'}</span>
+                                <span>${detailRoute}</span>
+                            </div>
+                            <a href="https://stats.vatsim.net/stats/${localPilot.cid}" target="_blank" class="pilot-stats-link lang" data-ru="Статистика VATSIM" data-en="VATSIM Stats">${(currentLang === 'en') ? 'VATSIM Stats' : 'Статистика VATSIM'}</a>
+                        </div>
+                    </td>
+                `;
+                rosterTbody.appendChild(detailsTr);
+                if (window.openPilotCid === localPilot.cid) {
+                    tr.classList.add('active');
+                }
+            });
+        }
 
-        <!-- // === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ЗАПРОСА METAR === -->
-        <!-- async function getMetar(icao) { -->
-            <!-- if (!icao || icao === '???' || icao === '---') return '---'; -->
-            <!-- try { -->
-                <!-- const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`); -->
-                <!-- if (response.ok) { -->
-                    <!-- const text = await response.text(); -->
-                    <!-- return text.trim() || `METAR for ${icao} not found`; -->
-                <!-- } -->
-                <!-- return `Error loading METAR (${response.status})`; -->
-            <!-- } catch (e) { -->
-                <!-- return 'Network weather error'; -->
-            <!-- } -->
-        <!-- } -->
+        // === ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ЗАПРОСА METAR ===
+        async function getMetar(icao) {
+            if (!icao || icao === '???' || icao === '---') return '---';
+            try {
+                const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`);
+                if (response.ok) {
+                    const text = await response.text();
+                    return text.trim() || `METAR for ${icao} not found`;
+                }
+                return `Error loading METAR (${response.status})`;
+            } catch (e) {
+                return 'Network weather error';
+            }
+        }
 
-        <!-- // === ЛОГИКА ПСЕВДО-ЛИЧНОГО КАБИНЕТА С LOCALSTORAGE === -->
-        <!-- window.toggleProfileDropdown = function(e) { -->
-            <!-- if (e) e.stopPropagation(); -->
-            <!-- const dropdown = document.getElementById('profileDropdown'); -->
-            <!-- if (dropdown) { -->
-                <!-- dropdown.classList.toggle('active'); -->
-                <!-- if (dropdown.classList.contains('active')) { -->
-                    <!-- window.renderProfileDropdownData(); -->
-                <!-- } -->
-            <!-- } -->
-        <!-- }; -->
+        // === ЛОГИКА ПСЕВДО-ЛИЧНОГО КАБИНЕТА С LOCALSTORAGE ===
+        window.toggleProfileDropdown = function(e) {
+            if (e) e.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('active');
+                if (dropdown.classList.contains('active')) {
+                    window.renderProfileDropdownData();
+                }
+            }
+        };
 
-        <!-- // Функция быстрого входа по кнопке "это я!" -->
-        <!-- window.quickLogin = function(cid) { -->
-            <!-- if (!cid) return; -->
-            <!-- localStorage.setItem('vatsim_pilot_cid', cid); -->
-            <!-- window.updateProfileWidget(); -->
+        // Функция быстрого входа по кнопке "это я!"
+        window.quickLogin = function(cid) {
+            if (!cid) return;
+            localStorage.setItem('vatsim_pilot_cid', cid);
+            window.updateProfileWidget();
             
-            <!-- window.scrollTo({ top: 0, behavior: 'smooth' }); -->
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            <!-- setTimeout(() => { -->
-                <!-- const dropdown = document.getElementById('profileDropdown'); -->
-                <!-- if (dropdown) { -->
-                    <!-- dropdown.classList.add('active'); -->
-                    <!-- window.renderProfileDropdownData(); -->
-                <!-- } -->
-            <!-- }, 300); -->
-        <!-- }; -->
+            setTimeout(() => {
+                const dropdown = document.getElementById('profileDropdown');
+                if (dropdown) {
+                    dropdown.classList.add('active');
+                    window.renderProfileDropdownData();
+                }
+            }, 300);
+        };
 
-        <!-- window.loginProfile = function() { -->
-            <!-- const input = document.getElementById('profileCidInput'); -->
-            <!-- if (!input) return; -->
-            <!-- const cid = input.value.trim(); -->
-            <!-- if (cid.length >= 4) { -->
-                <!-- localStorage.setItem('vatsim_pilot_cid', cid); -->
-                <!-- window.updateProfileWidget(); -->
+        window.loginProfile = function() {
+            const input = document.getElementById('profileCidInput');
+            if (!input) return;
+            const cid = input.value.trim();
+            if (cid.length >= 4) {
+                localStorage.setItem('vatsim_pilot_cid', cid);
+                window.updateProfileWidget();
                 
-                <!-- setTimeout(() => { -->
-                    <!-- const dropdown = document.getElementById('profileDropdown'); -->
-                    <!-- if (dropdown) { -->
-                        <!-- dropdown.classList.add('active'); -->
-                        <!-- window.renderProfileDropdownData(); -->
-                    <!-- } -->
-                <!-- }, 80); -->
-            <!-- } -->
-        <!-- }; -->
+                setTimeout(() => {
+                    const dropdown = document.getElementById('profileDropdown');
+                    if (dropdown) {
+                        dropdown.classList.add('active');
+                        window.renderProfileDropdownData();
+                    }
+                }, 80);
+            }
+        };
 
-        <!-- window.logoutProfile = function() { -->
-            <!-- localStorage.removeItem('vatsim_pilot_cid'); -->
-            <!-- window.updateProfileWidget(); -->
-        <!-- }; -->
+        window.logoutProfile = function() {
+            localStorage.removeItem('vatsim_pilot_cid');
+            window.updateProfileWidget();
+        };
 
-        <!-- // Перерисовка структуры виджета (Форма ввода или отображение залогиненного CID) -->
-        <!-- window.updateProfileWidget = function() { -->
-            <!-- const widget = document.getElementById('profileWidget'); -->
-            <!-- if (!widget) return; -->
-            <!-- const savedCid = localStorage.getItem('vatsim_pilot_cid'); -->
+        // Перерисовка структуры виджета (Форма ввода или отображение залогиненного CID)
+        window.updateProfileWidget = function() {
+            const widget = document.getElementById('profileWidget');
+            if (!widget) return;
+            const savedCid = localStorage.getItem('vatsim_pilot_cid');
             
-            <!-- if (!savedCid) { -->
-                <!-- const btnText = currentLang === 'en' ? 'Sign In' : 'Войти'; -->
-                <!-- const headingText = currentLang === 'en' ? 'Sign In' : 'Вход'; -->
-                <!-- const placeholderText = currentLang === 'en' ? 'Enter CID...' : 'Введите CID...'; -->
-                <!-- const forgotText = currentLang === 'en' ? 'Forgot CID?' : 'Забыли CID?'; -->
+            if (!savedCid) {
+                const btnText = currentLang === 'en' ? 'Sign In' : 'Войти';
+                const headingText = currentLang === 'en' ? 'Sign In' : 'Вход';
+                const placeholderText = currentLang === 'en' ? 'Enter CID...' : 'Введите CID...';
+                const forgotText = currentLang === 'en' ? 'Forgot CID?' : 'Забыли CID?';
                 
-                <!-- widget.innerHTML = ` -->
-                    <!-- <button class="profile-btn" onclick="window.toggleProfileDropdown(event)"> -->
-                        <!-- <span> ${btnText}</span> -->
-                    <!-- </button> -->
-                    <!-- <div class="profile-dropdown" id="profileDropdown" onclick="event.stopPropagation()"> -->
-                        <!-- <div class="profile-login-form"> -->
-                            <!-- <div class="login-title">${headingText}</div> -->
-                            <!-- <input type="text" id="profileCidInput" placeholder="${placeholderText}" maxlength="8"> -->
-                            <!-- <button onclick="window.loginProfile()">${btnText}</button> -->
-                            <!-- <span class="forgot-cid-link" onclick="window.highlightItsMeButtons()">${forgotText}</span> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                <!-- `; -->
-            <!-- } else { -->
-                <!-- widget.innerHTML = ` -->
-                    <!-- <button class="profile-btn" onclick="window.toggleProfileDropdown(event)"> -->
-                        <!-- <span> ${savedCid}</span> -->
-                    <!-- </button> -->
-                    <!-- <div class="profile-dropdown" id="profileDropdown" onclick="event.stopPropagation()"> -->
-                        <!-- <div id="profileDropdownContent"> -->
-                            <!-- <div style="font-size:12px; color:#aaa; text-align:center; padding:5px 0;">...</div> -->
-                        <!-- </div> -->
-                        <!-- <button class="logout-btn" onclick="window.logoutProfile()">${currentLang === 'en' ? 'Log Out' : 'Выйти'}</button> -->
-                    <!-- </div> -->
-                <!-- `; -->
-                <!-- window.renderProfileDropdownData(); -->
-            <!-- } -->
-        <!-- }; -->
+                widget.innerHTML = `
+                    <button class="profile-btn" onclick="window.toggleProfileDropdown(event)">
+                        <span> ${btnText}</span>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown" onclick="event.stopPropagation()">
+                        <div class="profile-login-form">
+                            <div class="login-title">${headingText}</div>
+                            <input type="text" id="profileCidInput" placeholder="${placeholderText}" maxlength="8">
+                            <button onclick="window.loginProfile()">${btnText}</button>
+                            <span class="forgot-cid-link" onclick="window.highlightItsMeButtons()">${forgotText}</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                widget.innerHTML = `
+                    <button class="profile-btn" onclick="window.toggleProfileDropdown(event)">
+                        <span> ${savedCid}</span>
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown" onclick="event.stopPropagation()">
+                        <div id="profileDropdownContent">
+                            <div style="font-size:12px; color:#aaa; text-align:center; padding:5px 0;">...</div>
+                        </div>
+                        <button class="logout-btn" onclick="window.logoutProfile()">${currentLang === 'en' ? 'Log Out' : 'Выйти'}</button>
+                    </div>
+                `;
+                window.renderProfileDropdownData();
+            }
+        };
 
-        <!-- // Заполнение шторки ЛК полётной информацией и METAR -->
-        <!-- window.renderProfileDropdownData = async function() { -->
-            <!-- const savedCid = localStorage.getItem('vatsim_pilot_cid'); -->
-            <!-- const content = document.getElementById('profileDropdownContent'); -->
-            <!-- if (!savedCid || !content) return; -->
+        // Заполнение шторки ЛК полётной информацией и METAR
+        window.renderProfileDropdownData = async function() {
+            const savedCid = localStorage.getItem('vatsim_pilot_cid');
+            const content = document.getElementById('profileDropdownContent');
+            if (!savedCid || !content) return;
 
-            <!-- const onlinePilot = window.lastVatsimData ? window.lastVatsimData.find(p => p.cid.toString() === savedCid) : null; -->
-            <!-- const cachedPilot = window.firebaseFlightsCache ? window.firebaseFlightsCache[savedCid] : null; -->
+            const onlinePilot = window.lastVatsimData ? window.lastVatsimData.find(p => p.cid.toString() === savedCid) : null;
+            const cachedPilot = window.firebaseFlightsCache ? window.firebaseFlightsCache[savedCid] : null;
 
-            <!-- if (onlinePilot) { -->
-                <!-- const callsign = onlinePilot.callsign || '---'; -->
-                <!-- let dep = '---'; -->
-                <!-- let arr = '---'; -->
-                <!-- if (onlinePilot.flight_plan) { -->
-                    <!-- dep = onlinePilot.flight_plan.departure || '---'; -->
-                    <!-- arr = onlinePilot.flight_plan.arrival || '---'; -->
-                <!-- } -->
+            if (onlinePilot) {
+                const callsign = onlinePilot.callsign || '---';
+                let dep = '---';
+                let arr = '---';
+                if (onlinePilot.flight_plan) {
+                    dep = onlinePilot.flight_plan.departure || '---';
+                    arr = onlinePilot.flight_plan.arrival || '---';
+                }
 
-                <!-- content.innerHTML = ` -->
-                    <!-- <div class="cid-res-header"> -->
-                        <!-- <span>${currentLang === 'en' ? 'VATSIM ONLINE' : 'В СЕТИ VATSIM'}</span> -->
-                        <!-- <span class="status-badge status-online">Online</span> -->
-                    <!-- </div> -->
-                    <!-- <div class="cid-res-pilot">${onlinePilot.name || 'Pilot'} (${savedCid})</div> -->
-                    <!-- <div class="cid-res-route">Callsign: <strong>${callsign}</strong> | Flight: <strong>${dep} ➔ ${arr}</strong></div> -->
-                    <!-- <div class="cid-res-metar-title">METAR ${dep}:</div> -->
-                    <!-- <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div> -->
-                    <!-- <div class="cid-res-metar-title">METAR ${arr}:</div> -->
-                    <!-- <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div> -->
-                <!-- `; -->
+                content.innerHTML = `
+                    <div class="cid-res-header">
+                        <span>${currentLang === 'en' ? 'VATSIM ONLINE' : 'В СЕТИ VATSIM'}</span>
+                        <span class="status-badge status-online">Online</span>
+                    </div>
+                    <div class="cid-res-pilot">${onlinePilot.name || 'Pilot'} (${savedCid})</div>
+                    <div class="cid-res-route">Callsign: <strong>${callsign}</strong> | Flight: <strong>${dep} ➔ ${arr}</strong></div>
+                    <div class="cid-res-metar-title">METAR ${dep}:</div>
+                    <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div>
+                    <div class="cid-res-metar-title">METAR ${arr}:</div>
+                    <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div>
+                `;
                 
-                <!-- const metarDep = await getMetar(dep); -->
-                <!-- const metarArr = await getMetar(arr); -->
+                const metarDep = await getMetar(dep);
+                const metarArr = await getMetar(arr);
                 
-                <!-- content.innerHTML = ` -->
-                    <!-- <div class="cid-res-header"> -->
-                        <!-- <span>${currentLang === 'en' ? 'VATSIM ONLINE' : 'В СЕТИ VATSIM'}</span> -->
-                        <!-- <span class="status-badge status-online">Online</span> -->
-                    <!-- </div> -->
-                    <!-- <div class="cid-res-pilot">${onlinePilot.name || 'Pilot'} (${savedCid})</div> -->
-                    <!-- <div class="cid-res-route">Callsign: <strong>${callsign}</strong> | Flight: <strong>${dep} ➔ ${arr}</strong></div> -->
-                    <!-- <div class="cid-res-metar-title">METAR ${dep}:</div> -->
-                    <!-- <div class="cid-res-metar-box">${metarDep}</div> -->
-                    <!-- <div class="cid-res-metar-title">METAR ${arr}:</div> -->
-                    <!-- <div class="cid-res-metar-box">${metarArr}</div> -->
-                <!-- `; -->
-            <!-- } else if (cachedPilot) { -->
-                <!-- const callsign = cachedPilot.callsign || '---'; -->
-                <!-- let dep = '---'; -->
-                <!-- let arr = '---'; -->
-                <!-- if (cachedPilot.route && cachedPilot.route.includes('→')) { -->
-                    <!-- const parts = cachedPilot.route.split('→'); -->
-                    <!-- dep = parts[0].trim(); -->
-                    <!-- arr = parts[1].trim(); -->
-                <!-- } -->
+                content.innerHTML = `
+                    <div class="cid-res-header">
+                        <span>${currentLang === 'en' ? 'VATSIM ONLINE' : 'В СЕТИ VATSIM'}</span>
+                        <span class="status-badge status-online">Online</span>
+                    </div>
+                    <div class="cid-res-pilot">${onlinePilot.name || 'Pilot'} (${savedCid})</div>
+                    <div class="cid-res-route">Callsign: <strong>${callsign}</strong> | Flight: <strong>${dep} ➔ ${arr}</strong></div>
+                    <div class="cid-res-metar-title">METAR ${dep}:</div>
+                    <div class="cid-res-metar-box">${metarDep}</div>
+                    <div class="cid-res-metar-title">METAR ${arr}:</div>
+                    <div class="cid-res-metar-box">${metarArr}</div>
+                `;
+            } else if (cachedPilot) {
+                const callsign = cachedPilot.callsign || '---';
+                let dep = '---';
+                let arr = '---';
+                if (cachedPilot.route && cachedPilot.route.includes('→')) {
+                    const parts = cachedPilot.route.split('→');
+                    dep = parts[0].trim();
+                    arr = parts[1].trim();
+                }
 
-                <!-- content.innerHTML = ` -->
-                    <!-- <div class="cid-res-header"> -->
-                        <!-- <span>${currentLang === 'en' ? 'Database history' : 'История из базы компании'}</span> -->
-                        <!-- <span class="status-badge status-offline">Offline</span> -->
-                    <!-- </div> -->
-                    <!-- <div class="cid-res-pilot">${callsign} (${savedCid})</div> -->
-                    <!-- <div class="cid-res-route">${currentLang === 'en' ? 'Last flight' : 'Крайний полет'}: <strong>${dep} ➔ ${arr}</strong></div> -->
-                    <!-- <div class="cid-res-metar-title">METAR ${dep}:</div> -->
-                    <!-- <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div> -->
-                    <!-- <div class="cid-res-metar-title">METAR ${arr}:</div> -->
-                    <!-- <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div> -->
-                <!-- `; -->
+                content.innerHTML = `
+                    <div class="cid-res-header">
+                        <span>${currentLang === 'en' ? 'Database history' : 'История из базы компании'}</span>
+                        <span class="status-badge status-offline">Offline</span>
+                    </div>
+                    <div class="cid-res-pilot">${callsign} (${savedCid})</div>
+                    <div class="cid-res-route">${currentLang === 'en' ? 'Last flight' : 'Крайний полет'}: <strong>${dep} ➔ ${arr}</strong></div>
+                    <div class="cid-res-metar-title">METAR ${dep}:</div>
+                    <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div>
+                    <div class="cid-res-metar-title">METAR ${arr}:</div>
+                    <div class="cid-res-metar-box">${currentLang === 'en' ? 'Loading weather...' : 'Связь с сервером погоды...'}</div>
+                `;
 
-                <!-- const metarDep = await getMetar(dep); -->
-                <!-- const metarArr = await getMetar(arr); -->
+                const metarDep = await getMetar(dep);
+                const metarArr = await getMetar(arr);
 
-                <!-- content.innerHTML = ` -->
-                    <!-- <div class="cid-res-header"> -->
-                        <!-- <span>${currentLang === 'en' ? 'Database history' : 'История из базы компании'}</span> -->
-                        <!-- <span class="status-badge status-offline">Offline</span> -->
-                    <!-- </div> -->
-                    <!-- <div class="cid-res-pilot">${callsign} (${savedCid})</div> -->
-                    <!-- <div class="cid-res-route">${currentLang === 'en' ? 'Last flight' : 'Крайний полет'}: <strong>${dep} ➔ ${arr}</strong></div> -->
-                    <!-- <div class="cid-res-metar-title">METAR ${dep}:</div> -->
-                    <!-- <div class="cid-res-metar-box">${metarDep}</div> -->
-                    <!-- <div class="cid-res-metar-title">METAR ${arr}:</div> -->
-                    <!-- <div class="cid-res-metar-box">${metarArr}</div> -->
-                <!-- `; -->
-            <!-- } else { -->
-                <!-- content.innerHTML = ` -->
-                    <!-- <div style="font-size:12px; color:#ff4d4d; text-align:center; padding:10px 0;"> -->
-                        <!-- ${currentLang === 'en' ? 'CID not found online or in company database.' : 'CID не найден в сети и в базе компании.'} -->
-                    <!-- </div> -->
-                <!-- `; -->
-            <!-- } -->
-        <!-- }; -->
+                content.innerHTML = `
+                    <div class="cid-res-header">
+                        <span>${currentLang === 'en' ? 'Database history' : 'История из базы компании'}</span>
+                        <span class="status-badge status-offline">Offline</span>
+                    </div>
+                    <div class="cid-res-pilot">${callsign} (${savedCid})</div>
+                    <div class="cid-res-route">${currentLang === 'en' ? 'Last flight' : 'Крайний полет'}: <strong>${dep} ➔ ${arr}</strong></div>
+                    <div class="cid-res-metar-title">METAR ${dep}:</div>
+                    <div class="cid-res-metar-box">${metarDep}</div>
+                    <div class="cid-res-metar-title">METAR ${arr}:</div>
+                    <div class="cid-res-metar-box">${metarArr}</div>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div style="font-size:12px; color:#ff4d4d; text-align:center; padding:10px 0;">
+                        ${currentLang === 'en' ? 'CID not found online or in company database.' : 'CID не найден в сети и в базе компании.'}
+                    </div>
+                `;
+            }
+        };
 
-        <!-- // Закрываем окно ЛК при клике в любое другое место экрана -->
-        <!-- document.addEventListener('click', (e) => { -->
-            <!-- const widget = document.getElementById('profileWidget'); -->
-            <!-- if (widget && !widget.contains(e.target)) { -->
-                <!-- const dropdown = document.getElementById('profileDropdown'); -->
-                <!-- if (dropdown) dropdown.classList.remove('active'); -->
-            <!-- } -->
-        <!-- }); -->
+        // Закрываем окно ЛК при клике в любое другое место экрана
+        document.addEventListener('click', (e) => {
+            const widget = document.getElementById('profileWidget');
+            if (widget && !widget.contains(e.target)) {
+                const dropdown = document.getElementById('profileDropdown');
+                if (dropdown) dropdown.classList.remove('active');
+            }
+        });
 
-        <!-- // Запуск приложения -->
-        <!-- async function initApp() { -->
-            <!-- renderRoster([]); -->
-            <!-- window.updateProfileWidget(); // Инициализация ЛК из localStorage -->
-            <!-- await loadFlightsFromFirebase(); -->
-            <!-- await fetchVatsimData(); -->
-            <!-- setInterval(fetchVatsimData, 60000);  -->
-        <!-- } -->
+        // Запуск приложения
+        async function initApp() {
+            renderRoster([]);
+            window.updateProfileWidget(); // Инициализация ЛК из localStorage
+            await loadFlightsFromFirebase();
+            await fetchVatsimData();
+            setInterval(fetchVatsimData, 60000); 
+        }
 
-        <!-- initApp(); -->
-    <!-- </script> -->
-<!-- </body> -->
-<!-- </html>
+        initApp();
+    </script>
+</body>
+</html>
