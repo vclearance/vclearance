@@ -914,6 +914,36 @@
             100% { border-color: rgba(255, 255, 255, 0.04); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
         }
 
+
+        /* Стили для пагинации последних полетов */
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .pagination-controls button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-controls button:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .pagination-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
         @media (max-width: 768px) {
             .pilot-details-inner {
                 flex-direction: column;
@@ -1156,6 +1186,36 @@
         </div>
     </section>
 
+
+    <section id="recent" class="content-section" style="background-color: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.02);">
+        <div class="container">
+            <h2 class="section-title lang" data-ru="Последние полеты" data-en="Recent Flights">Последние полеты</h2>
+            <div class="roster-wrapper">
+                <table class="roster-table">
+                    <thead>
+                        <tr>
+                            <th class="lang" data-ru="Дата" data-en="Date">Дата</th>
+                            <th class="lang" data-ru="Пилот" data-en="Pilot">Пилот</th>
+                            <th class="lang" data-ru="Позывной" data-en="Callsign">Позывной</th>
+                            <th class="lang" data-ru="Маршрут" data-en="Route">Маршрут</th>
+                            <th class="lang" data-ru="Тип ВС" data-en="Aircraft">Тип ВС</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-flights-tbody">
+                        <!-- Сюда будут подгружаться полеты -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Управление страницами -->
+            <div class="pagination-controls">
+                <button id="prevPageBtn" onclick="window.changeRecentPage(-1)">◀</button>
+                <span id="pageIndicator" style="font-size: 13px; color: #ccc;">Страница 1 / 1</span>
+                <button id="nextPageBtn" onclick="window.changeRecentPage(1)">▶</button>
+            </div>
+        </div>
+    </section>
+
     <section id="join" class="join-section">
         <div class="container">
             <div class="join-container">
@@ -1243,6 +1303,12 @@
         window.lastVatsimData = null;
         window.openPilotCid = null; // Храним ID открытого пилота для сохранения состояния
 
+        // --- ПЕРЕМЕННЫЕ ДЛЯ ПОСЛЕДНИХ ПОЛЕТОВ ---
+        window.recentFlightsData = [];
+        window.currentRecentPage = 1;
+        const FLIGHTS_PER_PAGE = 10;
+
+
         // Хелпер для очистки строки типа ВС от ICAO-суффиксов оборудования
         function cleanAircraftType(aircraftStr) {
             if (!aircraftStr) return '---';
@@ -1302,6 +1368,7 @@
                 renderRoster({ pilots: [], controllers: [] });
             }
 
+            renderRecentFlights();
             window.updateProfileWidget();
             if (window.innerWidth <= 768) closeMenu();
         };
@@ -1345,6 +1412,14 @@
                 if (docSnap.exists()) {
                     window.firebaseFlightsCache = docSnap.data() || {};
                 }
+                
+                // Загрузка лога последних 60 полетов
+                const recentRef = doc(db, 'vatsim_history', 'recent_flights_log');
+                const recentSnap = await getDoc(recentRef);
+                if (recentSnap.exists() && recentSnap.data().flights) {
+                    window.recentFlightsData = recentSnap.data().flights;
+                }
+                renderRecentFlights(); // Отрисовываем таблицу при загрузке
             } catch (error) {
                 console.error("Ошибка чтения из Firebase:", error);
             }
@@ -1380,6 +1455,41 @@
                             updatedDataToSave[localPilot.cid] = { type: 'pilot', callsign, aircraft, route };
                             needUpdateFirebase = true;
                         }
+
+                        // ---> НОВАЯ ЛОГИКА ЛОГИРОВАНИЯ CLR РЕЙСОВ <---
+                        if (callsign.toUpperCase().includes('CLR') && route !== '??? ➔ ???') {
+                            const flightId = `${localPilot.cid}_${callsign}_${route}`;
+                            
+                            const isAlreadyLogged = window.recentFlightsData.some(f => 
+                                f.cid === localPilot.cid && f.flightId === flightId
+                            );
+
+                            if (!isAlreadyLogged) {
+                                const newFlightLog = {
+                                    flightId: flightId,
+                                    cid: localPilot.cid,
+                                    name: localPilot.name,
+                                    callsign: callsign,
+                                    route: route,
+                                    aircraft: aircraft,
+                                    timestamp: new Date().toISOString()
+                                };
+                                
+                                window.recentFlightsData.unshift(newFlightLog);
+                                
+                                if (window.recentFlightsData.length > 60) {
+                                    window.recentFlightsData = window.recentFlightsData.slice(0, 60);
+                                }
+                                
+                                setDoc(doc(db, 'vatsim_history', 'recent_flights_log'), { 
+                                    flights: window.recentFlightsData 
+                                }, { merge: true });
+                                
+                                renderRecentFlights();
+                            }
+                        }
+                        // ---> КОНЕЦ НОВОЙ ЛОГИКИ <---
+
                     } else if (onlineController) {
                         const callsign = onlineController.callsign || '---';
                         if (!window.firebaseFlightsCache[localPilot.cid] || window.firebaseFlightsCache[localPilot.cid].callsign !== callsign || window.firebaseFlightsCache[localPilot.cid].type !== 'controller') {
@@ -1776,6 +1886,63 @@
                 if (dropdown) dropdown.classList.remove('active');
             }
         });
+
+        
+        // === ЛОГИКА ОТРИСОВКИ ПОСЛЕДНИХ ПОЛЕТОВ (CLR) ===
+        function renderRecentFlights() {
+            const tbody = document.getElementById('recent-flights-tbody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            if (window.recentFlightsData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 20px; color:#666;">
+                    ${currentLang === 'en' ? 'No recent flights found.' : 'История полетов пока пуста.'}
+                </td></tr>`;
+                document.getElementById('pageIndicator').textContent = 'Страница 1 / 1';
+                document.getElementById('prevPageBtn').disabled = true;
+                document.getElementById('nextPageBtn').disabled = true;
+                return;
+            }
+
+            const totalPages = Math.ceil(window.recentFlightsData.length / FLIGHTS_PER_PAGE);
+            
+            if (window.currentRecentPage > totalPages) window.currentRecentPage = totalPages;
+            if (window.currentRecentPage < 1) window.currentRecentPage = 1;
+
+            const startIndex = (window.currentRecentPage - 1) * FLIGHTS_PER_PAGE;
+            const endIndex = startIndex + FLIGHTS_PER_PAGE;
+            const flightsToShow = window.recentFlightsData.slice(startIndex, endIndex);
+
+            flightsToShow.forEach(flight => {
+                const dateObj = new Date(flight.timestamp);
+                const dateStr = dateObj.toLocaleDateString(currentLang === 'en' ? 'en-GB' : 'ru-RU', {
+                    day: '2-digit', month: 'short', hour: '2-digit', minute:'2-digit'
+                });
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="color:#aaa; font-size: 13px;">${dateStr}</td>
+                    <td><strong>${flight.name}</strong> <span style="font-size:11px; color:#666;">(${flight.cid})</span></td>
+                    <td><span style="font-family:monospace; font-weight:600; color:#2ecc71;">${flight.callsign}</span></td>
+                    <td>${flight.route}</td>
+                    <td>${flight.aircraft}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('pageIndicator').textContent = 
+                currentLang === 'en' ? `Page ${window.currentRecentPage} / ${totalPages}` 
+                                     : `Страница ${window.currentRecentPage} / ${totalPages}`;
+            
+            document.getElementById('prevPageBtn').disabled = window.currentRecentPage === 1;
+            document.getElementById('nextPageBtn').disabled = window.currentRecentPage === totalPages;
+        }
+
+        window.changeRecentPage = function(direction) {
+            window.currentRecentPage += direction;
+            renderRecentFlights();
+        };
 
         async function initApp() {
             renderRoster({ pilots: [], controllers: [] }); 
