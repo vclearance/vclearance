@@ -1167,13 +1167,11 @@
         </div>
     </section>
 
-    <!-- НОВЫЙ БЛОК С ИВЕНТАМИ ПОД ФЛОТОМ -->
     <section id="events" class="content-section">
         <div class="container">
             <h2 class="section-title lang" data-ru="Последний Ивент" data-en="Latest Event">Последний Ивент</h2>
             <div id="eventContainer" style="max-width: 850px; margin: 0 auto;">
-                <!-- Сюда динамически подставится карточка последнего ивента -->
-            </div>
+                </div>
         </div>
     </section>
 
@@ -1213,12 +1211,10 @@
                         </tr>
                     </thead>
                     <tbody id="recent-flights-tbody">
-                        <!-- Сюда будут подгружаться полеты -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
             
-            <!-- Управление страницами -->
             <div class="pagination-controls">
                 <button id="prevPageBtn" onclick="window.changeRecentPage(-1)">◀</button>
                 <span id="pageIndicator" style="font-size: 13px; color: #ccc;">Страница 1 / 1</span>
@@ -1253,7 +1249,6 @@
                 <p class="lang" data-ru="Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance." data-en="This Privacy Policy is compiled in compliance with the General Data Protection Regulation (GDPR) of the European Union and governs the collection, processing, and protection of personal data within the non-profit simulation community vClearance.">Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance.</p>
                 <h4 class="lang" data-ru="1. Сбор персональных данных" data-en="1. Collection of Personal Data">1. Сбор персональных данных</h4>
                 
-                <!-- ИЗМЕНЕНО: Добавлен id="privacyAtcPara" и оборачивание слова (УВД). в интерактивный спан-триггер для вызова админки -->
                 <p class="lang" id="privacyAtcPara" data-ru="Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут) или статус контроля <span onclick='document.getElementById(&quot;adminAuthModal&quot;).classList.add(&quot;open&quot;)' style='cursor: pointer; text-decoration: underline rgba(255,255,255,0.25); color: #fff; font-weight: 600;'>(УВД).</span>" data-en="We only process public data provided by the VATSIM network via the official public data feed (data.vatsim.net). This data includes: First and Last Name, VATSIM Identification Number (CID), and current virtual flight parameters (callsign, aircraft type, route) or ATC position.">Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут) или статус контроля <span onclick="document.getElementById('adminAuthModal').classList.add('open')" style="cursor: pointer; text-decoration: underline rgba(255,255,255,0.25); color: #fff; font-weight: 600;">(УВД).</span></p>
                 
                 <h4 class="lang" data-ru="2. Правовые основания и цели обработки" data-en="2. Legal Grounds and Objectives">2. Правовые основания и цели обработки</h4>
@@ -1273,7 +1268,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА ВВОДА ПАРОЛЯ АДМИНИСТРАТОРА -->
     <div class="modal" id="adminAuthModal">
         <div class="modal-content" style="max-width: 400px;">
             <button class="close-modal-btn" onclick="document.getElementById('adminAuthModal').classList.remove('open')">&times;</button>
@@ -1289,13 +1283,11 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА УПРАВЛЕНИЯ АДМИН-ПАНЕЛЬЮ -->
     <div class="modal" id="adminPanelModal">
         <div class="modal-content" style="max-width: 550px;">
             <button class="close-modal-btn" onclick="document.getElementById('adminPanelModal').classList.remove('open')">&times;</button>
             <div class="modal-header">Панель Управления vClearance</div>
             <div class="modal-body">
-                <!-- Форма добавления пилота -->
                 <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">Добавить нового пилота</h3>
                 <div class="profile-login-form" style="margin-bottom: 30px;">
                     <input type="text" id="newPilotCid" placeholder="VATSIM CID (например, 1999888)">
@@ -1303,7 +1295,6 @@
                     <button onclick="window.addAdminPilot()" style="background: #2ecc71; color: white;">Добавить в Roster</button>
                 </div>
 
-                <!-- Форма создания ивента -->
                 <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">Создать мероприятие (Ивент)</h3>
                 <div class="profile-login-form">
                     <input type="text" id="eventImg" placeholder="Ссылка на фото логотипа (формат 16:9)">
@@ -1319,7 +1310,7 @@
     <script type="module">
         // 1. Импортируем нужные функции из официального CDN Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // 2. Конфигурация проекта из вкладки CDN
         const firebaseConfig = {
@@ -1349,14 +1340,8 @@
             { cid: "1842401", name: "Artur B." }
         ];
 
-        // Глобальный динамический массив пилотов, объединяющий дефолтных и добавленных админом
-        let customPilots = [];
-        try {
-            customPilots = JSON.parse(localStorage.getItem('custom_pilots')) || [];
-        } catch(e) {
-            customPilots = [];
-        }
-        window.MY_PILOTS = [...BASE_PILOTS, ...customPilots];
+        // Глобальный массив пилотов 
+        window.MY_PILOTS = [...BASE_PILOTS];
 
         // Глобальный кэш для истории полётов из Firebase
         window.firebaseFlightsCache = {};
@@ -1438,7 +1423,6 @@
             }
 
             renderRecentFlights();
-            window.renderLatestEvent();
             window.updateProfileWidget();
             if (window.innerWidth <= 768) closeMenu();
         };
@@ -1474,6 +1458,38 @@
             }, 300);
         };
 
+        // === СЛУШАТЕЛЬ ПИЛОТОВ (FIREBASE) ===
+        function listenToPilots() {
+            onSnapshot(collection(db, 'custom_pilots'), (snapshot) => {
+                let customPilots = [];
+                snapshot.forEach((doc) => {
+                    customPilots.push(doc.data());
+                });
+                
+                // Объединяем дефолтных пилотов с теми, что из БД
+                window.MY_PILOTS = [...BASE_PILOTS, ...customPilots];
+                
+                // Перерисовываем ростер
+                if (window.lastVatsimData) {
+                    renderRoster(window.lastVatsimData);
+                } else {
+                    renderRoster({ pilots: [], controllers: [] });
+                }
+            });
+        }
+
+        // === СЛУШАТЕЛЬ ИВЕНТОВ (FIREBASE) ===
+        function listenToEvent() {
+            onSnapshot(doc(db, 'events', 'latest'), (docSnap) => {
+                if (docSnap.exists()) {
+                    window.renderLatestEvent(docSnap.data());
+                } else {
+                    window.renderLatestEvent(null);
+                }
+            });
+        }
+
+
         // === ЗАГРУЗКА ИСТОРИИ ПОЛЁТОВ ИЗ FIREBASE ===
         async function loadFlightsFromFirebase() {
             try {
@@ -1489,7 +1505,7 @@
                 if (recentSnap.exists() && recentSnap.data().flights) {
                     window.recentFlightsData = recentSnap.data().flights;
                 }
-                renderRecentFlights(); // Отрисовываем таблицу при загрузке
+                renderRecentFlights(); 
             } catch (error) {
                 console.error("Ошибка чтения из Firebase:", error);
             }
@@ -1526,10 +1542,8 @@
                             needUpdateFirebase = true;
                         }
 
-                        // ---> НОВАЯ ЛОГИКА ЛОГИРОВАНИЯ CLR РЕЙСОВ <---
                         if (callsign.toUpperCase().includes('CLR') && route !== '??? ➔ ???') {
                             const flightId = `${localPilot.cid}_${callsign}_${route}`;
-                            
                             const isAlreadyLogged = window.recentFlightsData.some(f => 
                                 f.cid === localPilot.cid && f.flightId === flightId
                             );
@@ -1546,7 +1560,6 @@
                                 };
                                 
                                 window.recentFlightsData.unshift(newFlightLog);
-                                
                                 if (window.recentFlightsData.length > 60) {
                                     window.recentFlightsData = window.recentFlightsData.slice(0, 60);
                                 }
@@ -1558,7 +1571,6 @@
                                 renderRecentFlights();
                             }
                         }
-                        // ---> КОНЕЦ НОВОЙ ЛОГИКИ <---
 
                     } else if (onlineController) {
                         const callsign = onlineController.callsign || '---';
@@ -1576,8 +1588,6 @@
                 }
 
                 renderRoster(window.lastVatsimData);
-
-                // ИСПРАВЛЕНИЕ: Обновляем данные профиля безусловно, а не только если вкладка active
                 window.renderProfileDropdownData();
 
             } catch (error) {
@@ -1615,6 +1625,9 @@
 
                 return scoreA - scoreB;
             });
+
+            // === ПРОВЕРКА НА АДМИНА ДЛЯ КНОПКИ УДАЛЕНИЯ ===
+            const isAdmin = localStorage.getItem('is_va_admin') === 'true';
 
             sortedPilots.forEach(localPilot => {
                 const onlinePilot = pilotsOnline.find(p => p.cid.toString() === localPilot.cid.toString());
@@ -1665,6 +1678,15 @@
                     detailRoute = cacheData.route || '---';
                 }
 
+                // Кнопка удаления для кастомных пилотов (не дефолтных)
+                let deleteBtnHtml = '';
+                if (isAdmin) {
+                    const isBasePilot = BASE_PILOTS.some(p => p.cid.toString() === localPilot.cid.toString());
+                    if (!isBasePilot) {
+                        deleteBtnHtml = `<button onclick="event.stopPropagation(); window.deletePilot('${localPilot.cid}')" style="background: #e74c3c; color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 8px; cursor: pointer;">Удалить</button>`;
+                    }
+                }
+
                 const tr = document.createElement('tr');
                 tr.className = 'pilot-row-clickable';
                 if (window.openPilotCid === localPilot.cid) tr.classList.add('active');
@@ -1674,6 +1696,7 @@
                         <button class="btn-its-me" onclick="event.stopPropagation(); window.quickLogin('${localPilot.cid}')">это я!</button>
                         <strong>${localPilot.name}</strong> 
                         <span style="font-size:11px; color:#666;">(${localPilot.cid})</span>
+                        ${deleteBtnHtml}
                     </td>
                     <td><span style="font-family:monospace; font-weight:600; color:#fff;">${callsign}</span></td>
                     <td>${aircraft}</td>
@@ -1754,13 +1777,15 @@
                 document.getElementById('adminAuthModal').classList.remove('open');
                 document.getElementById('privacyModal').classList.remove('open');
                 window.updateProfileWidget();
+                if (window.lastVatsimData) renderRoster(window.lastVatsimData); // перерисовать, чтобы появились кнопки
                 alert('Доступ подтвержден! Функция "Админ-Панель" успешно добавлена в меню вашего профиля.');
             } else {
                 if(errDiv) errDiv.style.display = 'block';
             }
         };
 
-        window.addAdminPilot = function() {
+        // Добавление пилота в Firebase
+        window.addAdminPilot = async function() {
             const cidInput = document.getElementById('newPilotCid');
             const nameInput = document.getElementById('newPilotName');
             const cid = cidInput.value.trim();
@@ -1776,24 +1801,34 @@
                 return;
             }
             
-            let customList = [];
             try {
-                customList = JSON.parse(localStorage.getItem('custom_pilots')) || [];
-            } catch(e) { customList = []; }
-            
-            const newPilot = { cid, name };
-            customList.push(newPilot);
-            localStorage.setItem('custom_pilots', JSON.stringify(customList));
-            
-            window.MY_PILOTS.push(newPilot);
-            cidInput.value = '';
-            nameInput.value = '';
-            
-            alert(`Пилот ${name} (${cid}) добавлен в базу "mypilots"!`);
-            if (window.lastVatsimData) renderRoster(window.lastVatsimData);
+                // Записываем в коллекцию custom_pilots, документ с id = cid
+                await setDoc(doc(db, 'custom_pilots', cid), { cid, name });
+                cidInput.value = '';
+                nameInput.value = '';
+                alert(`Пилот ${name} (${cid}) добавлен в базу "mypilots" Firebase!`);
+                // Слушатель onSnapshot сам обновит таблицу
+            } catch (error) {
+                console.error("Ошибка при добавлении пилота: ", error);
+                alert("Ошибка сохранения пилота.");
+            }
         };
 
-        window.createAdminEvent = function() {
+        // Удаление пилота из Firebase
+        window.deletePilot = async function(cid) {
+            if (confirm(`Вы уверены, что хотите удалить пилота с CID ${cid} из ростера?`)) {
+                try {
+                    await deleteDoc(doc(db, 'custom_pilots', cid));
+                    // onSnapshot сам обновит интерфейс
+                } catch (error) {
+                    console.error("Ошибка удаления:", error);
+                    alert("Произошла ошибка при удалении.");
+                }
+            }
+        }
+
+        // Сохранение ивента в Firebase
+        window.createAdminEvent = async function() {
             const img = document.getElementById('eventImg').value.trim();
             const title = document.getElementById('eventTitle').value.trim();
             const route = document.getElementById('eventRoute').value.trim();
@@ -1804,27 +1839,27 @@
                 return;
             }
             
-            const eventData = { img, title, route, desc };
-            localStorage.setItem('latest_event', JSON.stringify(eventData));
+            const eventData = { img, title, route, desc, updatedAt: new Date().toISOString() };
             
-            document.getElementById('eventImg').value = '';
-            document.getElementById('eventTitle').value = '';
-            document.getElementById('eventRoute').value = '';
-            document.getElementById('eventDesc').value = '';
-            
-            window.renderLatestEvent();
-            document.getElementById('adminPanelModal').classList.remove('open');
-            alert('Мероприятие успешно опубликовано на сайте!');
+            try {
+                await setDoc(doc(db, 'events', 'latest'), eventData);
+                document.getElementById('eventImg').value = '';
+                document.getElementById('eventTitle').value = '';
+                document.getElementById('eventRoute').value = '';
+                document.getElementById('eventDesc').value = '';
+                document.getElementById('adminPanelModal').classList.remove('open');
+                alert('Мероприятие успешно опубликовано на сайте (Firebase)!');
+                // Слушатель onSnapshot сам обновит блок
+            } catch (error) {
+                console.error("Ошибка сохранения ивента:", error);
+                alert("Произошла ошибка при публикации.");
+            }
         };
 
-        window.renderLatestEvent = function() {
+        // Рендер ивента (принимает данные из onSnapshot)
+        window.renderLatestEvent = function(ev) {
             const container = document.getElementById('eventContainer');
             if (!container) return;
-            
-            let ev = null;
-            try {
-                ev = JSON.parse(localStorage.getItem('latest_event'));
-            } catch(e) { ev = null; }
             
             if (ev && ev.title) {
                 container.innerHTML = `
@@ -1994,7 +2029,6 @@
                     </div>
                 `;
             } else {
-                // ПИЛОТ ОФФЛАЙН
                 const cacheData = window.firebaseFlightsCache[savedCid] || null;
                 const companyPilot = window.MY_PILOTS.find(p => p.cid.toString() === savedCid.toString());
 
@@ -2006,7 +2040,6 @@
                     const aircraft = cacheData ? cleanAircraftType(cacheData.aircraft) : '---';
                     const labelType = (cacheData && cacheData.type === 'controller') ? 'ATC' : (currentLang === 'en' ? 'Last Flight' : 'Последний полет');
 
-                    // ИСПРАВЛЕНИЕ: Достаем коды аэропортов из оффлайн-кэша маршрута для загрузки METAR
                     let dep = '???', arr = '???';
                     if (cacheData && cacheData.route && cacheData.route.includes('➔')) {
                         const parts = cacheData.route.split('➔');
@@ -2124,12 +2157,17 @@
             renderRecentFlights();
         };
 
+        // Запуск приложения
         async function initApp() {
-            window.renderLatestEvent();
+            listenToEvent(); // Подключаем слушатель Ивентов из Firestore
+            listenToPilots(); // Подключаем слушатель Пилотов из Firestore
+            
             renderRoster({ pilots: [], controllers: [] }); 
             window.updateProfileWidget(); 
+            
             await loadFlightsFromFirebase();
             await fetchVatsimData();
+            
             setInterval(fetchVatsimData, 60000); 
         }
 
