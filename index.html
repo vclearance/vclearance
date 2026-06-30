@@ -170,7 +170,7 @@
             padding-bottom: 6px;
         }
 
-        .profile-login-form input {
+        .profile-login-form input, .profile-login-form textarea {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
@@ -578,6 +578,7 @@
 
         #about { background-color: #121212; }
         #fleet { background-color: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.02); }
+        #events { background-color: #0d0d0d; border-top: 1px solid rgba(255, 255, 255, 0.02); }
         #roster { background-color: #121212; border-top: 1px solid rgba(255, 255, 255, 0.02); scroll-margin-top: 70px; }
 
         .section-title {
@@ -1066,6 +1067,7 @@
                             <li><a href="#boeing-777" onclick="highlightCard('boeing-777')">Boeing 777</a></li>
                         </ul>
                     </li>
+                    <li><a href="#events" class="lang" data-ru="Ивенты" data-en="Events" onclick="closeMenu()">Ивенты</a></li>
                     <li><a href="#roster" class="lang" data-ru="Участники" data-en="Roster" onclick="closeMenu()">Участники</a></li>
                     <li><a href="#join" class="lang" data-ru="Вступить" data-en="Join Us" onclick="closeMenu()">Вступить</a></li>
                 </ul>
@@ -1118,7 +1120,6 @@
         </div>
     </div>
 </section>
-    </section>
 
     <section id="about" class="content-section">
         <div class="container">
@@ -1162,6 +1163,16 @@
                     <h3>Boeing 777</h3>
                     <p class="lang" data-ru="Мощный широкофюзеляжный флагман vClearance с двигателями GE90. Создан для трансконтинентальных перелетов и многочасовых миссий через океаны." data-en="The mighty wide-body flagship of vClearance powered by GE90 engines. Purpose-built for transcontinental operations and multi-hour oceanic crossings.">Мощный широкофюзеляжный флагман vClearance с двигателями GE90. Создан для трансконтинентальных перелетов и многочасовых миссий через океаны.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- НОВЫЙ БЛОК С ИВЕНТАМИ ПОД ФЛОТОМ -->
+    <section id="events" class="content-section">
+        <div class="container">
+            <h2 class="section-title lang" data-ru="Последний Ивент" data-en="Latest Event">Последний Ивент</h2>
+            <div id="eventContainer" style="max-width: 850px; margin: 0 auto;">
+                <!-- Сюда динамически подставится карточка последнего ивента -->
             </div>
         </div>
     </section>
@@ -1220,7 +1231,7 @@
         <div class="container">
             <div class="join-container">
                 <h2 class="section-title lang" data-ru="Стать частью команды" data-en="Join the Team" style="margin-bottom: 30px;">Стать частью команды</h2>
-                <p class="lang" style="margin-bottom: 40px; color: #cccccc; font-weight: 300; font-size: 16px;" data-ru="vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!" data-en="vClearance is built around an active Discord community. There we coordinate group flights, share screenshots, and discuss flight simulation. We are waiting for you!">vClearance строится вокруг active Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!</p>
+                <p class="lang" style="margin-bottom: 40px; color: #cccccc; font-weight: 300; font-size: 16px;" data-ru="vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!" data-en="vClearance is built around an active Discord community. There we coordinate group flights, share screenshots, and discuss flight simulation. We are waiting for you!">vClearance строится вокруг активного Discord-сообщества. Там мы координируем совместные вылеты, делимся скриншотами и обсуждаем симуляторы. Ждем тебя в нашей команде!</p>
                 <a href="https://discord.gg/583FFvkwfv" target="_blank" class="btn btn-discord">Discord Server</a>
             </div>
         </div>
@@ -1241,7 +1252,10 @@
             <div class="modal-body">
                 <p class="lang" data-ru="Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance." data-en="This Privacy Policy is compiled in compliance with the General Data Protection Regulation (GDPR) of the European Union and governs the collection, processing, and protection of personal data within the non-profit simulation community vClearance.">Настоящая политика конфиденциальности составлена в соответствии с Общим регламентом по защите данных (GDPR) Европейского Союза и определяет порядок сбора, обработки и защиты данных пользователей некоммерческого симуляционного сообщества vClearance.</p>
                 <h4 class="lang" data-ru="1. Сбор персональных данных" data-en="1. Collection of Personal Data">1. Сбор персональных данных</h4>
-                <p class="lang" data-ru="Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут) или статус контроля (УВД)." data-en="We only process public data provided by the VATSIM network via the official public data feed (data.vatsim.net). This data includes: First and Last Name, VATSIM Identification Number (CID), and current virtual flight parameters (callsign, aircraft type, route) or ATC position.">Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут) или статус контроля (УВД).</p>
+                
+                <!-- ИЗМЕНЕНО: Добавлен id="privacyAtcPara" и оборачивание слова (УВД). в интерактивный спан-триггер для вызова админки -->
+                <p class="lang" id="privacyAtcPara" data-ru="Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут) или статус контроля <span onclick='document.getElementById(&quot;adminAuthModal&quot;).classList.add(&quot;open&quot;)' style='cursor: pointer; text-decoration: underline rgba(255,255,255,0.25); color: #fff; font-weight: 600;'>(УВД).</span>" data-en="We only process public data provided by the VATSIM network via the official public data feed (data.vatsim.net). This data includes: First and Last Name, VATSIM Identification Number (CID), and current virtual flight parameters (callsign, aircraft type, route) or ATC position.">Мы обрабатываем исключительно открытые общедоступные данные, предоставляемые сетью VATSIM через официальный открытый API (data.vatsim.net). К этим данным относятся: Имя, Фамилия, идентификационный номер VATSIM (CID), а также параметры текущего виртуального полета (позывной, тип ВС, маршрут) или статус контроля <span onclick="document.getElementById('adminAuthModal').classList.add('open')" style="cursor: pointer; text-decoration: underline rgba(255,255,255,0.25); color: #fff; font-weight: 600;">(УВД).</span></p>
+                
                 <h4 class="lang" data-ru="2. Правовые основания и цели обработки" data-en="2. Legal Grounds and Objectives">2. Правовые основания и цели обработки</h4>
                 <p class="lang" data-ru="Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активность в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга." data-en="Data processing is performed under Legitimate Interests (Art. 6 (1) (f) GDPR) to verify active internal membership and dynamically display live flight activity on the VATSIM network. Data is never used for commercial profiling or targeted advertising.">Обработка данных выполняется на основании законного интереса (Ст. 6 (1) (f) GDPR) для подтверждения активного членства участников в нашей виртуальной группе и отображения их текущей онлайн-активность в сети VATSIM. Данные не используются для профилирования или коммерческого таргетинга.</p>
                 <h4 class="lang" data-ru="3. Права пользователей в соответствии с GDPR" data-en="3. Your Rights Under GDPR">3. Права пользователей в соответствии с GDPR</h4>
@@ -1255,6 +1269,49 @@
                 <p class="lang" data-ru="Данные о полетах обрабатываются исключительно «на лету» в оперативной памяти браузера и не сохраняются на серверах. Мы используем безопасное шифрование HTTPS для предотвращения перехвата трафика. Мы не передаем данные сторонним коммерческим организациям." data-en="Flight data is processed purely on-the-fly inside the browser session and is not recorded onto dedicated internal servers. We enforce global HTTPS encryption to avoid transport interception. No data is shared with commercial third parties.">Данные о полетах обрабатываются исключительно «на лету» в оперативной памяти браузера и не сохраняются на серверах. Мы используем безопасное шифрование HTTPS для предотвращения перехвата трафика. Мы не передаем данные сторонним коммерческим организациям.</p>
                 <h4 class="lang" data-ru="5. Обратная связь" data-en="5. Contacts">5. Обратная связь</h4>
                 <p class="lang" data-ru="Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш official сервер Discord." data-en="To exercise any data rights or request removal of your CID from the vClearance roster, please contact the staff via our official Discord community server.">Для реализации ваших прав или удаления вашего CID из списка участников vClearance, пожалуйста, обратитесь к администрации через наш официальный сервер Discord.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ВВОДА ПАРОЛЯ АДМИНИСТРАТОРА -->
+    <div class="modal" id="adminAuthModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <button class="close-modal-btn" onclick="document.getElementById('adminAuthModal').classList.remove('open')">&times;</button>
+            <div class="modal-header">Авторизация Администратора</div>
+            <div class="modal-body">
+                <div class="profile-login-form">
+                    <label style="font-size: 11px; text-transform: uppercase; color: #888;">Введите мастер-пароль:</label>
+                    <input type="password" id="adminPasswordInput" placeholder="•••••••••••••••">
+                    <button onclick="window.checkAdminPassword()">Подтвердить</button>
+                    <div id="adminAuthError" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none; text-align: center;">Неверный пароль доступа!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА УПРАВЛЕНИЯ АДМИН-ПАНЕЛЬЮ -->
+    <div class="modal" id="adminPanelModal">
+        <div class="modal-content" style="max-width: 550px;">
+            <button class="close-modal-btn" onclick="document.getElementById('adminPanelModal').classList.remove('open')">&times;</button>
+            <div class="modal-header">Панель Управления vClearance</div>
+            <div class="modal-body">
+                <!-- Форма добавления пилота -->
+                <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">Добавить нового пилота</h3>
+                <div class="profile-login-form" style="margin-bottom: 30px;">
+                    <input type="text" id="newPilotCid" placeholder="VATSIM CID (например, 1999888)">
+                    <input type="text" id="newPilotName" placeholder="Имя и фамилия (например, Alexey P.)">
+                    <button onclick="window.addAdminPilot()" style="background: #2ecc71; color: white;">Добавить в Roster</button>
+                </div>
+
+                <!-- Форма создания ивента -->
+                <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">Создать мероприятие (Ивент)</h3>
+                <div class="profile-login-form">
+                    <input type="text" id="eventImg" placeholder="Ссылка на фото логотипа (формат 16:9)">
+                    <input type="text" id="eventTitle" placeholder="Заголовок ивента">
+                    <input type="text" id="eventRoute" placeholder="Маршрут рейса (например, UUEE — URSS)">
+                    <textarea id="eventDesc" placeholder="Полное описание и регламент проведения мероприятия..." style="min-height: 100px; font-family: inherit; resize: vertical; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 8px 12px; border-radius: 6px; font-size: 13px; outline: none; width: 100%;"></textarea>
+                    <button onclick="window.createAdminEvent()" style="background: white; color: #1a1a1a;">Опубликовать на главной</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1279,7 +1336,7 @@
         const db = getFirestore(app);
 
         // === СПИСОК CID ПИЛОТОВ ===
-        const MY_PILOTS = [
+        const BASE_PILOTS = [
             { cid: "1914467", name: "Elvin C." },
             { cid: "1816284", name: "Karim I." },
             { cid: "1878749", name: "Aleksey G." },
@@ -1291,6 +1348,15 @@
             { cid: "1843021", name: "Emir A." },
             { cid: "1842401", name: "Artur B." }
         ];
+
+        // Глобальный динамический массив пилотов, объединяющий дефолтных и добавленных админом
+        let customPilots = [];
+        try {
+            customPilots = JSON.parse(localStorage.getItem('custom_pilots')) || [];
+        } catch(e) {
+            customPilots = [];
+        }
+        window.MY_PILOTS = [...BASE_PILOTS, ...customPilots];
 
         // Глобальный кэш для истории полётов из Firebase
         window.firebaseFlightsCache = {};
@@ -1357,9 +1423,11 @@
             
             document.querySelectorAll('.lang').forEach(el => {
                 if (lang === 'en') {
-                    el.textContent = el.getAttribute('data-en');
+                    if (el.id === 'privacyAtcPara') el.innerHTML = el.getAttribute('data-en');
+                    else el.textContent = el.getAttribute('data-en');
                 } else {
-                    el.textContent = el.getAttribute('data-ru');
+                    if (el.id === 'privacyAtcPara') el.innerHTML = el.getAttribute('data-ru');
+                    else el.textContent = el.getAttribute('data-ru');
                 }
             });
 
@@ -1370,6 +1438,7 @@
             }
 
             renderRecentFlights();
+            window.renderLatestEvent();
             window.updateProfileWidget();
             if (window.innerWidth <= 768) closeMenu();
         };
@@ -1438,7 +1507,7 @@
                 let updatedDataToSave = { ...window.firebaseFlightsCache };
                 let needUpdateFirebase = false;
 
-                MY_PILOTS.forEach(localPilot => {
+                window.MY_PILOTS.forEach(localPilot => {
                     const onlinePilot = (data.pilots || []).find(p => p.cid.toString() === localPilot.cid.toString());
                     const onlineController = (data.controllers || []).find(c => c.cid.toString() === localPilot.cid.toString());
 
@@ -1522,7 +1591,7 @@
             const pilotsOnline = vatsimData.pilots || [];
             const controllersOnline = vatsimData.controllers || [];
 
-            const totalOnline = MY_PILOTS.filter(localPilot => 
+            const totalOnline = window.MY_PILOTS.filter(localPilot => 
                 pilotsOnline.some(p => p.cid.toString() === localPilot.cid.toString()) || 
                 controllersOnline.some(c => c.cid.toString() === localPilot.cid.toString())
             ).length;
@@ -1535,7 +1604,7 @@
             }
 
             // === ЛОГИКА СОРТИРОВКИ СПИСКА ПИЛОТОВ ===
-            const sortedPilots = [...MY_PILOTS].sort((a, b) => {
+            const sortedPilots = [...window.MY_PILOTS].sort((a, b) => {
                 const aIsController = controllersOnline.some(c => c.cid.toString() === a.cid.toString());
                 const aIsPilot = pilotsOnline.some(p => p.cid.toString() === a.cid.toString());
                 const bIsController = controllersOnline.some(c => c.cid.toString() === b.cid.toString());
@@ -1674,13 +1743,117 @@
         window.openModal = function() { document.getElementById('privacyModal').classList.add('open'); };
         window.closeModal = function() { document.getElementById('privacyModal').classList.remove('open'); };
 
+        // === СЕКРЕТНАЯ АВТОРИЗАЦИЯ И ФУНКЦИИ АДМИНИСТРАТОРА ===
+        window.checkAdminPassword = function() {
+            const passInput = document.getElementById('adminPasswordInput');
+            const errDiv = document.getElementById('adminAuthError');
+            if (passInput && passInput.value === "vClearance2026K") {
+                localStorage.setItem('is_va_admin', 'true');
+                passInput.value = '';
+                if(errDiv) errDiv.style.display = 'none';
+                document.getElementById('adminAuthModal').classList.remove('open');
+                document.getElementById('privacyModal').classList.remove('open');
+                window.updateProfileWidget();
+                alert('Доступ подтвержден! Функция "Админ-Панель" успешно добавлена в меню вашего профиля.');
+            } else {
+                if(errDiv) errDiv.style.display = 'block';
+            }
+        };
+
+        window.addAdminPilot = function() {
+            const cidInput = document.getElementById('newPilotCid');
+            const nameInput = document.getElementById('newPilotName');
+            const cid = cidInput.value.trim();
+            const name = nameInput.value.trim();
+            
+            if(!cid || !name) {
+                alert('Пожалуйста, заполните ID и имя пилота!');
+                return;
+            }
+            
+            if (window.MY_PILOTS.some(p => p.cid.toString() === cid.toString())) {
+                alert('Пилот с таким CID уже внесен в список компании!');
+                return;
+            }
+            
+            let customList = [];
+            try {
+                customList = JSON.parse(localStorage.getItem('custom_pilots')) || [];
+            } catch(e) { customList = []; }
+            
+            const newPilot = { cid, name };
+            customList.push(newPilot);
+            localStorage.setItem('custom_pilots', JSON.stringify(customList));
+            
+            window.MY_PILOTS.push(newPilot);
+            cidInput.value = '';
+            nameInput.value = '';
+            
+            alert(`Пилот ${name} (${cid}) добавлен в базу "mypilots"!`);
+            if (window.lastVatsimData) renderRoster(window.lastVatsimData);
+        };
+
+        window.createAdminEvent = function() {
+            const img = document.getElementById('eventImg').value.trim();
+            const title = document.getElementById('eventTitle').value.trim();
+            const route = document.getElementById('eventRoute').value.trim();
+            const desc = document.getElementById('eventDesc').value.trim();
+            
+            if(!title || !route || !desc) {
+                alert('Поля заголовка, маршрута и описания обязательны к заполнению!');
+                return;
+            }
+            
+            const eventData = { img, title, route, desc };
+            localStorage.setItem('latest_event', JSON.stringify(eventData));
+            
+            document.getElementById('eventImg').value = '';
+            document.getElementById('eventTitle').value = '';
+            document.getElementById('eventRoute').value = '';
+            document.getElementById('eventDesc').value = '';
+            
+            window.renderLatestEvent();
+            document.getElementById('adminPanelModal').classList.remove('open');
+            alert('Мероприятие успешно опубликовано на сайте!');
+        };
+
+        window.renderLatestEvent = function() {
+            const container = document.getElementById('eventContainer');
+            if (!container) return;
+            
+            let ev = null;
+            try {
+                ev = JSON.parse(localStorage.getItem('latest_event'));
+            } catch(e) { ev = null; }
+            
+            if (ev && ev.title) {
+                container.innerHTML = `
+                    <div class="card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-color: rgba(255,255,255,0.08); background: rgba(18,18,18,0.75);">
+                        <div style="width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-image: url('${ev.img || 'https://i.imgur.com/kFSOdpY.png'}');"></div>
+                        <div style="padding: 30px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                                <h3 style="font-size: 22px; margin: 0; color: #fff; text-transform: uppercase; letter-spacing: 1px;">${ev.title}</h3>
+                                <span style="background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); padding: 5px 14px; border-radius: 6px; font-family: monospace; font-weight: bold; font-size: 14px;">${ev.route}</span>
+                            </div>
+                            <p style="color: #b3b3b3; font-size: 14px; white-space: pre-line; line-height: 1.6; font-weight: 300;">${ev.desc}</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div style="text-align: center; color: #555; padding: 40px 0; background: rgba(20,20,20,0.3); border-radius: 12px; border: 1px solid rgba(255,255,255,0.02);" class="lang" data-ru="События пока не запланированы" data-en="No events scheduled yet.">
+                        ${currentLang === 'en' ? 'No events scheduled yet.' : 'События пока не запланированы'}
+                    </div>
+                `;
+            }
+        };
+
         // === ЛОГИКА ЛИЧНОГО КАБИНЕТА ===
         window.toggleProfileDropdown = function(e) {
             e.stopPropagation();
             const dropdown = document.getElementById('profileDropdown');
             if (dropdown) {
                 dropdown.classList.toggle('active');
-                // ИСПРАВЛЕНИЕ: Принудительно вызываем рендер данных при открытии виджета ЛК
                 if (dropdown.classList.contains('active')) {
                     window.renderProfileDropdownData();
                 }
@@ -1723,6 +1896,10 @@
             const widget = document.getElementById('profileWidget');
             if (!widget) return;
             const savedCid = localStorage.getItem('vatsim_pilot_cid');
+            const isAdmin = localStorage.getItem('is_va_admin') === 'true';
+            
+            // Кнопка перехода в админку, если статус активен
+            const adminButtonHtml = isAdmin ? `<button class="btn" style="background: #e74c3c; color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: 600; font-size: 12px; margin-top: 10px; letter-spacing: 0.5px;" onclick="document.getElementById('adminPanelModal').classList.add('open')">Админ-Панель</button>` : '';
 
             if (!savedCid) {
                 const btnText = currentLang === 'en' ? 'Sign In' : 'Войти';
@@ -1740,6 +1917,7 @@
                             <button onclick="window.loginProfile()">${btnText}</button>
                             <span class="forgot-cid-link" onclick="window.highlightItsMeButtons()">${forgotText}</span>
                         </div>
+                        ${adminButtonHtml}
                     </div>
                 `;
             } else {
@@ -1751,6 +1929,7 @@
                         <div id="profileDropdownContent">
                             <div style="font-size:12px; color:#aaa; text-align:center; padding:5px 0;">Загрузка...</div>
                         </div>
+                        ${adminButtonHtml}
                         <button class="logout-btn" onclick="window.logoutProfile()">${currentLang === 'en' ? 'Log Out' : 'Выйти'}</button>
                     </div>
                 `;
@@ -1817,7 +1996,7 @@
             } else {
                 // ПИЛОТ ОФФЛАЙН
                 const cacheData = window.firebaseFlightsCache[savedCid] || null;
-                const companyPilot = MY_PILOTS.find(p => p.cid.toString() === savedCid.toString());
+                const companyPilot = window.MY_PILOTS.find(p => p.cid.toString() === savedCid.toString());
 
                 if (cacheData || companyPilot) {
                     const pilotDisplayName = companyPilot ? companyPilot.name : 'Unknown Pilot';
@@ -1946,6 +2125,7 @@
         };
 
         async function initApp() {
+            window.renderLatestEvent();
             renderRoster({ pilots: [], controllers: [] }); 
             window.updateProfileWidget(); 
             await loadFlightsFromFirebase();
