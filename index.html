@@ -1769,6 +1769,7 @@
                 document.getElementById('privacyModal').classList.remove('open');
                 window.updateProfileWidget();
                 if (window.lastVatsimData) renderRoster(window.lastVatsimData); // перерисовать, чтобы появились кнопки
+                renderRecentFlights(); // перерисовать последние полеты для кнопок удаления
                 alert('Доступ подтвержден! Функция "Админ-Панель" успешно добавлена в меню вашего профиля.');
             } else {
                 if(errDiv) errDiv.style.display = 'block';
@@ -2094,7 +2095,28 @@
             }
         });
 
-        
+        // Удаление рейса из истории полетов (Firebase)
+        window.deleteRecentFlight = async function(flightId) {
+            if (confirm('Вы уверены, что хотите удалить этот полет из истории?')) {
+                try {
+                    // Фильтруем массив, удаляя выбранный рейс по его flightId
+                    window.recentFlightsData = window.recentFlightsData.filter(f => f.flightId !== flightId);
+                    
+                    // Обновляем документ в Firebase
+                    await setDoc(doc(db, 'vatsim_history', 'recent_flights_log'), { 
+                        flights: window.recentFlightsData 
+                    }, { merge: true });
+                    
+                    // Перерисовываем таблицу
+                    renderRecentFlights();
+                    
+                } catch (error) {
+                    console.error("Ошибка при удалении полета: ", error);
+                    alert("Произошла ошибка при удалении записи о полете.");
+                }
+            }
+        };
+
         // === ЛОГИКА ОТРИСОВКИ ПОСЛЕДНИХ ПОЛЕТОВ (CLR) ===
         function renderRecentFlights() {
             const tbody = document.getElementById('recent-flights-tbody');
@@ -2121,16 +2143,25 @@
             const endIndex = startIndex + FLIGHTS_PER_PAGE;
             const flightsToShow = window.recentFlightsData.slice(startIndex, endIndex);
 
+            // Проверяем статус администратора
+            const isAdmin = localStorage.getItem('is_va_admin') === 'true';
+
             flightsToShow.forEach(flight => {
                 const dateObj = new Date(flight.timestamp);
                 const dateStr = dateObj.toLocaleDateString(currentLang === 'en' ? 'en-GB' : 'ru-RU', {
                     day: '2-digit', month: 'short', hour: '2-digit', minute:'2-digit'
                 });
 
+                // Создаем кнопку удаления, если есть права админа
+                let deleteBtnHtml = '';
+                if (isAdmin) {
+                    deleteBtnHtml = `<button onclick="event.stopPropagation(); window.deleteRecentFlight('${flight.flightId}')" style="background: #e74c3c; color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 8px; cursor: pointer;">Удалить</button>`;
+                }
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="color:#aaa; font-size: 13px;">${dateStr}</td>
-                    <td><strong>${flight.name}</strong> <span style="font-size:11px; color:#666;">(${flight.cid})</span></td>
+                    <td><strong>${flight.name}</strong> <span style="font-size:11px; color:#666;">(${flight.cid})</span> ${deleteBtnHtml}</td>
                     <td><span style="font-family:monospace; font-weight:600; color:#2ecc71;">${flight.callsign}</span></td>
                     <td>${flight.route}</td>
                     <td>${flight.aircraft}</td>
