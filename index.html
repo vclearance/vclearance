@@ -1178,6 +1178,7 @@
     <section id="roster" class="content-section">
         <div class="container">
             <h2 class="section-title lang" data-ru="Список и активность участников" data-en="Members Roster & Live Activity">Список и активность участников</h2>
+            <div id="rosterAdminControls" style="margin-bottom: 15px; text-align: right;"></div>
             <div class="roster-wrapper">
                 <table class="roster-table">
                     <thead>
@@ -1274,10 +1275,12 @@
             <div class="modal-header">Авторизация Администратора</div>
             <div class="modal-body">
                 <div class="profile-login-form">
-                    <label style="font-size: 11px; text-transform: uppercase; color: #888;">Введите мастер-пароль:</label>
-                    <input type="password" id="adminPasswordInput" placeholder="•••••••••••••••">
+                    <label style="font-size: 11px; text-transform: uppercase; color: #888;">VATSIM CID:</label>
+                    <input type="text" id="adminCidInput" placeholder="Например, 1816284" autocomplete="off">
+                    <label style="font-size: 11px; text-transform: uppercase; color: #888; margin-top: 8px;">Пароль администратора:</label>
+                    <input type="password" id="adminPasswordInput" placeholder="•••••••••••••••" autocomplete="off">
                     <button onclick="window.checkAdminPassword()">Подтвердить</button>
-                    <div id="adminAuthError" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none; text-align: center;">Неверный пароль доступа!</div>
+                    <div id="adminAuthError" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none; text-align: center;">Неверный VATSIM CID или пароль!</div>
                 </div>
             </div>
         </div>
@@ -1288,6 +1291,7 @@
             <button class="close-modal-btn" onclick="document.getElementById('adminPanelModal').classList.remove('open')">&times;</button>
             <div class="modal-header">Панель Управления vClearance</div>
             <div class="modal-body">
+                <div id="adminPanelRoleInfo" style="font-size: 12px; color: #aaa; margin-bottom: 18px; text-align: center;"></div>
                 <h3 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">Добавить нового пилота</h3>
                 <div class="profile-login-form" style="margin-bottom: 30px;">
                     <input type="text" id="newPilotCid" placeholder="VATSIM CID (например, 1999888)">
@@ -1302,6 +1306,24 @@
                     <input type="text" id="eventRoute" placeholder="Маршрут рейса (например, UUEE — URSS)">
                     <textarea id="eventDesc" placeholder="Полное описание и регламент проведения мероприятия..." style="min-height: 100px; font-family: inherit; resize: vertical; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 8px 12px; border-radius: 6px; font-size: 13px; outline: none; width: 100%;"></textarea>
                     <button onclick="window.createAdminEvent()" style="background: white; color: #1a1a1a;">Опубликовать на главной</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addAdminModal">
+        <div class="modal-content" style="max-width: 420px;">
+            <button class="close-modal-btn" onclick="document.getElementById('addAdminModal').classList.remove('open')">&times;</button>
+            <div class="modal-header">Добавить администратора</div>
+            <div class="modal-body">
+                <div class="profile-login-form">
+                    <div id="addAdminTargetName" style="font-size: 13px; color: #ccc; text-align: center; margin-bottom: 2px;"></div>
+                    <label style="font-size: 11px; text-transform: uppercase; color: #888;">VATSIM CID:</label>
+                    <input type="text" id="newAdminCid" readonly style="opacity: 0.65; cursor: not-allowed;">
+                    <label style="font-size: 11px; text-transform: uppercase; color: #888; margin-top: 8px;">Придумайте пароль для этого админа:</label>
+                    <input type="text" id="newAdminPassword" placeholder="Новый пароль" autocomplete="off">
+                    <button onclick="window.createNewAdmin()" style="background: #2ecc71; color: white;">Создать доступ</button>
+                    <div id="addAdminError" style="color: #ff4d4d; font-size: 12px; margin-top: 5px; display: none; text-align: center;"></div>
                 </div>
             </div>
         </div>
@@ -1325,6 +1347,27 @@
         // 3. Инициализация приложения и базы данных
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+
+        // === СОСТОЯНИЕ АВТОРИЗАЦИИ АДМИНОВ (VATSIM CID + пароль, все хранится в Firebase) ===
+        window.currentAdminRole = null; // 'founder' | 'admin' | null
+        window.currentAdminCid = null;
+        const ADMIN_CACHE_KEY = 'va_admin_cache';
+
+        // Гарантируем, что стартовые аккаунты Основателя и Админа существуют в коллекции admins.
+        // Записываются только один раз — если документ уже есть, он не перезаписывается.
+        async function seedInitialAdmins() {
+            // Единственный стартовый аккаунт — Основатель. Больше никакие админы автоматически не создаются.
+            const seed = { cid: '1816284', password: 'KarimIbragimovClearance2026K', role: 'founder' };
+            try {
+                const ref = doc(db, 'admins', seed.cid);
+                const snap = await getDoc(ref);
+                if (!snap.exists()) {
+                    await setDoc(ref, { password: seed.password, role: seed.role });
+                }
+            } catch (error) {
+                console.error('Ошибка инициализации Основателя в Firebase:', error);
+            }
+        }
 
         // === СПИСОК CID ПИЛОТОВ ===
         const BASE_PILOTS = [
@@ -1461,6 +1504,25 @@
                 window.MY_PILOTS = [...BASE_PILOTS, ...customPilots];
                 
                 // Перерисовываем ростер
+                if (window.lastVatsimData) {
+                    renderRoster(window.lastVatsimData);
+                } else {
+                    renderRoster({ pilots: [], controllers: [] });
+                }
+            });
+        }
+
+        // === СЛУШАТЕЛЬ АДМИНОВ (FIREBASE) ===
+        // Держим карту CID -> роль, чтобы в ростере показывать "+ Админ" или "- Админ" для каждого человека
+        window.adminsMap = {};
+        function listenToAdmins() {
+            onSnapshot(collection(db, 'admins'), (snapshot) => {
+                const map = {};
+                snapshot.forEach((docSnap) => {
+                    map[docSnap.id] = docSnap.data().role || 'admin';
+                });
+                window.adminsMap = map;
+
                 if (window.lastVatsimData) {
                     renderRoster(window.lastVatsimData);
                 } else {
@@ -1618,7 +1680,7 @@
             });
 
             // === ПРОВЕРКА НА АДМИНА ДЛЯ КНОПКИ УДАЛЕНИЯ ===
-            const isAdmin = localStorage.getItem('is_va_admin2') === 'true';
+            const isAdmin = window.isAdmin();
 
             sortedPilots.forEach(localPilot => {
                 const onlinePilot = pilotsOnline.find(p => p.cid.toString() === localPilot.cid.toString());
@@ -1678,6 +1740,24 @@
                     }
                 }
 
+                // Кнопка "Добавить админа" / "Убрать админа" рядом с каждым человеком — доступна только Основателю.
+                // Основателя из списка админов убрать нельзя.
+                let addAdminBtnHtml = '';
+                if (window.isFounder()) {
+                    const safeCid = localPilot.cid.toString().replace(/'/g, "\\'");
+                    const safeName = (localPilot.name || '').replace(/'/g, "\\'");
+                    const existingRole = window.adminsMap ? window.adminsMap[localPilot.cid.toString()] : null;
+
+                    if (existingRole === 'founder') {
+                        // Основателя не трогаем — ни добавить, ни убрать
+                        addAdminBtnHtml = '';
+                    } else if (existingRole) {
+                        addAdminBtnHtml = `<button onclick="event.stopPropagation(); window.removeAdminPilot('${safeCid}')" style="background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.3); padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 8px; cursor: pointer;">- Админ</button>`;
+                    } else {
+                        addAdminBtnHtml = `<button onclick="event.stopPropagation(); window.openAddAdminModalFor('${safeCid}', '${safeName}')" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 8px; cursor: pointer;">+ Админ</button>`;
+                    }
+                }
+
                 const tr = document.createElement('tr');
                 tr.className = 'pilot-row-clickable';
                 if (window.openPilotCid === localPilot.cid) tr.classList.add('active');
@@ -1688,6 +1768,7 @@
                         <strong>${localPilot.name}</strong> 
                         <span style="font-size:11px; color:#666;">(${localPilot.cid})</span>
                         ${deleteBtnHtml}
+                        ${addAdminBtnHtml}
                     </td>
                     <td><span style="font-family:monospace; font-weight:600; color:#fff;">${callsign}</span></td>
                     <td>${aircraft}</td>
@@ -1757,22 +1838,184 @@
         window.openModal = function() { document.getElementById('privacyModal').classList.add('open'); };
         window.closeModal = function() { document.getElementById('privacyModal').classList.remove('open'); };
 
-        // === СЕКРЕТНАЯ АВТОРИЗАЦИЯ И ФУНКЦИИ АДМИНИСТРАТОРА ===
-        window.checkAdminPassword = function() {
+        // === СЕКРЕТНАЯ АВТОРИЗАЦИЯ И ФУНКЦИИ АДМИНИСТРАТОРА (VATSIM CID + пароль, из Firebase) ===
+
+        // Вспомогательные функции проверки роли
+        window.isAdmin = function() { return window.currentAdminRole === 'founder' || window.currentAdminRole === 'admin'; };
+        window.isFounder = function() { return window.currentAdminRole === 'founder'; };
+
+        // Проверяет пару CID+пароль по коллекции admins в Firebase. При успехе выставляет глобальную роль.
+        async function tryAdminLogin(cid, password) {
+            if (!cid || !password) {
+                window.currentAdminRole = null;
+                window.currentAdminCid = null;
+                return false;
+            }
+            try {
+                const ref = doc(db, 'admins', cid.toString());
+                const snap = await getDoc(ref);
+                if (snap.exists() && snap.data().password === password) {
+                    window.currentAdminRole = snap.data().role === 'founder' ? 'founder' : 'admin';
+                    window.currentAdminCid = cid.toString();
+                    return true;
+                }
+            } catch (error) {
+                console.error('Ошибка проверки администратора в Firebase:', error);
+            }
+            window.currentAdminRole = null;
+            window.currentAdminCid = null;
+            return false;
+        }
+
+        window.checkAdminPassword = async function() {
+            const cidInput = document.getElementById('adminCidInput');
             const passInput = document.getElementById('adminPasswordInput');
             const errDiv = document.getElementById('adminAuthError');
-            if (passInput && passInput.value === "KarimIbragimovClearance") {
-                localStorage.setItem('is_va_admin2', 'true');
-                passInput.value = '';
-                if(errDiv) errDiv.style.display = 'none';
+            const cid = cidInput ? cidInput.value.trim() : '';
+            const password = passInput ? passInput.value : '';
+
+            const ok = await tryAdminLogin(cid, password);
+
+            if (ok) {
+                // В кэш (localStorage) сохраняем именно то, что ввел пользователь при нажатии "УВД" —
+                // CID и пароль. При каждой загрузке сайта это заново проверяется по Firebase,
+                // поэтому если доступ был снят (документ удален/пароль изменен), админка пропадет.
+                localStorage.setItem(ADMIN_CACHE_KEY, JSON.stringify({ cid, password }));
+                if (cidInput) cidInput.value = '';
+                if (passInput) passInput.value = '';
+                if (errDiv) errDiv.style.display = 'none';
                 document.getElementById('adminAuthModal').classList.remove('open');
                 document.getElementById('privacyModal').classList.remove('open');
                 window.updateProfileWidget();
+                window.renderAdminControls();
                 if (window.lastVatsimData) renderRoster(window.lastVatsimData); // перерисовать, чтобы появились кнопки
                 renderRecentFlights(); // перерисовать последние полеты для кнопок удаления
-                alert('Доступ подтвержден! Функция "Админ-Панель" успешно добавлена в меню вашего профиля.');
+                const roleLabel = window.currentAdminRole === 'founder' ? 'Основатель' : 'Администратор';
+                alert(`Доступ подтвержден! Ваша роль: ${roleLabel}.`);
             } else {
-                if(errDiv) errDiv.style.display = 'block';
+                if (errDiv) {
+                    errDiv.textContent = 'Неверный VATSIM CID или пароль!';
+                    errDiv.style.display = 'block';
+                }
+            }
+        };
+
+        // Выход из админки — снимает и роль, и кэш
+        window.logoutAdmin = function() {
+            localStorage.removeItem(ADMIN_CACHE_KEY);
+            window.currentAdminRole = null;
+            window.currentAdminCid = null;
+            window.updateProfileWidget();
+            window.renderAdminControls();
+            if (window.lastVatsimData) renderRoster(window.lastVatsimData);
+            renderRecentFlights();
+            document.getElementById('adminPanelModal').classList.remove('open');
+        };
+
+        // При загрузке сайта — если раньше был сохранен вход, заново проверяем его по Firebase.
+        // Если доступ отозван (Основатель удалил документ или сменил пароль) — админка не восстановится.
+        async function restoreAdminSession() {
+            const raw = localStorage.getItem(ADMIN_CACHE_KEY);
+            if (!raw) return;
+            try {
+                const { cid, password } = JSON.parse(raw);
+                const ok = await tryAdminLogin(cid, password);
+                if (!ok) {
+                    localStorage.removeItem(ADMIN_CACHE_KEY);
+                }
+            } catch (error) {
+                localStorage.removeItem(ADMIN_CACHE_KEY);
+            }
+        }
+
+        // Открытие панели администратора (с инфо о текущей роли и кнопкой выхода)
+        window.openAdminPanel = function() {
+            const infoDiv = document.getElementById('adminPanelRoleInfo');
+            if (infoDiv) {
+                const roleLabel = window.currentAdminRole === 'founder' ? 'Основатель' : 'Администратор';
+                infoDiv.innerHTML = `Вы вошли как <strong>${roleLabel}</strong> (CID ${window.currentAdminCid}) &nbsp;·&nbsp; <span style="color:#e74c3c; cursor:pointer; text-decoration:underline;" onclick="window.logoutAdmin()">Выйти из админки</span>`;
+            }
+            document.getElementById('adminPanelModal').classList.add('open');
+        };
+
+        // Раньше здесь была общая кнопка "Добавить админа" над ростером — теперь кнопка находится
+        // рядом с каждым человеком в списке (см. renderRoster), поэтому общий контейнер больше не используется.
+        window.renderAdminControls = function() {
+            const container = document.getElementById('rosterAdminControls');
+            if (container) container.innerHTML = '';
+        };
+
+        // Открывает модалку добавления админа для конкретного человека из ростера.
+        // CID берется из строки ростера и блокируется — Основателю нужно только придумать пароль.
+        window.openAddAdminModalFor = function(cid, name) {
+            if (!window.isFounder()) {
+                alert('Только Основатель может добавлять администраторов!');
+                return;
+            }
+            const cidInput = document.getElementById('newAdminCid');
+            const passInput = document.getElementById('newAdminPassword');
+            const nameDiv = document.getElementById('addAdminTargetName');
+            const errDiv = document.getElementById('addAdminError');
+            if (cidInput) cidInput.value = cid;
+            if (passInput) passInput.value = '';
+            if (nameDiv) nameDiv.textContent = name || '';
+            if (errDiv) errDiv.style.display = 'none';
+            document.getElementById('addAdminModal').classList.add('open');
+        };
+
+        // Убирает права администратора у человека (Основателя убрать нельзя — проверка выше при отрисовке кнопки)
+        window.removeAdminPilot = async function(cid) {
+            if (!window.isFounder()) {
+                alert('Только Основатель может убирать администраторов!');
+                return;
+            }
+            if (confirm(`Убрать права администратора у CID ${cid}?`)) {
+                try {
+                    await deleteDoc(doc(db, 'admins', cid));
+                    // Если этот админ сейчас сам залогинен в этой сессии — на всякий случай локально это не трогаем,
+                    // при следующей проверке (restoreAdminSession) доступ пропадет автоматически.
+                } catch (error) {
+                    console.error('Ошибка удаления администратора:', error);
+                    alert('Произошла ошибка при удалении администратора.');
+                }
+            }
+        };
+
+        // Создание нового администратора Основателем — CID и пароль уходят в Firebase (коллекция admins)
+        window.createNewAdmin = async function() {
+            if (!window.isFounder()) {
+                alert('Только Основатель может добавлять администраторов!');
+                return;
+            }
+            const cidInput = document.getElementById('newAdminCid');
+            const passInput = document.getElementById('newAdminPassword');
+            const errDiv = document.getElementById('addAdminError');
+            const cid = cidInput.value.trim();
+            const password = passInput.value.trim();
+
+            if (!cid || !password) {
+                if (errDiv) { errDiv.textContent = 'Заполните VATSIM CID и пароль!'; errDiv.style.display = 'block'; }
+                return;
+            }
+            if (password.length < 6) {
+                if (errDiv) { errDiv.textContent = 'Пароль должен быть не короче 6 символов!'; errDiv.style.display = 'block'; }
+                return;
+            }
+
+            try {
+                await setDoc(doc(db, 'admins', cid), {
+                    password: password,
+                    role: 'admin',
+                    addedBy: window.currentAdminCid
+                });
+                cidInput.value = '';
+                passInput.value = '';
+                if (errDiv) errDiv.style.display = 'none';
+                document.getElementById('addAdminModal').classList.remove('open');
+                alert(`Администратор с CID ${cid} добавлен и сохранен в Firebase!`);
+            } catch (error) {
+                console.error('Ошибка создания администратора:', error);
+                if (errDiv) { errDiv.textContent = 'Ошибка сохранения в Firebase.'; errDiv.style.display = 'block'; }
             }
         };
 
@@ -1926,10 +2169,10 @@
             const widget = document.getElementById('profileWidget');
             if (!widget) return;
             const savedCid = localStorage.getItem('vatsim_pilot_cid');
-            const isAdmin = localStorage.getItem('is_va_admin2') === 'true';
+            const isAdmin = window.isAdmin();
             
             // Кнопка перехода в админку, если статус активен
-            const adminButtonHtml = isAdmin ? `<button class="btn" style="background: #e74c3c; color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: 600; font-size: 12px; margin-top: 10px; letter-spacing: 0.5px;" onclick="document.getElementById('adminPanelModal').classList.add('open')">Админ-Панель</button>` : '';
+            const adminButtonHtml = isAdmin ? `<button class="btn" style="background: #e74c3c; color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: 600; font-size: 12px; margin-top: 10px; letter-spacing: 0.5px;" onclick="window.openAdminPanel()">Админ-Панель</button>` : '';
 
             if (!savedCid) {
                 const btnText = currentLang === 'en' ? 'Sign In' : 'Войти';
@@ -2144,7 +2387,7 @@
             const flightsToShow = window.recentFlightsData.slice(startIndex, endIndex);
 
             // Проверяем статус администратора
-            const isAdmin = localStorage.getItem('is_va_admin2') === 'true';
+            const isAdmin = window.isAdmin();
 
             flightsToShow.forEach(flight => {
                 const dateObj = new Date(flight.timestamp);
@@ -2184,11 +2427,16 @@
 
         // Запуск приложения
         async function initApp() {
+            await seedInitialAdmins();   // гарантируем наличие только Основателя в Firebase
+            await restoreAdminSession(); // восстанавливаем/перепроверяем сохраненный вход админа
+
             listenToEvent(); // Подключаем слушатель Ивентов из Firestore
             listenToPilots(); // Подключаем слушатель Пилотов из Firestore
+            listenToAdmins(); // Подключаем слушатель Админов из Firestore
             
             renderRoster({ pilots: [], controllers: [] }); 
             window.updateProfileWidget(); 
+            window.renderAdminControls();
             
             await loadFlightsFromFirebase();
             await fetchVatsimData();
