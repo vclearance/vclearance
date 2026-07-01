@@ -1618,7 +1618,7 @@
             });
 
             // === ПРОВЕРКА НА АДМИНА ДЛЯ КНОПКИ УДАЛЕНИЯ ===
-            const isAdmin = localStorage.getItem('is_va_admin') === 'true';
+            const isAdmin = localStorage.getItem('is_va_admin2') === 'true';
 
             sortedPilots.forEach(localPilot => {
                 const onlinePilot = pilotsOnline.find(p => p.cid.toString() === localPilot.cid.toString());
@@ -1762,7 +1762,7 @@
             const passInput = document.getElementById('adminPasswordInput');
             const errDiv = document.getElementById('adminAuthError');
             if (passInput && passInput.value === "KarimIbragimovClearance") {
-                localStorage.setItem('is_va_admin', 'true');
+                localStorage.setItem('is_va_admin2', 'true');
                 passInput.value = '';
                 if(errDiv) errDiv.style.display = 'none';
                 document.getElementById('adminAuthModal').classList.remove('open');
@@ -1926,7 +1926,7 @@
             const widget = document.getElementById('profileWidget');
             if (!widget) return;
             const savedCid = localStorage.getItem('vatsim_pilot_cid');
-            const isAdmin = localStorage.getItem('is_va_admin') === 'true';
+            const isAdmin = localStorage.getItem('is_va_admin2') === 'true';
             
             // Кнопка перехода в админку, если статус активен
             const adminButtonHtml = isAdmin ? `<button class="btn" style="background: #e74c3c; color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: 600; font-size: 12px; margin-top: 10px; letter-spacing: 0.5px;" onclick="document.getElementById('adminPanelModal').classList.add('open')">Админ-Панель</button>` : '';
@@ -2144,7 +2144,7 @@
             const flightsToShow = window.recentFlightsData.slice(startIndex, endIndex);
 
             // Проверяем статус администратора
-            const isAdmin = localStorage.getItem('is_va_admin') === 'true';
+            const isAdmin = localStorage.getItem('is_va_admin2') === 'true';
 
             flightsToShow.forEach(flight => {
                 const dateObj = new Date(flight.timestamp);
