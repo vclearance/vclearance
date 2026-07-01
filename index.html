@@ -685,6 +685,31 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Бейдж роли (Админ / Основатель) рядом со статусом */
+        .role-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .role-badge-admin {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.35);
+        }
+
+        .role-badge-founder {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.18), rgba(255, 165, 0, 0.12));
+            color: #ffd24d;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
+        }
+
         /* Кнопка "Это я!" в списке пилотов */
         .btn-its-me {
             background: transparent;
@@ -1714,6 +1739,15 @@
                     statusBadge = `<span class="status-badge status-offline">OFFLINE</span>`;
                 }
 
+                // Бейдж роли (Основатель / Админ) рядом со статусом
+                let roleBadge = '';
+                const pilotRole = window.adminsMap ? window.adminsMap[localPilot.cid.toString()] : null;
+                if (pilotRole === 'founder') {
+                    roleBadge = `<span class="role-badge role-badge-founder">${currentLang === 'en' ? 'Founder' : 'Основатель'}</span>`;
+                } else if (pilotRole === 'admin') {
+                    roleBadge = `<span class="role-badge role-badge-admin">${currentLang === 'en' ? 'Admin' : 'Админ'}</span>`;
+                }
+
                 let detailsLabel = currentLang === 'en' ? 'Callsign' : 'Позывной';
                 let detailCallsign = '---';
                 let detailAircraft = '---';
@@ -1773,7 +1807,7 @@
                     <td><span style="font-family:monospace; font-weight:600; color:#fff;">${callsign}</span></td>
                     <td>${aircraft}</td>
                     <td>${route}</td>
-                    <td>${statusBadge}</td>
+                    <td>${statusBadge}${roleBadge}</td>
                 `;
 
                 const detailsTr = document.createElement('tr');
